@@ -40,7 +40,7 @@ export default function HomeScreen(): JSX.Element {
         <Typography.Paragraph className="text-center">
           A modern starter for React Native, preconfigured with HeroUI Native, Uniwind, and Expo
           Router. Edit{" "}
-          <Typography.Paragraph className="font-semibold">app/index.tsx</Typography.Paragraph> and
+          <Typography.Paragraph className="font-semibold font-poppins-medium">app/index.tsx</Typography.Paragraph> and
           watch it reload.
         </Typography.Paragraph>
         <Button className="w-full">Get started</Button>
