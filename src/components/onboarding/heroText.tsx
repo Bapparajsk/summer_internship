@@ -47,15 +47,20 @@ export function OnboardingHeroText() {
             {/* Heading */}
             <Animated.View style={titleStyle}>
                 <Text className="font-poppins-semibold text-4xl leading-tight tracking-tight text-text-primary">
-                    Challenge your{"\n"}knowledge.
+                    {/* Challenge your{"\n"}knowledge. */}
+                    {/* Build Your Momentum{"\n"}Keep learning. */}
+                    See your progress.
                 </Text>
             </Animated.View>
 
             {/* Description */}
             <Animated.View style={descriptionStyle}>
                 <Text className="mt-2 max-w-75 font-poppins-medium text-xl leading-6 text-text-secondary">
-                    Test what you know, discover what you don’t, and turn every quiz into
-                    progress.
+                    {/* Test what you know, discover what you don’t, and turn every quiz into
+                    progress. */}
+                    {/* Make every quiz count and build knowledge through consistent practice. */}
+                    Track your accuracy, find your weak spots, and get better with every
+          quiz.
                 </Text>
             </Animated.View>
         </View>

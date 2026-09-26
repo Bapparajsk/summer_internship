@@ -4,6 +4,8 @@ import { OnboardingHeroText } from "./heroText";
 import { QuizPreviewCard } from "./quizPreviewCard";
 import { OnboardingFooter } from "./footer";
 import { useState } from "react";
+import { StreakOnboarding } from "./streakOnboarding";
+import { ProgressDashboardCard } from "./progressDashboardCard";
 
 export const Onboarding = () => {
 
@@ -15,7 +17,9 @@ export const Onboarding = () => {
                 <OnboardingHeader />
                 <OnboardingHeroText />
             </View>
-            <QuizPreviewCard />
+            {/* <QuizPreviewCard /> */}
+            {/* <StreakOnboarding /> */}
+            <ProgressDashboardCard />
             <OnboardingFooter currentStep={0} totalSteps={3} onContinue={() => setCurrentStep(currentStep + 1 % 3)} />
         </View>
     );

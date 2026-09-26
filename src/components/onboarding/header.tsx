@@ -38,7 +38,9 @@ export const OnboardingHeader = () => {
                     className="h-1.5 w-1.5 rounded-full bg-primary"
                 />
                 <Text className="font-poppins-semibold text-xs uppercase tracking-wide text-primary">
-                    QuizFlow
+                    {/* QuizFlow */}
+                    {/* YOUR JOURNEY */}
+                    QUIZFLOW AI
                 </Text>
             </Chip>
         </View>
