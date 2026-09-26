@@ -16,7 +16,6 @@ export const Onboarding = () => {
                 <OnboardingHeroText index={currentStep} />
             </View>
             <HeroCard index={currentStep} />
-            {/* <ProgressDashboardCard/> */}
             <OnboardingFooter currentStep={currentStep} totalSteps={3} onContinue={() => setCurrentStep((currentStep + 1) % 3)} onPrevious={() => setCurrentStep((currentStep - 1 + 3) % 3)} />
         </View>
     );

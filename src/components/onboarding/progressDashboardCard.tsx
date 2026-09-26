@@ -116,18 +116,6 @@ export const ProgressDashboardCard = () => {
     return (
         <View className="w-full">
             <Card className="relative overflow-hidden rounded-xl border border-border-subtle bg-surface-container-low">
-                {/* Ambient top glow */}
-                <LinearGradient
-                    colors={[
-                        "rgba(92,198,226,0.07)",
-                        "rgba(92,198,226,0.02)",
-                        "transparent",
-                    ]}
-                    start={{ x: 0.5, y: 0 }}
-                    end={{ x: 0.5, y: 1 }}
-                    className="absolute left-0 right-0 top-0 h-32"
-                />
-
                 <Card.Body>
                     {/* Header */}
                     <View className="relative z-10 flex-row items-start justify-between">

@@ -69,35 +69,6 @@ export function QuizPreviewCard() {
 
     return (
         <View className="relative z-20 w-full">
-
-            {/* Ambient background */}
-            <View className="absolute -inset-8 overflow-hidden">
-                <LinearGradient
-                    colors={[
-                        "rgba(92,198,226,0.18)",
-                        "rgba(92,198,226,0.06)",
-                        "transparent",
-                    ]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    className="absolute -left-12 -top-10 h-64 w-64"
-                    style={{ borderRadius: 9999 }}
-                />
-
-                <LinearGradient
-                    colors={[
-                        "transparent",
-                        "rgba(92,198,226,0.05)",
-                        "rgba(92,198,226,0.14)",
-                    ]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    className="absolute -bottom-12 -right-10 h-56 w-56"
-                    style={{ borderRadius: 9999 }}
-                />
-            </View>
-
-
             {/* HeroUI Card */}
             <Animated.View style={cardStyle}>
                 <Card

@@ -1,25 +1,26 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Dimensions, ViewStyle } from "react-native";
 import Animated, {
+    Easing,
     useAnimatedStyle,
     useSharedValue,
-    withSpring,
+    withDelay,
+    withTiming,
+    WithTimingConfig
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 
 const { width } = Dimensions.get("window");
-
-const SPRING_CONFIG = {
-    damping: 18,
-    stiffness: 180,
-    mass: 0.7,
-};
 
 type AnimatedIndexedProps<T> = {
     items: readonly T[];
     index: number;
     renderItem: (item: T, index: number) => ReactNode;
     style?: ViewStyle;
+    delay?: number;
+    duration?: number;
+    easing?: WithTimingConfig["easing"];
+    _offset?: number;
 };
 
 export function AnimatedIndexed<T>({
@@ -27,6 +28,10 @@ export function AnimatedIndexed<T>({
     index,
     renderItem,
     style,
+    delay = 100,
+    duration = 300,
+    easing,
+    _offset = 5
 }: AnimatedIndexedProps<T>) {
     const [previousIndex, setPreviousIndex] = useState(index);
 
@@ -45,6 +50,10 @@ export function AnimatedIndexed<T>({
                     currentIndex={index}
                     previousIndex={previousIndex}
                     style={style}
+                    delay={delay}
+                    duration={duration}
+                    easing={easing}
+                    _offset={_offset}
                 >
                     {renderItem(item, itemIndex)}
                 </AnimatedIndexedItem>
@@ -59,6 +68,10 @@ type AnimatedIndexedItemProps = {
     previousIndex: number;
     style?: ViewStyle;
     children: ReactNode;
+    delay?: number;
+    duration?: number;
+    easing?: WithTimingConfig["easing"];
+    _offset: number;
 };
 
 function AnimatedIndexedItem({
@@ -67,13 +80,18 @@ function AnimatedIndexedItem({
     previousIndex,
     style,
     children,
+    delay = 100,
+    duration = 300,
+    easing = Easing.out(Easing.cubic),
+    _offset = 5
 }: AnimatedIndexedItemProps) {
     const translateX = useSharedValue(
         itemIndex === currentIndex
             ? 0
             : itemIndex < currentIndex
-              ? -width
-              : width,
+                ? -width * _offset
+                : width * _offset,
+
     );
 
     useEffect(() => {
@@ -85,11 +103,17 @@ function AnimatedIndexedItem({
 
         // Incoming
         if (itemIndex === currentIndex) {
-            translateX.value = isForward ? width : -width;
+            translateX.value = isForward ? width * _offset : -width * _offset;
 
-            translateX.value = withSpring(
-                0,
-                SPRING_CONFIG,
+            translateX.value = withDelay(
+                delay,
+                withTiming(
+                    0,
+                    {
+                        duration,
+                        easing
+                    },
+                )
             );
 
             return;
@@ -97,9 +121,12 @@ function AnimatedIndexedItem({
 
         // Outgoing
         if (itemIndex === previousIndex) {
-            translateX.value = withSpring(
-                isForward ? -width : width,
-                SPRING_CONFIG,
+            translateX.value = withDelay(
+                delay,
+                withTiming(
+                    isForward ? -width * _offset : width * _offset,
+                    {duration, easing},
+                )
             );
 
             return;
@@ -108,12 +135,15 @@ function AnimatedIndexedItem({
         // Other cards stay outside
         translateX.value =
             itemIndex < currentIndex
-                ? -width
-                : width;
+                ? -width * _offset
+                : width * _offset;
     }, [
         currentIndex,
         previousIndex,
         itemIndex,
+        delay,
+        duration,
+        easing,
         translateX,
     ]);
 
@@ -131,8 +161,6 @@ function AnimatedIndexedItem({
                 {
                     position: "absolute",
                     width: "100%",
-                    // left: 0,
-                    // right: 0,
                 },
                 style,
                 animatedStyle,

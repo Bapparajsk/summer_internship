@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import { AnimatedIndexed } from "./animatedIndexed";
+import { Easing } from "react-native-reanimated";
 
 const TITLES = [
     "Challenge your",
@@ -24,7 +25,7 @@ export function OnboardingHeroText({
     index: number;
 }) {
     return (
-        <View className="mt-4 h-30 overflow-hidden pt-space-xs pb-space-sm">
+        <View className="mt-4 h-30 overflow-visible pt-space-xs pb-space-sm">
             <AnimatedIndexed
                 items={HERO_ITEMS}
                 index={index}
@@ -39,6 +40,8 @@ export function OnboardingHeroText({
                         </Text>
                     </>
                 )}
+                easing={Easing.inOut(Easing.cubic)}
+                duration={1000}
             />
         </View>
     );
