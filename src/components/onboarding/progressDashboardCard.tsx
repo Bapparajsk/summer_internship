@@ -19,6 +19,7 @@ import Svg, {
 } from "react-native-svg";
 import { Card } from "heroui-native/card";
 import { SegmentedProgress } from "../progressBar";
+import { Ticker } from "../number";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -103,10 +104,6 @@ export const ProgressDashboardCard = () => {
         strokeDashoffset: CHART_LENGTH * (1 - chartProgress.value),
     }));
 
-    const areaStyle = useAnimatedStyle(() => ({
-        opacity: areaOpacity.value,
-    }));
-
     const cardStyle = useAnimatedStyle(() => ({
         opacity: cardProgress.value,
         transform: [
@@ -140,9 +137,7 @@ export const ProgressDashboardCard = () => {
                             </Text>
 
                             <View className="mt-0.5 flex-row items-baseline">
-                                <Text className="font-poppins-semibold text-[42px] leading-none tracking-tight text-text-primary">
-                                    60%
-                                </Text>
+                                <Ticker value={"60%"} fontSize={42} className="text-white font-poppins-semibold" />
                             </View>
                         </View>
 

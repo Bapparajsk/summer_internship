@@ -68,7 +68,7 @@ export function QuizPreviewCard() {
     }));
 
     return (
-        <View className="relative z-20 w-full mt-8">
+        <View className="relative z-20 w-full">
 
             {/* Ambient background */}
             <View className="absolute -inset-8 overflow-hidden">

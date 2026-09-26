@@ -1,68 +1,45 @@
-import { useEffect } from "react";
 import { Text, View } from "react-native";
-import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withDelay,
-    withTiming,
-} from "react-native-reanimated";
+import { AnimatedIndexed } from "./animatedIndexed";
 
-export function OnboardingHeroText() {
-    const titleProgress = useSharedValue(0);
-    const descriptionProgress = useSharedValue(0);
+const TITLES = [
+    "Challenge your",
+    "Build Your Momentum",
+    "See your progress.",
+];
 
-    useEffect(() => {
-        titleProgress.value = withTiming(1, {
-            duration: 550,
-        });
+const DESCRIPTIONS = [
+    "Test what you know, discover what you don’t, and turn every quiz into progress.",
+    "Make every quiz count and build knowledge through consistent practice.",
+    "Track your accuracy, find your weak spots, and get better with every quiz.",
+];
 
-        descriptionProgress.value = withDelay(
-            140,
-            withTiming(1, {
-                duration: 500,
-            }),
-        );
-    }, []);
+const HERO_ITEMS = TITLES.map((title, index) => ({
+    title,
+    description: DESCRIPTIONS[index],
+}));
 
-    const titleStyle = useAnimatedStyle(() => ({
-        opacity: titleProgress.value,
-        transform: [
-            {
-                translateY: 18 * (1 - titleProgress.value),
-            },
-        ],
-    }));
-
-    const descriptionStyle = useAnimatedStyle(() => ({
-        opacity: descriptionProgress.value,
-        transform: [
-            {
-                translateY: 10 * (1 - descriptionProgress.value),
-            },
-        ],
-    }));
-
+export function OnboardingHeroText({
+    index,
+}: {
+    index: number;
+}) {
     return (
-        <View className="pt-space-xs pb-space-sm mt-4">
-            {/* Heading */}
-            <Animated.View style={titleStyle}>
-                <Text className="font-poppins-semibold text-4xl leading-tight tracking-tight text-text-primary">
-                    {/* Challenge your{"\n"}knowledge. */}
-                    {/* Build Your Momentum{"\n"}Keep learning. */}
-                    See your progress.
-                </Text>
-            </Animated.View>
+        <View className="mt-4 h-30 overflow-hidden pt-space-xs pb-space-sm">
+            <AnimatedIndexed
+                items={HERO_ITEMS}
+                index={index}
+                renderItem={({ title, description }) => (
+                    <>
+                        <Text className="font-poppins-semibold text-4xl leading-tight tracking-tight text-text-primary">
+                            {title}
+                        </Text>
 
-            {/* Description */}
-            <Animated.View style={descriptionStyle}>
-                <Text className="mt-2 max-w-75 font-poppins-medium text-xl leading-6 text-text-secondary">
-                    {/* Test what you know, discover what you don’t, and turn every quiz into
-                    progress. */}
-                    {/* Make every quiz count and build knowledge through consistent practice. */}
-                    Track your accuracy, find your weak spots, and get better with every
-          quiz.
-                </Text>
-            </Animated.View>
+                        <Text className="mt-2 max-w-75 font-poppins-medium text-xl leading-6 text-text-secondary">
+                            {description}
+                        </Text>
+                    </>
+                )}
+            />
         </View>
     );
 }

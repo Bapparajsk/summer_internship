@@ -11,12 +11,14 @@ interface OnboardingFooterProps {
     currentStep?: number;
     totalSteps?: number;
     onContinue?: () => void;
+    onPrevious?: () => void;
 }
 
 export function OnboardingFooter({
     currentStep = 0,
     totalSteps = 3,
     onContinue,
+    onPrevious,
 }: OnboardingFooterProps) {
     const progress = useSharedValue(0);
 
@@ -49,8 +51,8 @@ export function OnboardingFooter({
                         <View
                             key={index}
                             className={`h-2 rounded-full ${active
-                                    ? "w-6 bg-primary"
-                                    : "w-2 bg-surface-container-high"
+                                ? "w-6 bg-primary"
+                                : "w-2 bg-surface-container-high"
                                 }`}
                         />
                     );
@@ -58,18 +60,32 @@ export function OnboardingFooter({
             </View>
 
             {/* Continue Button */}
-            <Button
-                onPress={onContinue}
-                className="h-12 w-full rounded-lg bg-primary"
-            >
-                <Button.Label className="font-poppins-semibold text-base text-background">
-                    Continue
-                </Button.Label>
+            <View className="flex-row items-center justify-between gap-x-2">
+                <Button
+                    onPress={onContinue}
+                    // className="h-12 w-full rounded-lg bg-primary"
+                >
+                    <Button.Label className="font-poppins-semibold text-base text-background">
+                        Continue
+                    </Button.Label>
 
-                <Text className="ml-1 text-lg font-semibold text-background">
-                    →
-                </Text>
-            </Button>
+                    <Text className="ml-1 text-lg font-semibold text-background">
+                        →
+                    </Text>
+                </Button>
+                <Button
+                    onPress={onPrevious}
+                    // className="h-12 w-full rounded-lg bg-primary"
+                >
+                    <Button.Label className="font-poppins-semibold text-base text-background">
+                        Back
+                    </Button.Label>
+
+                    <Text className="ml-1 text-lg font-semibold text-background">
+                        ←
+                    </Text>
+                </Button>
+            </View>
         </Animated.View>
     );
 }
