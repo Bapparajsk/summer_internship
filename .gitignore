@@ -8,6 +8,7 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+.vscode/
 
 # Uniwind (generated on first `expo start`)
 uniwind-types.d.ts

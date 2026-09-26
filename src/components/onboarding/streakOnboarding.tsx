@@ -199,13 +199,12 @@ export const StreakOnboarding = () => {
             </View>
 
             {/* Insight */}
-            <Card className="mt-3 w-full rounded-xl border border-border-subtle bg-surface-container-low">
-                <Card.Body className="flex-row items-center gap-space-md p-space-md">
+            <Card className="mt-3 w-full border border-border-subtle bg-surface-container-low">
+                <Card.Body className="flex-row items-center gap-space-md">
                     <View className="h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-container-high">
-                        <Text className="text-xl">✦</Text>
-                    </View>
-
-                    <View className="min-w-0 flex-1">
+                        <Text className="text-xl text-primary">✦</Text>
+                    </View> 
+                    <View className="min-w-0 flex-1 ml-2">
                         <Text className="font-poppins-semibold text-base tracking-tight text-text-primary">
                             Consistency compounds
                         </Text>

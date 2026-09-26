@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
     useAnimatedProps,
     useAnimatedStyle,
@@ -316,13 +315,6 @@ export const ProgressDashboardCard = () => {
 
                                             {/* Progress */}
                                             <View className="mt-1.5 w-24 overflow-hidden">
-                                                {/* <View
-                                                    className="h-full rounded-full"
-                                                    style={{
-                                                        width: `${subject.value}%`,
-                                                        backgroundColor: subject.color,
-                                                    }}
-                                                /> */}
                                                 <SegmentedProgress progress={subject.value} primaryColor={subject.color} />
                                             </View>
                                             

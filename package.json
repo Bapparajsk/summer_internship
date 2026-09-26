@@ -16,9 +16,11 @@
   "dependencies": {
     "@expo/metro-runtime": "~57.0.16",
     "@gorhom/bottom-sheet": "^5.2.14",
+    "@lottiefiles/dotlottie-react-native": "^0.12.1",
     "expo": "~57.0.24",
     "expo-constants": "~57.0.19",
     "expo-haptics": "~57.0.3",
+    "expo-image": "~57.0.5",
     "expo-linear-gradient": "~57.0.2",
     "expo-linking": "~57.0.10",
     "expo-router": "~57.0.22",
