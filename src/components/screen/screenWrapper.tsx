@@ -58,7 +58,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                 scrollEventThrottle={16}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    paddingTop: 10,
+                    paddingTop: 70,
                     paddingHorizontal: SCREEN_HORIZONTAL_PADDING,
                     paddingBottom: 40 + bottomBarHeight,
                     position: "relative",
