@@ -73,7 +73,7 @@ export default function Tab({
                         <active.Icon
                             name={active.name}
                             size={22}
-                            color={"#5CC6E2"}
+                            color={"rgba(255, 255, 255, 0.95)"}
                         />
                     </If.Then>
 
@@ -88,7 +88,7 @@ export default function Tab({
 
             <Text
                 className={'text-xs mt-0.5 font-poppins-semibold'}
-                style={{ color: isFocused ? "#5CC6E2" : "#8FA5B8" }}
+                style={{ color: isFocused ? "rgba(255, 255, 255, 1)" : "#8FA5B8" }}
             >
                 {label.toString()}
             </Text>

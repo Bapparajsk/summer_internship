@@ -20,7 +20,7 @@ export const AnimatedView = ({
                     height: 56,
 
                     borderRadius: 999,
-                    backgroundColor: "#3B82F680",
+                    backgroundColor: "#7BE2FF80",
                 },
                 animatedStyle,
             ]}

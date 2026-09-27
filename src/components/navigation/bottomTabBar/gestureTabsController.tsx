@@ -119,10 +119,10 @@ export const GestureTabsController = ({
                     position: "relative",
 
                     borderRadius: 999999,
-                    backgroundColor: "rgba(17,24,39,0.85)",
+                    backgroundColor: "#10141A",
 
                     borderWidth: 1,
-                    borderColor: "rgba(255,255,255,0.08)",
+                    borderColor:  "rgba(92, 198, 226, 0.14)",
 
                     flexDirection: "row",
                     alignItems: "center",
