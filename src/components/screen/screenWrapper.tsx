@@ -1,4 +1,4 @@
-import Animated, { useAnimatedRef } from "react-native-reanimated";
+import Animated, { SharedValue, useAnimatedRef, useAnimatedScrollHandler } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import AppFooter from "../footer/appFooter";
@@ -13,6 +13,7 @@ interface ScreenContentProps {
     stickyHeaderHiddenOnScroll?: boolean;
     showFooter?: boolean;
     SCREEN_HORIZONTAL_PADDING?: number;
+    scrollY: SharedValue<number>;
 }
 
 export const ScreenWrapper: React.FC<ScreenContentProps> = ({
@@ -23,8 +24,15 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
     stickyHeaderHiddenOnScroll,
     showFooter = true,
     SCREEN_HORIZONTAL_PADDING = 16,
+    scrollY,
 }) => {
-    const aref = useAnimatedRef<any>();
+
+    const onScroll = useAnimatedScrollHandler({
+        onScroll: (event) => {
+            scrollY.set(event.contentOffset.y);
+        },
+    });
+
     return (
         <SafeAreaView
             style={{
@@ -46,7 +54,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                 }}
             />
             <AnimatedScrollView
-                ref={aref}
+                onScroll={onScroll}
                 scrollEventThrottle={16}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
