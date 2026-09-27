@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
     useAnimatedProps,
     useAnimatedStyle,
@@ -109,7 +108,7 @@ export const StreakOnboarding = ({ index }: { index: number }) => {
             </View>
 
             {/* Progress core */}
-            <Animated.View className="relative h-[210px] w-[210px]">
+            <Animated.View className="relative h-52.5 w-52.5">
                 <Svg
                     width={SIZE}
                     height={SIZE}
