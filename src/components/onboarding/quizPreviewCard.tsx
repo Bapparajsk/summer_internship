@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text, View } from "react-native";
 import Animated, {
     useAnimatedStyle,
@@ -8,7 +8,6 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { Card } from "heroui-native/card";
-import { LinearGradient } from "expo-linear-gradient";
 import { Chip, cn } from "heroui-native";
 import { PressableFeedback } from 'heroui-native';
 import * as Haptics from 'expo-haptics';
@@ -27,10 +26,13 @@ const tempOptions: Option[] = [
 ];
 
 const correctOptionsId = "B"; // Number of correct options in the quiz.
+const _MY_INDEX = 0; // Index of the current question in the quiz.
 
-export function QuizPreviewCard() {
+export function QuizPreviewCard({index}: {index: number}) {
     const float = useSharedValue(0);
     const [options, setOptions] = useState<Option[]>(tempOptions);
+
+    const isCompleted = useRef(false);
 
     const handleOptionSelect = async (selectedOptionIndex: number) => {
 
@@ -52,7 +54,7 @@ export function QuizPreviewCard() {
         }          
     }
 
-    useEffect(() => {
+    const startAnimation = () => {
         float.value = withRepeat(
             withSequence(
                 withTiming(-4, { duration: 2500 }),
@@ -61,7 +63,19 @@ export function QuizPreviewCard() {
             -1,
             true,
         );
-    }, []);
+    }
+
+    useEffect(() => {
+
+        if(isCompleted.current) return;
+        if(index !== _MY_INDEX) return;
+
+        isCompleted.current = true;
+
+        setTimeout(() => {
+            startAnimation();
+        }, 500);
+    }, [index]);
 
     const cardStyle = useAnimatedStyle(() => ({
         transform: [{ translateY: float.value }],

@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text, View } from "react-native";
 import Animated, {
     useAnimatedProps,
-    useAnimatedStyle,
+    useAnimatedReaction,
     useSharedValue,
     withDelay,
     withRepeat,
@@ -19,12 +19,16 @@ import Svg, {
 import { Card } from "heroui-native/card";
 import { SegmentedProgress } from "../progressBar";
 import { Ticker } from "../number";
+import { scheduleOnRN } from "react-native-worklets";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const CHART_PATH = "M 10,80 Q 80,72 150,50 T 260,30 L 305,14";
 const CHART_LENGTH = 350;
+
+const _MY_INDEX = 2; // Index of the current question in the quiz.
+
 
 const subjects = [
     {
@@ -34,25 +38,37 @@ const subjects = [
     },
     {
         name: "Modern C++ Mastery",
-        value: 50,
+        value: 75,
         color: "#7BE2FF",
         top: true,
     },
     {
         name: "Database Internals",
-        value: 39,
+        value: 69,
         color: "#8FA5B8",
     },
 ];
 
-export const ProgressDashboardCard = () => {
+export const ProgressDashboardCard = ({ index }: { index: number }) => {
     const chartProgress = useSharedValue(0);
     const areaOpacity = useSharedValue(0);
     const cardProgress = useSharedValue(0);
     const apexPulse = useSharedValue(1);
     const pointPulse = useSharedValue(1);
+    const progressValue = useSharedValue(0);
 
-    useEffect(() => {
+    const [progress, setProgress] = useState("00%");
+    const [isAnimationStarted, setIsAnimationStarted] = useState(false);
+
+
+    const isCompleted = useRef(false);
+
+    const pointGlowProps = useAnimatedProps(() => ({
+        opacity: 0.15 + pointPulse.value * 0.3,
+        r: 7 + pointPulse.value * 4,
+    }));
+
+    const startAnimation = () => {
         pointPulse.value = withRepeat(
             withSequence(
                 withTiming(0.15, {
@@ -65,18 +81,11 @@ export const ProgressDashboardCard = () => {
             -1,
             true,
         );
-    }, []);
 
-    const pointGlowProps = useAnimatedProps(() => ({
-        opacity: 0.15 + pointPulse.value * 0.3,
-        r: 7 + pointPulse.value * 4,
-    }));
-
-    useEffect(() => {
         chartProgress.value = withDelay(
             300,
             withTiming(1, {
-                duration: 1200,
+                duration: 2000,
             }),
         );
 
@@ -97,20 +106,37 @@ export const ProgressDashboardCard = () => {
         apexPulse.value = withTiming(1, {
             duration: 500,
         });
-    }, []);
+
+        progressValue.value = withDelay(
+            300,
+            withTiming(60, {
+                duration: 2000,
+            }),
+        );
+    }
+
+    useEffect(() => {
+
+        if (isCompleted.current) return;
+        if (index !== _MY_INDEX) return;
+        isCompleted.current = true;
+        setTimeout(() => {
+            setIsAnimationStarted(true);
+            startAnimation();
+        }, 500);
+
+    }, [index]);
 
     const chartProps = useAnimatedProps(() => ({
         strokeDashoffset: CHART_LENGTH * (1 - chartProgress.value),
     }));
 
-    const cardStyle = useAnimatedStyle(() => ({
-        opacity: cardProgress.value,
-        transform: [
-            {
-                translateY: 12 * (1 - cardProgress.value),
-            },
-        ],
-    }));
+    useAnimatedReaction(
+        () => Math.round(progressValue.value),
+        (value) => {
+            scheduleOnRN(setProgress, `${value}%`);
+        }
+    );
 
     return (
         <View className="w-full">
@@ -124,7 +150,7 @@ export const ProgressDashboardCard = () => {
                             </Text>
 
                             <View className="mt-0.5 flex-row items-baseline">
-                                <Ticker value={"60%"} fontSize={42} className="text-white font-poppins-semibold" />
+                                <Ticker value={progress} fontSize={42} className="text-white font-poppins-semibold" />
                             </View>
                         </View>
 
@@ -256,6 +282,8 @@ export const ProgressDashboardCard = () => {
                                 cx="305"
                                 cy="14"
                                 fill="#5CC6E2"
+                                stroke="#7BE2FF"
+                                strokeWidth="2"
                                 animatedProps={pointGlowProps}
                             />
 
@@ -278,64 +306,105 @@ export const ProgressDashboardCard = () => {
                     {/* Subject list */}
                     <View className="relative z-10 mt-2 gap-2">
                         {subjects.map((subject, index) => (
-                            <Animated.View
-                                key={subject.name}
-                                style={cardStyle}
-                            >
-                                <View className="flex-row items-center justify-between rounded-lg bg-surface-container-high/80 p-3">
-                                    <View className="flex-1 flex-row items-center gap-3">
-                                        {/* Icon */}
-                                        <View className="h-8 w-8 items-center justify-center rounded-lg bg-surface-container">
-                                            <Text
-                                                className="font-poppins-semibold text-sm"
-                                                style={{ color: subject.color }}
-                                            >
-                                                {index === 0 ? "⌘" : index === 1 ? "</>" : "DB"}
-                                            </Text>
-                                        </View>
-
-                                        {/* Subject */}
-                                        <View className="flex-1">
-                                            <View className="flex-row items-center gap-1.5">
-                                                <Text
-                                                    numberOfLines={1}
-                                                    className="flex-1 font-poppins-semibold text-sm text-text-primary"
-                                                >
-                                                    {subject.name}
-                                                </Text>
-
-                                                {subject.top && (
-                                                    <View className="rounded-full bg-primary-soft px-1.5 py-0.5">
-                                                        <Text className="font-poppins-semibold text-[9px] uppercase tracking-wider text-primary">
-                                                            Top
-                                                        </Text>
-                                                    </View>
-                                                )}
-                                            </View>
-
-                                            {/* Progress */}
-                                            <View className="mt-1.5 w-24 overflow-hidden">
-                                                <SegmentedProgress progress={subject.value} primaryColor={subject.color} />
-                                            </View>
-                                            
-                                        </View>
-                                    </View>
-
-                                    {/* Percentage */}
-                                    <View className="ml-2 rounded-full bg-surface-container px-2 py-0.5">
-                                        <Text
-                                            className="font-poppins-semibold text-xs"
-                                            style={{ color: subject.color }}
-                                        >
-                                            {subject.value}%
-                                        </Text>
-                                    </View>
-                                </View>
-                            </Animated.View>
+                            <SubjectCard key={subject.name} subject={subject} index={index} isAnimationStarted={isAnimationStarted} />
                         ))}
                     </View>
                 </Card.Body>
             </Card>
+        </View>
+    );
+}
+
+function SubjectCard({
+    subject,
+    index,
+    isAnimationStarted,
+}: {
+    subject: typeof subjects[0];
+    index: number;
+    isAnimationStarted: boolean;
+}) {
+    const progress = useSharedValue(0);
+    const progressValue = useSharedValue(0);
+
+    const [progressValueCount, setProgressValueCount] = useState("00%");
+    const [displayProgress, setDisplayProgress] = useState(0);
+
+    useEffect(() => {
+        if (!isAnimationStarted) return;
+
+        progress.value = withDelay(
+            index * 100,
+            withTiming(subject.value, {
+                duration: 800,
+            })
+        );
+        progressValue.value = withDelay(
+            300,
+            withTiming(subject.value, {
+                duration: 2000,
+            }),
+        );
+    }, [isAnimationStarted]);
+
+    useAnimatedReaction(
+        () => Math.round(progress.value),
+        (value) => {
+            scheduleOnRN(setDisplayProgress, value);
+        }
+    );
+
+    useAnimatedReaction(
+        () => Math.round(progressValue.value),
+        (value) => {
+            scheduleOnRN(setProgressValueCount, `${value}%`);
+        }
+    );
+
+    return (
+        <View className="flex-row items-center justify-between rounded-lg bg-surface-container-high/80 p-3">
+            <View className="flex-1 flex-row items-center gap-3">
+                {/* Icon */}
+                <View className="h-8 w-8 items-center justify-center rounded-lg bg-surface-container">
+                    <Text
+                        className="font-poppins-semibold text-sm"
+                        style={{ color: subject.color }}
+                    >
+                        {index === 0 ? "⌘" : index === 1 ? "</>" : "DB"}
+                    </Text>
+                </View>
+
+                {/* Subject */}
+                <View className="flex-1">
+                    <View className="flex-row items-center gap-1.5">
+                        <Text
+                            numberOfLines={1}
+                            className="flex-1 font-poppins-semibold text-sm text-text-primary"
+                        >
+                            {subject.name}
+                        </Text>
+
+                        {subject.top && (
+                            <View className="rounded-full bg-primary-soft px-1.5 py-0.5">
+                                <Text className="font-poppins-semibold text-[9px] uppercase tracking-wider text-primary">
+                                    Top
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+
+                    {/* Progress */}
+                    <View className="mt-1.5 w-24 overflow-hidden">
+                        <SegmentedProgress progress={displayProgress} primaryColor={subject.color} />
+                    </View>
+
+                </View>
+            </View>
+
+            {/* Percentage */}
+            <View className="ml-2 rounded-full bg-surface-container px-2 py-0.5">
+                <Ticker value={progressValueCount} fontSize={12} className="text-white font-poppins-semibold" />
+            </View>
         </View>
     );
 }

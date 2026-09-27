@@ -118,7 +118,7 @@ export function Ticker({
     className,
 }: TickerProps) {
 
-    const characters = value.split('');
+    const characters = value.toString().split('');
 
     return (
         <View className="flex-row items-center">

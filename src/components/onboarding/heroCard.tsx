@@ -50,7 +50,7 @@ export const HeroCard = ({
             <AnimatedIndexed
                 items={CARDS}
                 index={index}
-                renderItem={(Card) => <Card />}
+                renderItem={(Card) => <Card index={index} />}
                 easing={Easing.out(Easing.cubic)}
                 duration={1000}
             />

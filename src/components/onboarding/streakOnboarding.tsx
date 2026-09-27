@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
@@ -29,12 +29,17 @@ const STROKE = 8;
 
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-export const StreakOnboarding = () => {
+const _MY_INDEX = 1; // Index of the current question in the quiz.
+
+
+export const StreakOnboarding = ({ index }: { index: number }) => {
     const progress = useSharedValue(0);
     const flameScale = useSharedValue(1);
     const todayPulse = useSharedValue(1);
 
-    useEffect(() => {
+    const isCompleted = useRef(false);
+
+    const startAnimation = () => {
         // 6 / 7 days
         progress.value = withDelay(
             300,
@@ -62,7 +67,22 @@ export const StreakOnboarding = () => {
             -1,
             false,
         );
-    }, []);
+    }
+
+    useEffect(() => {
+
+        if (isCompleted.current) return;
+        if (index !== _MY_INDEX) return;
+
+
+        setTimeout(() => {
+            startAnimation();
+        }, 500);
+
+        // 6 / 7 days
+
+        isCompleted.current = true;
+    }, [index]);
 
     const ringProps = useAnimatedProps(() => ({
         strokeDashoffset: CIRCUMFERENCE * (1 - progress.value),
@@ -78,7 +98,7 @@ export const StreakOnboarding = () => {
 
     return (
         <View className="relative z-20 mt-space-lg w-full items-center">
-            
+
             {/* Achievement chip */}
             <View className="mb-3 flex-row items-center gap-1.5 overflow-hidden rounded-full bg-surface-container-high px-3 py-1.5">
                 <View className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -170,8 +190,8 @@ export const StreakOnboarding = () => {
                         <View
                             key={`${day}-${index}`}
                             className={`w-[13%] items-center rounded-lg py-2 ${today
-                                    ? "bg-surface-container-highest"
-                                    : "bg-surface-container-high"
+                                ? "bg-surface-container-highest"
+                                : "bg-surface-container-high"
                                 }`}
                         >
                             <Text
@@ -203,7 +223,7 @@ export const StreakOnboarding = () => {
                 <Card.Body className="flex-row items-center gap-space-md">
                     <View className="h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-container-high">
                         <Text className="text-xl text-primary">✦</Text>
-                    </View> 
+                    </View>
                     <View className="min-w-0 flex-1 ml-2">
                         <Text className="font-poppins-semibold text-base tracking-tight text-text-primary">
                             Consistency compounds
