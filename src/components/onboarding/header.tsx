@@ -21,8 +21,8 @@ export const Header = ({ index }: { index: number }) => {
                         {chip}
                     </OnboardingHeaderChip>
                 )}
-                easing={Easing.in(Easing.cubic)}
-                duration={900}
+                easing={Easing.inOut(Easing.cubic)}
+                duration={700}
                 _offset={1}
             />
         </View>
