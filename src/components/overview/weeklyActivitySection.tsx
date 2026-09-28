@@ -30,14 +30,14 @@ interface ActivityBarProps {
     onPress: () => void;
 }
 
-function ActivityBar({
+const ActivityBar = ({
     day,
     value,
     peak,
     today,
     selected,
     onPress,
-}: ActivityBarProps) {
+}: ActivityBarProps) => {
     const scale = useSharedValue(1);
 
     const handlePressIn = () => {
@@ -110,7 +110,7 @@ function ActivityBar({
     );
 }
 
-export function WeeklyActivity() {
+export const WeeklyActivity = () => {
     const [selectedDay, setSelectedDay] = useState<number | null>(3);
 
     const total = activity.reduce(

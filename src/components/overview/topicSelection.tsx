@@ -54,9 +54,9 @@ interface TopicCardProps {
     item: (typeof topics)[number];
 }
 
-function TopicCard({
+const TopicCard = ({
     item
-}: TopicCardProps) {
+}: TopicCardProps) => {
     const { Icon, name } = getCommonIcon(item.id);
 
 

@@ -26,7 +26,7 @@ const BUTTON_DURATION = 220;
 const SUBTITLE_DELAY = 70;
 
 // Blur
-const BLUR_INTENSITY = 25;
+const BLUR_INTENSITY = 100;
 const BLUR_FADE_DURATION = 180;
 
 const easing = Easing.out(Easing.cubic);
@@ -367,7 +367,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                 ]}
             >
                 <BlurView
-                    intensity={100}
+                    intensity={BLUR_INTENSITY}
                     tint="systemMaterialDark"
                     style={StyleSheet.absoluteFill}
                 />

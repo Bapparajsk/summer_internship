@@ -17,9 +17,9 @@ interface QuickQuizCardProps {
     onStart?: () => void;
 }
 
-export function QuickQuizCard({
+export const QuickQuizCard = ({
     onStart,
-}: QuickQuizCardProps) {
+}: QuickQuizCardProps) => {
     const score = 90;
 
     // Circular score animation
@@ -64,12 +64,7 @@ export function QuickQuizCard({
 
                     {/* Speed Run */}
                     <View className="flex-row items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1">
-                        {/* <Bolt
-                            size={16}
-                            color="#5CC6E2"
-                            fill="#5CC6E2"
-                            strokeWidth={2}
-                        /> */}
+                       
                         <FontAwesome6 name="bolt" size={16} color="#5CC6E2" />
 
                         <Text className="font-poppins-medium text-xs text-primary">
