@@ -356,7 +356,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                 ]}
             >
                 <BlurView
-                    intensity={100}
+                    intensity={BLUR_INTENSITY}
                     tint="dark"
                     style={StyleSheet.absoluteFill}
                 />

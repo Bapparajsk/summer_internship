@@ -62,7 +62,7 @@ const TopicCard = ({
 
     return (
         <PressableFeedback
-            className={`mr-3 h-24 w-34 overflow-hidden rounded-2xl p-3.5 border border-border-subtle bg-surface-container`}
+            className={`mr-3 h-24 w-34 overflow-hidden rounded-2xl p-3.5 border border-border bg-surface-container`}
         >
             <PressableFeedback.Ripple
                 animation={{
@@ -124,6 +124,7 @@ export const TopicSelection = () => {
             <SectionHeader
                 title="Choose a topic"
                 rightText={`See all (${topics.length + 10})`}
+                className="px-margin"
             />
 
             {/* Horizontal Topics */}

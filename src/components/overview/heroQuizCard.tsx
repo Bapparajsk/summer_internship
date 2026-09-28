@@ -36,7 +36,7 @@ export const QuickQuizCard = ({
     }));
 
     return (
-        <Card className="relative w-full rounded-[34px] border-0 gap-5">
+        <Card className="relative w-full rounded-[34px] border border-border gap-5">
             {/* Card gradient */}
             <LinearGradient
                 colors={[

@@ -119,10 +119,10 @@ export const WeeklyActivity = () => {
     );
 
     return (
-        <Card>
+        <Card className="rounded-[34px] border border-border">
             {/* Header */}
             <Card.Header>
-                <View className="mb-space-md flex-row items-center justify-between">
+                <View className="w-full flex-row items-center justify-between">
                     <View>
                         <Text className="font-poppins-semibold text-base text-text-primary">
                             Weekly activity

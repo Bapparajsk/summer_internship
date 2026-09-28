@@ -2,33 +2,47 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Href, Link } from "expo-router";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { cn } from "heroui-native";
+import If from "../lib/if";
 
 export type SectionHeaderProps = {
     href?: Href;
-    title: string;
+    title: string | React.ReactNode;
     startIcon?: React.ReactNode;
+    startEndIcon?: React.ReactNode;
     rightText?: string;
     showRightIcon?: boolean;
     rightIcon?: React.ReactNode;
+    className?: string;
 };
 
 export const SectionHeader = ({
     href,
     title,
     startIcon,
-    rightText,
+    startEndIcon,
+    rightText = "See all",
     showRightIcon = true,
     rightIcon,
+    className
 }: SectionHeaderProps) => {
     const content = (
-        <View className="flex-row items-center justify-between px-margin">
+        <View className={cn("flex-row items-center justify-between", className)}>
             {/* Left */}
             <View className="flex-row items-center gap-2">
                 {startIcon}
 
-                <Text className="font-poppins-semibold text-base text-text-primary">
-                    {title}
-                </Text>
+                <If condition={(typeof title === "string")}>
+                    <If.Then>
+                        <Text className="font-poppins-semibold text-base text-text-primary">
+                            {title}
+                        </Text>
+                    </If.Then>
+                    <If.Else>
+                        {title}
+                    </If.Else>
+                </If>
+                {startEndIcon}
             </View>
 
             {/* Right */}
