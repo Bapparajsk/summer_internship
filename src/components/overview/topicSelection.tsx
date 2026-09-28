@@ -1,7 +1,8 @@
-import { FlatList, Pressable, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { SegmentedProgress } from "../progressBar";
-import { PressableFeedback } from "heroui-native";
-import { getCommonIcon, FontAwesome6 } from "../lib/icon";
+import { PressableFeedback } from "heroui-native/pressable-feedback";
+import { getCommonIcon } from "../lib/icon";
+import { SectionHeader } from "../header/sectionHeader";
 
 const topics = [
     {
@@ -63,6 +64,13 @@ function TopicCard({
         <PressableFeedback
             className={`mr-3 h-24 w-34 overflow-hidden rounded-2xl p-3.5 border border-border-subtle bg-surface-container`}
         >
+            <PressableFeedback.Ripple
+                animation={{
+                    backgroundColor: { value: '#8FA5B8' },
+                    opacity: { value: [0, 0.1, 0] },
+                    progress: { baseDuration: 600 },
+                }}
+            />
             {/* Top */}
             <View className="flex-row items-center gap-2">
                 <View
@@ -108,28 +116,15 @@ function TopicCard({
     );
 }
 
-export function TopicSelection() {
+export const TopicSelection = () => {
 
     return (
         <View className="gap-3">
-            {/* Header */}
-            <View className="flex-row items-center justify-between px-margin">
-                <Text className="font-poppins-semibold text-base text-text-primary">
-                    Choose a topic
-                </Text>
 
-                <Pressable
-                    className="flex-row items-center gap-0.5"
-                    onPress={() => {
-                        // Navigate to all topics
-                    }}
-                >
-                    <Text className="font-poppins-medium text-sm text-primary">
-                        See all ({topics.length + 10})
-                    </Text>
-                    <FontAwesome6 name="angle-right" size={16} color="#5CC6E2" />
-                </Pressable>
-            </View>
+            <SectionHeader
+                title="Choose a topic"
+                rightText={`See all (${topics.length + 10})`}
+            />
 
             {/* Horizontal Topics */}
             <FlatList

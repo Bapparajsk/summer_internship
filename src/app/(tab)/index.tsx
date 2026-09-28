@@ -1,8 +1,8 @@
 import { QuickQuizCard } from "@/components/overview/heroQuizCard";
 import { TopicSelection } from "@/components/overview/topicSelection";
-import { ScreenWrapper } from "@/components/screen";
+import { WeeklyActivity } from "@/components/overview/weeklyActivitySection";
+import { ContentWrapper, ScreenWrapper } from "@/components/screen";
 import { useScroll } from "@/context/scroll";
-import { View } from "react-native";
 
 export default function OverviewScreen() {
   const { scrollY } = useScroll();
@@ -10,10 +10,13 @@ export default function OverviewScreen() {
 
   return (
     <ScreenWrapper path="/(tab)/index" scrollY={scrollY} SCREEN_HORIZONTAL_PADDING={0}>
-      <View className="px-4">
+      <ContentWrapper>
         <QuickQuizCard />
-      </View>
+      </ContentWrapper>
       <TopicSelection />
-     </ScreenWrapper>
+      <ContentWrapper>
+        <WeeklyActivity />
+      </ContentWrapper>
+    </ScreenWrapper>
   );
 }

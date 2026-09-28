@@ -2,6 +2,8 @@ import Animated, { SharedValue, useAnimatedScrollHandler } from "react-native-re
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import AppFooter from "../footer/appFooter";
+import { View } from "react-native";
+import { cn } from "heroui-native";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(Animated.ScrollView);
 
@@ -73,3 +75,11 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
         </SafeAreaView>
     );
 };
+
+export const ContentWrapper: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className }) => {
+    return (
+        <View className={cn("px-4", className)}>
+            {children}
+        </View>
+    );
+}

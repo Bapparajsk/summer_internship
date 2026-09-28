@@ -7,11 +7,11 @@ import Animated, {
     withDelay,
     withTiming,
 } from "react-native-reanimated";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 import { PressableFeedback } from "heroui-native";
-import { Fontisto } from "../lib/icon"
-
+import { Fontisto } from "../lib/icon";
 
 const TITLE_OFFSET = 500;
 const SUBTITLE_OFFSET = 500;
@@ -22,7 +22,12 @@ const BUTTON_OFFSET = -100;
 const TEXT_DURATION = 500;
 const CONTAINER_DURATION = 180;
 
+const BUTTON_DURATION = 220;
 const SUBTITLE_DELAY = 70;
+
+// Blur
+const BLUR_INTENSITY = 25;
+const BLUR_FADE_DURATION = 180;
 
 const easing = Easing.out(Easing.cubic);
 
@@ -36,23 +41,40 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
     const previousY = useSharedValue(0);
 
     /*
-     * Text animation
+     * ============================
+     * TEXT
+     * ============================
      */
     const titleX = useSharedValue(0);
     const subtitleX = useSharedValue(0);
 
     /*
-     * Entire text container
+     * ============================
+     * TEXT CONTAINER
+     * ============================
      */
     const textContainerY = useSharedValue(0);
 
     /*
-     * Notification button
+     * ============================
+     * NOTIFICATION BUTTON
+     * ============================
      */
     const buttonY = useSharedValue(0);
 
     /*
-     * Prevent animation from restarting every frame.
+     * ============================
+     * BACKGROUND BLUR
+     *
+     * 1 = fully visible
+     * 0 = hidden
+     * ============================
+     */
+    const backgroundOpacity = useSharedValue(1);
+
+    /*
+     * Prevent animation from
+     * restarting every frame.
      */
     const headerState = useSharedValue<"shown" | "hidden">("shown");
 
@@ -62,7 +84,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
 
         /*
          * ============================
-         * HIDE
+         * HIDE HEADER
          * ============================
          */
         const hideHeader = () => {
@@ -71,9 +93,18 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             headerState.value = "hidden";
 
             /*
+             * Blur disappears immediately
+             * when header starts hiding.
+             */
+            backgroundOpacity.value = withTiming(0, {
+                duration: BLUR_FADE_DURATION,
+                easing,
+            });
+
+            /*
              * STEP 1
              *
-             * Animate the text away first.
+             * Animate text away.
              */
             titleX.value = withTiming(-TITLE_OFFSET, {
                 duration: TEXT_DURATION,
@@ -91,11 +122,8 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             /*
              * STEP 2
              *
-             * After the text has disappeared,
-             * move the entire text container upward.
-             *
-             * This removes its layout/hit area from
-             * the header region.
+             * Move entire text container
+             * after text disappears.
              */
             textContainerY.value = withDelay(
                 TEXT_DURATION,
@@ -109,14 +137,14 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
              * Notification moves independently.
              */
             buttonY.value = withTiming(BUTTON_OFFSET, {
-                duration: 220,
+                duration: BUTTON_DURATION,
                 easing: Easing.in(Easing.cubic),
             });
         };
 
         /*
          * ============================
-         * SHOW
+         * SHOW HEADER
          * ============================
          */
         const showHeader = () => {
@@ -125,9 +153,15 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             headerState.value = "shown";
 
             /*
+             * Make sure blur stays hidden
+             * while elements are entering.
+             */
+            backgroundOpacity.value = 0;
+
+            /*
              * STEP 1
              *
-             * Bring the entire text container back FIRST.
+             * Bring entire container back.
              */
             textContainerY.value = withTiming(0, {
                 duration: CONTAINER_DURATION,
@@ -135,20 +169,18 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             });
 
             /*
-             * Notification comes back immediately.
+             * Notification comes back.
              */
             buttonY.value = withTiming(0, {
-                duration: 220,
+                duration: BUTTON_DURATION,
                 easing,
             });
 
             /*
              * STEP 2
              *
-             * Then animate the text back.
-             *
-             * Small delay gives the container time
-             * to return before text appears.
+             * Text comes back after
+             * container has returned.
              */
             titleX.value = withDelay(
                 CONTAINER_DURATION,
@@ -162,6 +194,31 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                 CONTAINER_DURATION + SUBTITLE_DELAY,
                 withTiming(0, {
                     duration: TEXT_DURATION,
+                    easing,
+                })
+            );
+
+            /*
+             * STEP 3
+             *
+             * Show blur ONLY after
+             * all elements are completely visible.
+             *
+             * Timeline:
+             *
+             * 180ms container
+             * 500ms title
+             * 70ms subtitle delay
+             * 500ms subtitle
+             *
+             * = 750ms total
+             */
+            backgroundOpacity.value = withDelay(
+                CONTAINER_DURATION +
+                SUBTITLE_DELAY +
+                TEXT_DURATION,
+                withTiming(1, {
+                    duration: BLUR_FADE_DURATION,
                     easing,
                 })
             );
@@ -180,25 +237,46 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             subtitleX.value = 0;
             buttonY.value = 0;
 
+            /*
+             * At the top everything is
+             * completely visible.
+             */
+            backgroundOpacity.value = 1;
+
             previousY.value = currentY;
             return;
         }
 
         /*
-         * Scroll UP
+         * ============================
+         * SCROLL UP
+         * ============================
          */
         if (diff > 0) {
             hideHeader();
         }
 
         /*
-         * Scroll DOWN
+         * ============================
+         * SCROLL DOWN
+         * ============================
          */
         else if (diff < 0) {
             showHeader();
         }
 
         previousY.value = currentY;
+    });
+
+    /*
+     * ============================
+     * BACKGROUND
+     * ============================
+     */
+    const backgroundStyle = useAnimatedStyle(() => {
+        return {
+            opacity: backgroundOpacity.value,
+        };
     });
 
     /*
@@ -272,8 +350,30 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             }}
             pointerEvents="box-none"
         >
-            <View className="flex-1 h-full flex-row items-center justify-between px-5">
 
+            <Animated.View
+                pointerEvents="none"
+                style={[
+                    {
+                        position: "absolute",
+                        top: -insets.top,
+                        left: 0,
+                        right: 0,
+                        height: insets.top + 70,
+                        overflow: "hidden",
+                        backgroundColor: "#05081699",
+                    },
+                    backgroundStyle,
+                ]}
+            >
+                <BlurView
+                    intensity={100}
+                    tint="systemMaterialDark"
+                    style={StyleSheet.absoluteFill}
+                />
+            </Animated.View>
+
+            <View className="flex-row items-center justify-between px-5">
                 <Animated.View style={textContainerStyle}>
                     <Animated.View style={titleStyle}>
                         <Text className="text-text-primary text-2xl tracking-wide font-poppins-semibold">
@@ -303,7 +403,6 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                         <View className="absolute right-5.25 top-4.75 h-2 w-2 rounded-full bg-primary" />
                     </PressableFeedback>
                 </Animated.View>
-
             </View>
         </Animated.View>
     );
