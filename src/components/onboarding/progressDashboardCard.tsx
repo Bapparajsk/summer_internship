@@ -394,7 +394,7 @@ function SubjectCard({
                     </View>
 
                     {/* Progress */}
-                    <View className="mt-1.5 w-24 overflow-hidden">
+                    <View className="mt-1.5 w-24 h-1.5 overflow-hidden">
                         <SegmentedProgress progress={displayProgress} primaryColor={subject.color} />
                     </View>
 

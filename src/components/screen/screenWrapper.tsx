@@ -1,4 +1,4 @@
-import Animated, { SharedValue, useAnimatedRef, useAnimatedScrollHandler } from "react-native-reanimated";
+import Animated, { SharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import AppFooter from "../footer/appFooter";
@@ -62,6 +62,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                     paddingHorizontal: SCREEN_HORIZONTAL_PADDING,
                     paddingBottom: 40 + bottomBarHeight,
                     position: "relative",
+                    gap: 20,
                 }}
                 stickyHeaderIndices={stickyHeaderIndices}
                 stickyHeaderHiddenOnScroll={stickyHeaderHiddenOnScroll}

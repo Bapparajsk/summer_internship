@@ -36,7 +36,7 @@ export const SegmentedProgress = ({
     }));
 
     return (
-        <View className="h-1.5 w-full flex-row gap-0.5 overflow-hidden rounded-full">
+        <View className="h-full w-full flex-row gap-0.5 overflow-hidden rounded-full">
             <AnimatedView
                 className="h-full rounded-full"
                 style={[progressStyle, { backgroundColor: primaryColor }]}
