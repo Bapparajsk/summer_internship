@@ -1,5 +1,5 @@
 import { BottomTabBarProps } from 'expo-router/build/react-navigation/bottom-tabs';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
     useAnimatedStyle,

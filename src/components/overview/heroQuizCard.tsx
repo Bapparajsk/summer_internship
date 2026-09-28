@@ -8,14 +8,8 @@ import Animated, {
 import Svg, { Circle } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { Card } from "heroui-native/card";
-import {
-    Bolt,
-    ChartNoAxesCombined,
-    CircleHelp,
-    Clock,
-    Play,
-} from "lucide-react-native";
 import { PressableFeedback } from "heroui-native";
+import { Feather, FontAwesome6 } from "../lib/icon";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -30,8 +24,6 @@ export function QuickQuizCard({
 
     // Circular score animation
     const progress = useSharedValue(0);
-
-    // Button press animatio
 
     useEffect(() => {
         progress.value = withTiming(score, {
@@ -72,12 +64,13 @@ export function QuickQuizCard({
 
                     {/* Speed Run */}
                     <View className="flex-row items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1">
-                        <Bolt
+                        {/* <Bolt
                             size={16}
                             color="#5CC6E2"
                             fill="#5CC6E2"
                             strokeWidth={2}
-                        />
+                        /> */}
+                        <FontAwesome6 name="bolt" size={16} color="#5CC6E2" />
 
                         <Text className="font-poppins-medium text-xs text-primary">
                             Speed Run
@@ -97,11 +90,12 @@ export function QuickQuizCard({
 
                         {/* Questions */}
                         <View className="flex-row items-center gap-1">
-                            <CircleHelp
+                            {/* <CircleHelp
                                 size={16}
                                 color="#5CC6E2"
                                 strokeWidth={2}
-                            />
+                            /> */}
+                            <Feather name="help-circle" size={16} color="#5CC6E2" />
 
                             <Text className="font-poppins-medium text-sm text-text-secondary">
                                 10 questions
@@ -115,11 +109,7 @@ export function QuickQuizCard({
 
                         {/* Time */}
                         <View className="flex-row items-center gap-1">
-                            <Clock
-                                size={16}
-                                color="#5CC6E2"
-                                strokeWidth={2}
-                            />
+                            <FontAwesome6 name="clock" size={16} color="#5CC6E2" />
 
                             <Text className="font-poppins-medium text-sm text-text-secondary">
                                 5 mins
@@ -201,11 +191,12 @@ export function QuickQuizCard({
                     // onPress={onViewInsights}
                     className="h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-border bg-surface-container-high"
                 >
-                    <ChartNoAxesCombined
+                    {/* <ChartNoAxesCombined
                         size={17}
                         color="#8FA5B8"
                         strokeWidth={2}
-                    />
+                    /> */}
+                    <FontAwesome6 name="chart-line" size={17} color="#8FA5B8" />
 
                     <Text className="font-poppins-medium text-sm text-text-secondary">
                         View Insights
@@ -217,12 +208,14 @@ export function QuickQuizCard({
                     onPress={onStart}
                     className="h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl bg-primary"
                 >
-                    <Play
+                    {/* <Play
                         size={17}
                         color="#0D1117"
                         fill="#0D1117"
                         strokeWidth={2}
-                    />
+                    /> */}
+
+                    <FontAwesome6 name="play" size={17} color="#0D1117" />
 
                     <Text className="font-poppins-semibold text-sm text-background">
                         Start Quiz

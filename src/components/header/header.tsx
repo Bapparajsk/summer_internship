@@ -10,9 +10,8 @@ import Animated, {
 import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PressableFeedback } from "heroui-native";
-import Fontisto from "@expo/vector-icons/Fontisto";
+import { Fontisto } from "../lib/icon"
 
-const HEADER_HEIGHT = 64;
 
 const TITLE_OFFSET = 500;
 const SUBTITLE_OFFSET = 500;
@@ -301,7 +300,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                             color="white"
                         />
 
-                        <View className="absolute right-5.5 top-[20px] h-2 w-2 rounded-full bg-primary" />
+                        <View className="absolute right-5.25 top-4.75 h-2 w-2 rounded-full bg-primary" />
                     </PressableFeedback>
                 </Animated.View>
 

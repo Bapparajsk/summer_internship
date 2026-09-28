@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
 import { BottomTabBarProps } from 'expo-router/build/react-navigation/bottom-tabs';
 import { NavigationRoute, ParamListBase } from 'expo-router/react-navigation';
-import If from '@/components/if';
-import getIcon from './icon';
+import If from '@/components/lib/if';
+import { getBottomTabIcon } from '../../lib/icon';
 
 export type TabProps =
     Pick<
@@ -34,7 +34,7 @@ export default function Tab({
                 : route.name;
 
     const { active, inactive } = useMemo(() => {
-        return getIcon(label.toString().toLowerCase());
+        return getBottomTabIcon(label.toString().toLowerCase());
     }, [label]);
 
     const isFocused = state.index === index;
@@ -81,14 +81,14 @@ export default function Tab({
                         <inactive.Icon
                             name={inactive.name}
                             size={22}
-                            color={"#8FA5B8"}
+                            color={"rgba(255, 255, 255, 0.30)"}
                         />
                     </If.Else>
                 </If>}
 
             <Text
                 className={'text-xs mt-0.5 font-poppins-semibold'}
-                style={{ color: isFocused ? "rgba(255, 255, 255, 1)" : "#8FA5B8" }}
+                style={{ color: isFocused ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.30)" }}
             >
                 {label.toString()}
             </Text>
