@@ -92,20 +92,13 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
 
             headerState.value = "hidden";
 
-            /*
-             * Blur disappears immediately
-             * when header starts hiding.
-             */
+            // Blur fades out with the header
             backgroundOpacity.value = withTiming(0, {
                 duration: BLUR_FADE_DURATION,
                 easing,
             });
 
-            /*
-             * STEP 1
-             *
-             * Animate text away.
-             */
+            // Text
             titleX.value = withTiming(-TITLE_OFFSET, {
                 duration: TEXT_DURATION,
                 easing,
@@ -119,12 +112,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                 })
             );
 
-            /*
-             * STEP 2
-             *
-             * Move entire text container
-             * after text disappears.
-             */
+            // Container
             textContainerY.value = withDelay(
                 TEXT_DURATION,
                 withTiming(TEXT_CONTAINER_OFFSET, {
@@ -133,9 +121,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                 })
             );
 
-            /*
-             * Notification moves independently.
-             */
+            // Notification
             buttonY.value = withTiming(BUTTON_OFFSET, {
                 duration: BUTTON_DURATION,
                 easing: Easing.in(Easing.cubic),
@@ -153,15 +139,17 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             headerState.value = "shown";
 
             /*
-             * Make sure blur stays hidden
-             * while elements are entering.
+             * IMPORTANT:
+             *
+             * Keep blur hidden while
+             * the elements are entering.
              */
             backgroundOpacity.value = 0;
 
             /*
              * STEP 1
              *
-             * Bring entire container back.
+             * Container comes back.
              */
             textContainerY.value = withTiming(0, {
                 duration: CONTAINER_DURATION,
@@ -179,8 +167,7 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             /*
              * STEP 2
              *
-             * Text comes back after
-             * container has returned.
+             * Title comes back.
              */
             titleX.value = withDelay(
                 CONTAINER_DURATION,
@@ -190,6 +177,9 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                 })
             );
 
+            /*
+             * Subtitle comes back.
+             */
             subtitleX.value = withDelay(
                 CONTAINER_DURATION + SUBTITLE_DELAY,
                 withTiming(0, {
@@ -201,22 +191,20 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             /*
              * STEP 3
              *
-             * Show blur ONLY after
-             * all elements are completely visible.
+             * Everything is now visible.
              *
-             * Timeline:
+             * 180
+             * + 500
+             * + 70
+             * + 500
+             * = 750ms
              *
-             * 180ms container
-             * 500ms title
-             * 70ms subtitle delay
-             * 500ms subtitle
-             *
-             * = 750ms total
+             * Then blur appears.
              */
             backgroundOpacity.value = withDelay(
                 CONTAINER_DURATION +
-                SUBTITLE_DELAY +
-                TEXT_DURATION,
+                TEXT_DURATION +
+                SUBTITLE_DELAY,
                 withTiming(1, {
                     duration: BLUR_FADE_DURATION,
                     easing,
@@ -228,6 +216,11 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
          * ============================
          * TOP
          * ============================
+         *
+         * At the absolute top:
+         *
+         * - Header visible
+         * - Blur HIDDEN
          */
         if (currentY <= 0) {
             headerState.value = "shown";
@@ -237,11 +230,8 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
             subtitleX.value = 0;
             buttonY.value = 0;
 
-            /*
-             * At the top everything is
-             * completely visible.
-             */
-            backgroundOpacity.value = 1;
+            // IMPORTANT
+            backgroundOpacity.value = 0;
 
             previousY.value = currentY;
             return;
@@ -361,14 +351,13 @@ export const AnimatedHeader = ({ scrollY }: Props) => {
                         right: 0,
                         height: insets.top + 70,
                         overflow: "hidden",
-                        backgroundColor: "#05081699",
                     },
                     backgroundStyle,
                 ]}
             >
                 <BlurView
-                    intensity={BLUR_INTENSITY}
-                    tint="systemMaterialDark"
+                    intensity={100}
+                    tint="dark"
                     style={StyleSheet.absoluteFill}
                 />
             </Animated.View>
