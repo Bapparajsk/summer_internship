@@ -25,8 +25,6 @@ export default function TabsLayout() {
 
                     const routeName = routes[index]?.name;
 
-                    console.log("Active route:", routeName);
-
                     if (
                         routeName === "index" ||
                         routeName === "explore" ||

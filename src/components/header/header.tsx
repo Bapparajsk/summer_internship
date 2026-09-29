@@ -366,6 +366,14 @@ export const AnimatedHeader = () => {
                     tint="dark"
                     style={StyleSheet.absoluteFill}
                 />
+                <Animated.View
+                    style={[
+                        StyleSheet.absoluteFill,
+                        {
+                            backgroundColor: "#050816AA",
+                        },
+                    ]}
+                />
             </Animated.View>
 
             <View className="flex-row items-center justify-between px-5">

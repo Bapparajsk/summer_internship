@@ -46,7 +46,7 @@ export const UniversityInfoCard = ({
     };
 
     return (
-        <View className="overflow-hidden rounded-[30px] border border-border bg-white/4 p-5 mt-3">
+        <View className="overflow-hidden rounded-[30px] border border-border bg-white/4 p-5">
 
             {/* Background Glow */}
             <View className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan-400/10" />
@@ -57,7 +57,7 @@ export const UniversityInfoCard = ({
                 {/* University Logo */}
                 <View className="h-16 w-16 items-center justify-center rounded-[28px] bg-white p-2">
                     <Image
-                        source={require('../../../assets/college-logo.svg')}
+                        source={{ uri: "https://static.vecteezy.com/system/resources/previews/024/765/885/non_2x/education-badge-logo-design-university-high-school-emblem-logo-template-vector.jpg" }}
                         className="h-full w-full rounded-[28px]"
                         resizeMode="cover"
                     />
