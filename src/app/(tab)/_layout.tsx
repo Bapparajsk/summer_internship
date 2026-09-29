@@ -4,15 +4,9 @@ import { useScrollStore } from "@/store/scroll-store";
 import { Tabs } from "expo-router";
 
 export default function TabsLayout() {
-    const activeTab = useScrollStore((state) => state.activeTab);
-    const scrollY = useScrollStore(
-        (state) => state.scrollY[activeTab]
-    );
-
     const setActiveTab = useScrollStore(
         (state) => state.setActiveTab
     );
-    
 
     return (
         <Tabs
@@ -21,7 +15,7 @@ export default function TabsLayout() {
                 animation: "shift",
 
                 header: () => (
-                    <AnimatedHeader scrollY={scrollY} />
+                    <AnimatedHeader />
                 ),
             }}
             screenListeners={{
@@ -30,6 +24,8 @@ export default function TabsLayout() {
                     const index = event.data.state.index;
 
                     const routeName = routes[index]?.name;
+
+                    console.log("Active route:", routeName);
 
                     if (
                         routeName === "index" ||

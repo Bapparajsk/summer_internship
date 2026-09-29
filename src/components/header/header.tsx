@@ -1,6 +1,5 @@
 import Animated, {
     Easing,
-    SharedValue,
     useAnimatedStyle,
     useDerivedValue,
     useSharedValue,
@@ -12,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { PressableFeedback } from "heroui-native";
 import { Fontisto } from "../lib/icon";
+import { useScrollStore } from "@/store/scroll-store";
 
 const TITLE_OFFSET = 500;
 const SUBTITLE_OFFSET = 500;
@@ -31,11 +31,17 @@ const BLUR_FADE_DURATION = 180;
 
 const easing = Easing.out(Easing.cubic);
 
-type Props = {
-    scrollY: SharedValue<number>;
-};
 
-export const AnimatedHeader = ({ scrollY }: Props) => {
+export const AnimatedHeader = () => {
+
+    const activeTab = useScrollStore(
+        (state) => state.activeTab
+    );
+
+    const scrollY = useScrollStore(
+        (state) => state.scrollY[activeTab]
+    );
+
     const insets = useSafeAreaInsets();
 
     const previousY = useSharedValue(0);
