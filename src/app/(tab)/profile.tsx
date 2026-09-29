@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen'
-import { ProfileHeroCard, UniversityInfoCard, ProfileIdentityCard, tempProfileData } from '@/components/profile';
+import { ProfileHeroCard, UniversityInfoCard, ProfileIdentityCard, tempProfileData, ActivityTimelineSection } from '@/components/profile';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
@@ -43,6 +43,7 @@ export default function ProfileScreen() {
         advisor="Mr. Chandan Chowdhury"
         logo="https://eiem.ac.in/images/logo.svg"
       />
+      <ActivityTimelineSection />
     </ScreenWrapper>
   )
 }
