@@ -1,8 +1,8 @@
-import Animated, { SharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
+import Animated, { SharedValue } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import {AppFooter} from "../footer";
-import { View } from "react-native";
+import { AppFooter } from "../footer";
+import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { cn } from "heroui-native";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(Animated.ScrollView);
@@ -15,7 +15,7 @@ interface ScreenContentProps {
     stickyHeaderHiddenOnScroll?: boolean;
     showFooter?: boolean;
     SCREEN_HORIZONTAL_PADDING?: number;
-    scrollY: SharedValue<number>;
+    onScroll?: ((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined> | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined> | undefined> | undefined
 }
 
 export const ScreenWrapper: React.FC<ScreenContentProps> = ({
@@ -26,14 +26,8 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
     stickyHeaderHiddenOnScroll,
     showFooter = true,
     SCREEN_HORIZONTAL_PADDING = 16,
-    scrollY,
+    onScroll
 }) => {
-
-    const onScroll = useAnimatedScrollHandler({
-        onScroll: (event) => {
-            scrollY.set(event.contentOffset.y);
-        },
-    });
 
     return (
         <SafeAreaView

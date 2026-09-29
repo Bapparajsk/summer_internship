@@ -1,29 +1,74 @@
 import { AnimatedHeader } from "@/components/header";
 import { BottomTabBar } from "@/components/navigation/bottomTabBar/tabBar";
-import { ScrollProvider } from "@/provider/scroll";
+import { useScrollStore } from "@/store/scroll-store";
 import { Tabs } from "expo-router";
-import { useSharedValue } from "react-native-reanimated";
 
 export default function TabsLayout() {
+    const activeTab = useScrollStore((state) => state.activeTab);
+    const scrollY = useScrollStore(
+        (state) => state.scrollY[activeTab]
+    );
 
-    const scrollY = useSharedValue(0);
+    const setActiveTab = useScrollStore(
+        (state) => state.setActiveTab
+    );
+    
 
     return (
-        <ScrollProvider scrollY={scrollY}>
-            <Tabs
-                tabBar={(props) => <BottomTabBar {...props} />}
-                screenOptions={{
-                    animation: "shift",
-                    header: () => (
-                        <AnimatedHeader scrollY={scrollY} />
-                    ),
+        <Tabs
+            tabBar={(props) => <BottomTabBar {...props} />}
+            screenOptions={{
+                animation: "shift",
+
+                header: () => (
+                    <AnimatedHeader scrollY={scrollY} />
+                ),
+            }}
+            screenListeners={{
+                state: (event) => {
+                    const routes = event.data.state.routes;
+                    const index = event.data.state.index;
+
+                    const routeName = routes[index]?.name;
+
+                    if (
+                        routeName === "index" ||
+                        routeName === "explore" ||
+                        routeName === "progress" ||
+                        routeName === "profile"
+                    ) {
+                        setActiveTab(routeName);
+                    }
+                },
+            }}
+        >
+            <Tabs.Screen
+                name="index"
+                options={{
+                    title: "Overview",
                 }}
-            >
-                <Tabs.Screen name="index" options={{ title: "Overview", }} />
-                <Tabs.Screen name="explore" options={{ title: "Explore", }} />
-                <Tabs.Screen name="progress" options={{ title: "Progress", }} />
-                <Tabs.Screen name="profile" options={{ title: "Profile", }} />
-            </Tabs>
-        </ScrollProvider>
+            />
+
+            <Tabs.Screen
+                name="explore"
+                options={{
+                    title: "Explore",
+                }}
+            />
+
+            <Tabs.Screen
+                name="progress"
+                options={{
+                    title: "Progress",
+                }}
+            />
+
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: "Profile",
+                }}
+            />
+        </Tabs>
     );
 }

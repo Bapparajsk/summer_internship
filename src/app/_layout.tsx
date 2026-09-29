@@ -21,6 +21,7 @@ export default function RootLayout(): JSX.Element {
         <ThemeProvider value={DarkTheme}>
           <FontProvider>
             <Stack screenOptions={{ headerShown: false }} >
+              <Stack.Screen name="(tab)" />
               <Stack.Screen name="onboarding" />
             </Stack>
           </FontProvider>

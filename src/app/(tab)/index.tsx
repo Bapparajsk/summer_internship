@@ -1,6 +1,7 @@
 import { QuickQuizCard, TopicSelection, WeeklyActivity, WeeklyLeaderboard, ProgressStats, DailyTip } from "@/components/overview";
 import { ContentWrapper, ScreenWrapper } from "@/components/screen";
-import { useScroll } from "@/context/scroll";
+import { useScrollStore } from "@/store/scroll-store";
+import { useAnimatedScrollHandler } from "react-native-reanimated";
 
 const tip = {
   id: "dbms-1",
@@ -10,10 +11,20 @@ const tip = {
 }
 
 export default function OverviewScreen() {
-  const { scrollY } = useScroll();
+
+  const scrollY = useScrollStore(
+    (state) => state.scrollY.index
+  );
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.set(event.contentOffset.y);
+    },
+  });
+
 
   return (
-    <ScreenWrapper path="/(tab)/index" scrollY={scrollY} SCREEN_HORIZONTAL_PADDING={0}>
+    <ScreenWrapper path="/(tab)/index" onScroll={scrollHandler} SCREEN_HORIZONTAL_PADDING={0}>
       <ContentWrapper>
         <QuickQuizCard />
       </ContentWrapper>
