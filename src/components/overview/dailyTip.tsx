@@ -6,7 +6,7 @@ interface DailyTipProps {
     tip: QuizTip;
 }
 
-export function DailyTip({ tip }: DailyTipProps) {
+export const DailyTip = ({ tip }: DailyTipProps) => {
     return (
         <View className="flex-row items-start gap-3 rounded-[24px] border border-border bg-surface-container-lowest/80 p-3.5">
             <View className="h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-high">

@@ -3,6 +3,7 @@ import { Card } from "heroui-native/card";
 import { cn } from "heroui-native/utils";
 import { FontAwesome6, MaterialCommunityIcons } from "../lib/icon";
 import { SectionHeader } from "../header/sectionHeader";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface ProgressStat {
     label: string;
@@ -64,11 +65,11 @@ const StatIcon = ({
             </IconWrapper>
         );
     }
-    
+
     return (
         <IconWrapper>
             <FontAwesome6 name="fire-flame-curved" size={17} color="#FBBF24" />
-        </IconWrapper> 
+        </IconWrapper>
     );
 }
 
@@ -82,6 +83,15 @@ const ProgressCard = ({
 
     return (
         <Card className="rounded-xl flex-1 border border-border">
+            <LinearGradient
+                colors={[
+                    "#262A31",
+                    "#1C2026",
+                    "transparent",
+                ]}
+                locations={[0, 0.5, 1]}
+                className="absolute inset-0"
+            />
             <Card.Body className="">
                 <View className="flex-row items-center gap-2.5">
                     <StatIcon type={stat.type} />
@@ -93,7 +103,7 @@ const ProgressCard = ({
                         {stat.value}
                     </Text>
                 </View>
-                
+
 
                 <View className="mt-2">
                     <Text className="mt-0.5 font-poppins-medium text-xs text-text-secondary">

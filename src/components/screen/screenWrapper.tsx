@@ -1,7 +1,7 @@
 import Animated, { SharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import AppFooter from "../footer/appFooter";
+import {AppFooter} from "../footer";
 import { View } from "react-native";
 import { cn } from "heroui-native";
 
