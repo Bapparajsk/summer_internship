@@ -58,7 +58,7 @@ function StatItem({
     );
 }
 
-export function ProfileHeroCard({
+export const ProfileHeroCard = ({
     name,
     role,
     program,
@@ -75,9 +75,9 @@ export function ProfileHeroCard({
 
     onEdit,
     onShare,
-}: ProfileHeroProps) {
+}: ProfileHeroProps) => {
     return (
-        <View className="overflow-hidden rounded-[28px] border border-border bg-white/4 px-4 py-4">
+        <View className="overflow-hidden rounded-[34px] border border-border bg-white/4 px-4 py-4">
             {/* Profile Row */}
             <View className="flex-row items-center">
 

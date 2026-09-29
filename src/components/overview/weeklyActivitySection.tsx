@@ -134,7 +134,7 @@ export const WeeklyActivity = () => {
                     </View>
 
                     <View className="rounded-full bg-surface-container-high px-2.5 py-1">
-                        <Text className="font-mono text-xs text-primary">
+                        <Text className="font-poppins-semibold text-[10px] leading-normal text-primary">
                             {total} questions
                         </Text>
                     </View>

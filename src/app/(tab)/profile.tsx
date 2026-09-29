@@ -2,18 +2,21 @@ import { ScreenWrapper } from '@/components/screen'
 import { ProfileHeroCard } from '@/components/profile/profileHeroCard';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
+import { ProfileIdentityCard, tempProfileData } from '@/components/profile/profileIdentityCard';
+
+
 
 export default function ProfileScreen() {
 
   const scrollY = useScrollStore(
-      (state) => state.scrollY.index
-    );
-  
-    const scrollHandler = useAnimatedScrollHandler({
-      onScroll: (event) => {
-        scrollY.set(event.contentOffset.y);
-      },
-    });
+    (state) => state.scrollY.index
+  );
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.set(event.contentOffset.y);
+    },
+  });
 
   return (
     <ScreenWrapper path="/profile" onScroll={scrollHandler}>
@@ -29,6 +32,10 @@ export default function ProfileScreen() {
         streak={14}
         rank="#12"
         achievements={124}
+      />
+
+      <ProfileIdentityCard
+        {...tempProfileData}
       />
     </ScreenWrapper>
   )

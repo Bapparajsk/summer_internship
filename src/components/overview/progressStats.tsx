@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { Card } from "heroui-native/card";
 import { cn } from "heroui-native/utils";
-import { FontAwesome6, MaterialCommunityIcons } from "../lib/icon";
+import { FontAwesome6, Ionicons, MaterialCommunityIcons } from "../lib/icon";
 import { SectionHeader } from "../header/sectionHeader";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -129,7 +129,7 @@ export const ProgressStats = () => {
             <SectionHeader
                 title="Your progress"
                 rightText="View stats"
-                rightIcon={<MaterialCommunityIcons name="trending-up" size={16} color="#5CC6E2" />}
+                rightIcon={<Ionicons name="trending-up" size={16} color="#5CC6E2" />}
             />
 
             {/* Stats */}
