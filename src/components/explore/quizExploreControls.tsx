@@ -153,8 +153,8 @@ export const QuizExploreControls = () => {
         <View className="gap-2.5">
             <SearchBarButton />
 
-            <FilterCarousel
-            />
+            {/* <FilterCarousel
+            /> */}
         </View>
     );
 }

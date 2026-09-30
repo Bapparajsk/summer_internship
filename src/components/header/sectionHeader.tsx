@@ -12,6 +12,7 @@ export type SectionHeaderProps = {
     startEndIcon?: React.ReactNode;
     rightText?: string;
     showRightIcon?: boolean;
+    showRightText?: boolean;
     rightIcon?: React.ReactNode;
     className?: string;
 };
@@ -23,6 +24,7 @@ export const SectionHeader = ({
     startEndIcon,
     rightText = "See all",
     showRightIcon = true,
+    showRightText = true,
     rightIcon,
     className
 }: SectionHeaderProps) => {
@@ -46,43 +48,50 @@ export const SectionHeader = ({
             </View>
 
             {/* Right */}
-            {rightText && (
-                <View className="flex-row items-center">
-                    {href ? (
-                        <Link href={href} asChild>
-                            <View className="flex-row items-center gap-1">
-                                <Text className="font-poppins-medium text-sm text-primary">
-                                    {rightText}
-                                </Text>
 
-                                {showRightIcon &&
-                                    (rightIcon ?? (
-                                        <FontAwesome6
-                                            name="angle-right"
-                                            size={14}
-                                            color="#5CC6E2"
-                                        />
-                                    ))}
-                            </View>
-                        </Link>
-                    ) : (
-                        <View className="flex-row items-center gap-1">
-                            <Text className="font-poppins-medium text-sm text-primary">
-                                {rightText}
-                            </Text>
+            <If condition={Boolean(showRightText && rightText)}>
+                <If.Then>
+                    <View className="flex-row items-center">
+                        <If condition={Boolean(href)}>
+                            <If.Then>
+                                <Link href={href} asChild>
+                                    <View className="flex-row items-center gap-1">
+                                        <Text className="font-poppins-medium text-sm text-primary">
+                                            {rightText}
+                                        </Text>
 
-                            {showRightIcon &&
-                                (rightIcon ?? (
-                                    <FontAwesome6
-                                        name="angle-right"
-                                        size={14}
-                                        color="#5CC6E2"
-                                    />
-                                ))}
-                        </View>
-                    )}
-                </View>
-            )}
+                                        {showRightIcon &&
+                                            (rightIcon ?? (
+                                                <FontAwesome6
+                                                    name="angle-right"
+                                                    size={14}
+                                                    color="#5CC6E2"
+                                                />
+                                            ))}
+                                    </View>
+                                </Link>
+                            </If.Then>
+                            <If.Else>
+                                <View className="flex-row items-center gap-1">
+                                    <Text className="font-poppins-medium text-sm text-primary">
+                                        {rightText}
+                                    </Text>
+
+                                    {showRightIcon &&
+                                        (rightIcon ?? (
+                                            <FontAwesome6
+                                                name="angle-right"
+                                                size={14}
+                                                color="#5CC6E2"
+                                            />
+                                        ))}
+                                </View>
+                            </If.Else>
+                        </If>
+
+                    </View>
+                </If.Then>
+            </If>
         </View>
     );
 

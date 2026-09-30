@@ -92,6 +92,7 @@ const ProgressCard = ({
                 locations={[0, 0.5, 1]}
                 className="absolute inset-0"
             />
+
             <Card.Body className="">
                 <View className="flex-row items-center gap-2.5">
                     <StatIcon type={stat.type} />
@@ -103,7 +104,6 @@ const ProgressCard = ({
                         {stat.value}
                     </Text>
                 </View>
-
 
                 <View className="mt-2">
                     <Text className="mt-0.5 font-poppins-medium text-xs text-text-secondary">
