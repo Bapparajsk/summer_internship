@@ -30,6 +30,7 @@
     "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "heroui-native": "^1.0.10",
+    "lodash.debounce": "^4.0.8",
     "lucide-react-native": "^1.48.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -47,6 +48,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "~19.2.15",
     "eslint": "^9.39.4",
     "eslint-config-expo": "~57.0.2",

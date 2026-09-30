@@ -8,8 +8,7 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import { Card } from "heroui-native/card";
-import { Chip, cn } from "heroui-native";
-import { PressableFeedback } from 'heroui-native';
+import { Chip, cn, PressableFeedback } from "heroui-native";
 import * as Haptics from 'expo-haptics';
 
 type Option = {

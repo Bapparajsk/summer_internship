@@ -17,7 +17,7 @@ export default function ProfileScreen() {
   });
 
   return (
-    <ScreenWrapper path="/profile" onScroll={scrollHandler}>
+    <ScreenWrapper path="/(tab)/profile" onScroll={scrollHandler}>
       <ProfileHeroCard
         name="Bappa Raj"
         role="Full Stack Developer"
