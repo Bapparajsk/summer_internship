@@ -1,60 +1,28 @@
-import { isValidValueOrDefault, areAllValid } from "./utils";
+import { areAllValid } from "./utils";
 import { MaterialIcons } from '@expo/vector-icons';
-import { Fragment, ReactNode, useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
 import Animated, { FadeIn, LinearTransition } from 'react-native-reanimated';
 import { cn, PressableFeedback, Separator } from 'heroui-native';
+import { SelectOption, SelectPopoverProps } from "./select.d";
+import { SelectItemList } from "./selectItemlist";
 
-
-export type SelectOption = {
-    id: string;
-    label: string;
-    iconName?: keyof typeof MaterialIcons.glyphMap;
-    classNames?: {
-        container?: string;
-        label?: string;
-        startIconColor?: string;
-        endIconColor?: string;
-    }
-};
-
-export type SelectPopoverItemStyle = {
-    activeColor?: string;
-    inactiveColor?: string;
-    labelClassName?: string;
-}
-
-export type SelectPopoverProps = {
-    items: SelectOption[];
-    items1?: SelectOption[];
-    activeItemId?: string;
-    itemStyle?: SelectPopoverItemStyle
-    zIndex?: number;
-    activeContent?: ReactNode;
-    activeIsOpenTextPosition?: "left" | "right";
-    containerPosition?: "left" | "right";
-    activeIsOpenText?: string;
-    showActiveIcon?: boolean;
-    showActiveColor?: boolean;
-    triggerClassName?: string;
-    containerClassName?: string;
-    onSelect?: (item: SelectOption) => void;
-};
     
 export const SelectPopover = ({
     items,
-    items1,
     activeItemId,
     itemStyle,
     zIndex,
     activeContent,
     activeIsOpenText,
+    activeIsOpenTextClassName,
     activeIsOpenTextPosition = "right",
     containerPosition = "right",
     showActiveIcon = true,
     showActiveColor = true,
     triggerClassName,
     containerClassName,
+    iconSize = 16,
     onSelect,
 }: SelectPopoverProps) => {
 
@@ -109,7 +77,7 @@ export const SelectPopover = ({
                         <Fragment>
                             {areAllValid(open, activeIsOpenText, activeIsOpenTextPosition === "left") && (
                                 <Animated.View entering={FadeIn}>
-                                    <Text className="ml-2 text-zinc-400">
+                                    <Text className={cn("ml-2 text-zinc-400 font-poppins-medium", activeIsOpenTextClassName)}>
                                         {activeIsOpenText}
                                     </Text>
                                 </Animated.View>
@@ -117,7 +85,7 @@ export const SelectPopover = ({
                             {activeContent}
                             {areAllValid(open, activeIsOpenText, activeIsOpenTextPosition === "right") && (
                                 <Animated.View entering={FadeIn}>
-                                    <Text className="ml-2 text-zinc-400">
+                                    <Text className={cn("ml-2 text-zinc-400 font-poppins-medium", activeIsOpenTextClassName)}>
                                         {activeIsOpenText}
                                     </Text>
                                 </Animated.View>
@@ -133,7 +101,7 @@ export const SelectPopover = ({
                                 />
                             )}
 
-                            <Text className={cn("ml-2", itemStyle?.labelClassName)}>
+                            <Text className={cn("ml-2 font-poppins-medium", itemStyle?.labelClassName)}>
                                 {selectedSelect.label}
                             </Text>
 
@@ -156,49 +124,17 @@ export const SelectPopover = ({
                 {/* Content */}
                 {open && (
                     <Animated.View className="mb-3 gap-1 px-2 mt-1.5" >
-                        {items.map(Select => {
-                            const active = selectedSelect?.id === Select.id;
-
-                            return (
-                                <Animated.View key={Select.id} entering={FadeIn.delay(100)}>
-                                    <PressableFeedback
-                                        onPress={() => {
-                                            setSelectedSelect(Select);
-                                            setOpen(false);
-                                            onSelect?.(Select);
-                                        }}
-                                        className={cn("flex-row items-center rounded-2xl px-3 py-3", Select.classNames?.container)}
-                                    >
-                                        {Select.iconName && (
-                                            <MaterialIcons
-                                                name={Select.iconName}
-                                                size={18}
-                                                color={Select.classNames?.startIconColor || (showActiveColor && active ? isValidValueOrDefault(itemStyle?.activeColor, '#22D3EE') : "rgba(255, 255, 255, 0.22)")}
-                                            />
-                                        )}
-
-                                        <Text
-                                            className={cn(`mx-2 font-poppins-semibold`,
-                                                `text-[#64748B]`,
-                                                { "text-[#22D3EE]": showActiveColor && active },
-                                                itemStyle?.labelClassName,
-                                                Select.classNames?.label
-                                            )}
-                                        >
-                                            {Select.label}
-                                        </Text>
-
-                                        {showActiveIcon && active && (
-                                            <MaterialIcons
-                                                name="check"
-                                                size={16}
-                                                color={isValidValueOrDefault(Select.classNames?.endIconColor, "#22D3EE")}
-                                            />
-                                        )}
-                                    </PressableFeedback>
-                                </Animated.View>
-                            );
-                        })}
+                        <SelectItemList
+                            items={items}
+                            selectedSelect={selectedSelect}
+                            setSelectedSelect={setSelectedSelect}
+                            setOpen={setOpen}
+                            onSelect={onSelect}
+                            iconSize={iconSize}
+                            itemStyle={itemStyle}
+                            showActiveIcon={showActiveIcon}
+                            showActiveColor={showActiveColor}
+                        />
                     </Animated.View>
                 )}
             </Animated.View>

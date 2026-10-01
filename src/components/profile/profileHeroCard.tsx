@@ -4,7 +4,8 @@ import {
     Text,
     View
 } from 'react-native';
-import { SelectPopover, SelectOption } from '../select/select';
+import { SelectPopover, SelectOption } from '../select';
+
 
 type ProfileHeroProps = {
     name: string;
@@ -25,10 +26,18 @@ type ProfileHeroProps = {
     onShare?: () => void;
 };
 
+const className = "px-2 py-1.5"
+
 const options: SelectOption[] = [
-    { id: "edit-name", label: "Edit Name", iconName: "edit" },
-    { id: "profile-image", label: "Profile Image", iconName: "account-circle" },
-    { id: "3", label: "Private", iconName: "lock" }
+    { id: "edit-name", label: "Edit Name", iconName: "edit", classNames: { container: className } },
+    { id: "profile-image", label: "Update Image", iconName: "image", classNames: { container: className } },
+    {
+        id: "log-out", label: "Log Out", iconName: "logout", classNames: {
+            container: className + " bg-danger-soft px-3", 
+            label: "text-red-500",
+            startIconColor: "#fb2c36"
+        }
+    }
 ];
 
 function StatItem({
@@ -129,17 +138,22 @@ export const ProfileHeroCard = ({
                 <SelectPopover
                     items={options}
                     showActiveIcon={false}
-                    showActiveColor
-                    activeIsOpenText="Privacy"
+                    showActiveColor={false}
+                    activeIsOpenText="Account Settings"
                     activeIsOpenTextPosition="right"
                     activeContent={
-                        <MaterialCommunityIcons 
-                            name="account-cog-outline" 
-                            size={18} 
-                            color="#9CA3AF" 
+                        <MaterialCommunityIcons
+                            name="account-cog-outline"
+                            size={18}
+                            color="#9CA3AF"
                         />
                     }
                     triggerClassName="px-3 py-2"
+                    itemStyle={{
+                        labelClassName: "text-xs"
+                    }}
+                    iconSize={14}
+                    activeIsOpenTextClassName='text-xs font-poppins-medium'
                 />
             </View>
 
