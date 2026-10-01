@@ -1,26 +1,25 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text, TextInput, View } from "react-native";
 import { BottomSheet, Button, PressableFeedback, SearchField, Tabs } from "heroui-native";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import debounce from "lodash.debounce";
 import { Octicons } from "@expo/vector-icons";
 
-const filters = [
+type Filter = {
+    id: string;
+    label: string;
+};
+
+const filters: Filter[] = [
     { id: "all", label: "All" },
-    { id: "beginner", label: "Beginner" },
-    { id: "intermediate", label: "Intermediate" },
-    { id: "advanced", label: "Advanced" },
-    { id: "trending", label: "Trending", icon: "trending" },
-    { id: "new", label: "New", icon: "new" },
-    { id: "popular", label: "Popular", icon: "popular" },
-    { id: "random", label: "Random", icon: "random" },
-    { id: "favorites", label: "Favorites", icon: "favorites" },
+    { id: "c", label: "C" }, 
+    { id: "java", label: "Java" },
+    { id: "python", label: "Python" },
+    { id: "data-structures", label: "Data Structures" },
+    { id: "algorithms", label: "Algorithms" },
+    { id: "database", label: "Database" },
+    { id: "networking", label: "Networking" }
 ] as const;
-
-type Filter = (typeof filters)[number];
-
-type FilterId = (typeof filters)[number]["id"];
-
 
 function SearchBarButton() {
 
@@ -54,60 +53,57 @@ function SearchBarButton() {
     const debouncedChangeText = debounce(onChangeTextDebounced, 300);
 
     return (
-        <Fragment>
+        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+            <BottomSheet.Trigger asChild>
+                <PressableFeedback className="h-14 w-full rounded-full bg-white/4 border border-border">
+                    <View className="flex-row items-center justify-items-start gap-2.5 h-full px-4">
+                        <Octicons name="search" size={18} color="#8FA5B8" />
+                        <Text className="font-poppins-medium text-text-secondary text-sm">
+                            Search quizzes...
+                        </Text>
+                    </View>
+                </PressableFeedback>
+            </BottomSheet.Trigger>
+            <BottomSheet.Portal >
+                <BottomSheet.Overlay className="bg-black/70" />
+                <BottomSheet.Content
+                    snapPoints={["90%"]}
+                    enableDynamicSizing={false}
+                    enableOverDrag={false}
+                    contentContainerClassName="h-full"
+                >
+                    <SearchField onChange={debouncedChangeText}>
+                        <SearchField.Group>
+                            <SearchField.SearchIcon />
+                            <SearchField.Input
+                                ref={inputRef}
+                                className="font-poppins-medium bg-white/4 border border-border rounded-[34px]"
+                                placeholder="Search quizzes..."
+                            />
+                            <SearchField.ClearButton />
+                        </SearchField.Group>
+                    </SearchField>
+                    <BottomSheetFlatList
 
-            <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-                <BottomSheet.Trigger asChild>
-                    <PressableFeedback className="h-14 w-full rounded-full bg-white/4 border border-border">
-                        <View className="flex-row items-center justify-items-start gap-2.5 h-full px-4">
-                            <Octicons name="search" size={18} color="#8FA5B8" />
-                            <Text className="font-poppins-medium text-text-secondary text-sm">
-                                Search quizzes...
-                            </Text>
-                        </View>
-                    </PressableFeedback>
-                </BottomSheet.Trigger>
-                <BottomSheet.Portal >
-                    <BottomSheet.Overlay className="bg-black/70" />
-                    <BottomSheet.Content
-                        snapPoints={["90%"]}
-                        enableDynamicSizing={false}
-                        enableOverDrag={false}
-                        contentContainerClassName="h-full"
-                    >
-                        <SearchField onChange={debouncedChangeText}>
-                            <SearchField.Group>
-                                <SearchField.SearchIcon />
-                                <SearchField.Input
-                                    ref={inputRef}
-                                    className="font-poppins-medium bg-white/4 border border-border rounded-[34px]"
-                                    placeholder="Search quizzes..."
-                                />
-                                <SearchField.ClearButton />
-                            </SearchField.Group>
-                        </SearchField>
-                        <BottomSheetFlatList
+                        data={data}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => (
+                            <View className="p-4 h-40 border-b border-border">
+                                <Button
+                                    variant="ghost"
+                                    onPress={() => {
+                                        setIsOpen(false);
+                                    }}
+                                >
 
-                            data={data}
-                            keyExtractor={(item) => item.id}
-                            renderItem={({ item }) => (
-                                <View className="p-4 h-40 border-b border-border">
-                                    <Button
-                                        variant="ghost"
-                                        onPress={() => {
-                                            setIsOpen(false);
-                                        }}
-                                    >
-
-                                        {item.label}
-                                    </Button>
-                                </View>
-                            )}
-                        />
-                    </BottomSheet.Content>
-                </BottomSheet.Portal>
-            </BottomSheet>
-        </Fragment>
+                                    {item.label}
+                                </Button>
+                            </View>
+                        )}
+                    />
+                </BottomSheet.Content>
+            </BottomSheet.Portal>
+        </BottomSheet>
     );
 }
 
@@ -131,7 +127,7 @@ function FilterCarousel() {
 
                             >
                                 <Tabs.Label
-                                    className={`font-poppins-medium text-xs ${active
+                                    className={`font-poppins-medium text-xs items-center ${active
                                         ? "text-primary"
                                         : "text-text-secondary"
                                         }`}
@@ -153,8 +149,8 @@ export const QuizExploreControls = () => {
         <View className="gap-2.5">
             <SearchBarButton />
 
-            {/* <FilterCarousel
-            /> */}
+            <FilterCarousel
+            />
         </View>
     );
 }

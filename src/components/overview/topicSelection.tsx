@@ -62,7 +62,7 @@ const TopicCard = ({
 
     return (
         <PressableFeedback
-            className={`mr-3 h-24 w-34 overflow-hidden rounded-2xl p-3.5 border border-border bg-surface-container`}
+            className={`mr-2 h-24 w-34 overflow-hidden rounded-[28px] p-3.5 border border-border bg-white/4`}
         >
             <PressableFeedback.Ripple
                 animation={{

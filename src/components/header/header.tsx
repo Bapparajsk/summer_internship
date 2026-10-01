@@ -385,7 +385,7 @@ export const AnimatedHeader = () => {
                     </Animated.View>
 
                     <Animated.View style={subtitleStyle}>
-                        <Text className="text-text-secondary text-xs font-poppins-light">
+                        <Text className="text-text-secondary text-xs font-poppins-medium">
                             Good morning, Engineer!
                         </Text>
                     </Animated.View>

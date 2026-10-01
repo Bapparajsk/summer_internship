@@ -1,89 +1,38 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { PressableFeedback } from "heroui-native";
-import { ArrowUpRight, Brain, Braces, Coffee, Database, GitBranch, Globe, Network, Terminal } from "lucide-react-native";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { SegmentedProgress } from "../progressBar";
-import { SectionHeader } from "../header/sectionHeader";
-import { Feather } from "@expo/vector-icons";
+import { getCommonIcon } from "../lib/icon";
 
 type Discipline = {
     id: string;
     title: string;
     quizzes: string;
     progress: number;
-    icon: React.ComponentType<{
-        size?: number;
-        color?: string;
-        strokeWidth?: number;
-    }>;
+    icon: string;
     keyWords: string[];
+    tag: string;
 };
 
 const disciplines: Discipline[] = [
-    {
-        id: "data-structures",
-        title: "Data Structures",
-        quizzes: "120+ quizzes",
-        progress: 82,
-        icon: GitBranch,
-        keyWords: ["Logic", "Data Structures"],
-    },
-    {
-        id: "algorithms",
-        title: "Algorithms",
-        quizzes: "95+ quizzes",
-        progress: 74,
-        icon: Brain,
-        keyWords: ["Algorithms", "Problem Solving"],
-    },
     {
         id: "cpp",
         title: "Modern C++",
         quizzes: "80+ quizzes",
         progress: 64,
-        icon: Braces,
+        icon: "cpp",
         keyWords: ["C++", "Programming", "Best Practices"],
-    },
-    {
-        id: "java",
-        title: "Java & JVM",
-        quizzes: "75+ quizzes",
-        progress: 48,
-        icon: Coffee,
-        keyWords: ["Java", "Programming", "JVM"],
-    },
-    {
-        id: "python",
-        title: "Python",
-        quizzes: "90+ quizzes",
-        progress: 72,
-        icon: Terminal,
-        keyWords: ["Python", "Programming", "Data Science"],
+        tag: "new",
     },
     {
         id: "os",
         title: "OS Kernel",
         quizzes: "60+ quizzes",
         progress: 35,
-        icon: Globe,
+        icon: "os",
         keyWords: ["Operating Systems", "Kernel", "System Programming"],
-    },
-    {
-        id: "dbms",
-        title: "Databases",
-        quizzes: "55+ quizzes",
-        progress: 56,
-        icon: Database,
-        keyWords: ["Databases", "Database Management", "Design Principles"],
-    },
-    {
-        id: "networks",
-        title: "Networking",
-        quizzes: "50+ quizzes",
-        progress: 28,
-        icon: Network,
-        keyWords: ["Computer Networks", "Protocols", "Communication Systems"],
-    },
+        tag: "new",
+    }
 ];
 
 type DisciplineCardProps = {
@@ -95,7 +44,7 @@ function DisciplineCard({
     item,
     onPress,
 }: DisciplineCardProps) {
-    const Icon = item.icon;
+    const { Icon, name } = getCommonIcon(item.icon);
 
     return (
         <PressableFeedback
@@ -115,11 +64,22 @@ function DisciplineCard({
                     locations={[0, 0.5, 1]}
                     className="absolute inset-0"
                 />
+
+                {/* fechner Chip */}
+                <View className="absolute top-3 right-3">
+                    <View className="rounded-full bg-primary-soft px-2 py-1">
+                        <Text className="font-poppins-medium text-[8px] text-primary leading-normal">
+                            {item.tag}
+                        </Text>
+                    </View>
+                </View>
+
                 {/* Icon + Arrow */}
                 <View className="flex-row items-center justify-between">
                     <View className="flex-row gap-1.5 items-center">
                         <View className="h-9 w-9 items-center justify-center rounded-lg bg-primary-soft">
                             <Icon
+                                name={name}
                                 size={19}
                                 color="#5CC6E2"
                                 strokeWidth={2}
@@ -132,13 +92,6 @@ function DisciplineCard({
                             {item.title}
                         </Text>
                     </View>
-
-
-                    <ArrowUpRight
-                        size={17}
-                        color="rgba(255,255,255,0.40)"
-                        strokeWidth={2}
-                    />
                 </View>
 
                 <View className="my-2">
@@ -170,15 +123,7 @@ function DisciplineCard({
     );
 }
 
-type CoreDisciplinesProps = {
-    onSeeAll?: () => void;
-    onDisciplinePress?: (item: Discipline) => void;
-};
-
-export function CoreDisciplines({
-    onSeeAll,
-    onDisciplinePress,
-}: CoreDisciplinesProps) {
+export function TrendingSections() {
     return (
         <View className="gap-3">
             {/* 2 Column Grid */}
@@ -187,13 +132,8 @@ export function CoreDisciplines({
                     Array.from({ length: Math.ceil(disciplines.length / 2) }, (_, i) => i * 2).map((index) => (
                         <View className="w-full flex-row justify-between" key={index}>
                             {disciplines.slice(index, index + 2).map((item) => (
-
                                 <View className="w-[49%]" key={item.id}>
-
-                                    <DisciplineCard
-                                        item={item}
-                                        onPress={onDisciplinePress}
-                                    />
+                                    <DisciplineCard item={item} />
                                 </View>
                             ))}
                         </View>
