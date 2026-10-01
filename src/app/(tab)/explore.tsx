@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen';
-import { QuizExploreControls, TrendingSections } from "@/components/explore";
+import { QuizExploreControls, TrendingSections } from "@/components/screen/explore";
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 

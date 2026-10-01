@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen'
-import { ProfileHeroCard, UniversityInfoCard, ProfileIdentityCard, tempProfileData, ActivityTimelineSection } from '@/components/profile';
+import { ProfileHeroCard, UniversityInfoCard, ProfileIdentityCard, tempProfileData, ActivityTimelineSection } from '@/components/screen/profile';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 

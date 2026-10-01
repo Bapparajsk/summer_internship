@@ -1,4 +1,4 @@
-import { QuickQuizCard, TopicSelection, WeeklyActivity, WeeklyLeaderboard, ProgressStats, DailyTip } from "@/components/overview";
+import { QuickQuizCard, TopicSelection, WeeklyActivity, WeeklyLeaderboard, ProgressStats, DailyTip } from "@/components/screen/overview";
 import { ContentWrapper, ScreenWrapper } from "@/components/screen";
 import { useScrollStore } from "@/store/scroll-store";
 import { useAnimatedScrollHandler } from "react-native-reanimated";
