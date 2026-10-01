@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { Card } from "heroui-native/card";
-import { SegmentedProgress } from "../progressBar";
-import { FontAwesome6, Ionicons } from "../lib/icon";
+import { SegmentedProgress } from "../../progressBar";
+import { FontAwesome6, Ionicons } from "../../lib/icon";
 
 interface ProfileIdentityCardProps {
     level?: number;

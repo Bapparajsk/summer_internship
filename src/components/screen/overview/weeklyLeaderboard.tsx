@@ -2,8 +2,8 @@ import { Image, Text, View } from "react-native";
 import { Card } from "heroui-native/card";
 import { LinearGradient } from "expo-linear-gradient";
 import { cn, PressableFeedback } from "heroui-native";
-import { SectionHeader } from "../header/sectionHeader";
-import { Octicons } from "../lib/icon";
+import { SectionHeader } from "../../header/sectionHeader";
+import { Octicons } from "../../lib/icon";
 
 interface LeaderboardUser {
     rank: number;

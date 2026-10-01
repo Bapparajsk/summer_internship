@@ -1,4 +1,4 @@
-import { MaterialIcons } from '../lib/icon';
+import { MaterialIcons } from '../../lib/icon';
 import { Image, Text, View } from 'react-native';
 import { PressableFeedback, Toast, useToast } from 'heroui-native';
 

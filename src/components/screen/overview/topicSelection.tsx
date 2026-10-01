@@ -1,8 +1,8 @@
 import { FlatList, Text, View } from "react-native";
-import { SegmentedProgress } from "../progressBar";
+import { SegmentedProgress } from "../../progressBar";
 import { PressableFeedback } from "heroui-native/pressable-feedback";
-import { getCommonIcon } from "../lib/icon";
-import { SectionHeader } from "../header/sectionHeader";
+import { getCommonIcon } from "../../lib/icon";
+import { SectionHeader } from "../../header/sectionHeader";
 
 const topics = [
     {

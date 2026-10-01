@@ -9,7 +9,7 @@ import Svg, { Circle } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { Card } from "heroui-native/card";
 import { PressableFeedback } from "heroui-native";
-import { Feather, FontAwesome6 } from "../lib/icon";
+import { Feather, FontAwesome6 } from "../../lib/icon";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 

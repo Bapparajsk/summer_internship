@@ -1,10 +1,10 @@
-import { MaterialCommunityIcons, MaterialIcons } from '../lib/icon';
+import { MaterialCommunityIcons, MaterialIcons } from '../../lib/icon';
 import {
     Image,
     Text,
     View
 } from 'react-native';
-import { SelectPopover, SelectOption } from '../select';
+import { SelectPopover, SelectOption } from '../../select';
 
 
 type ProfileHeroProps = {

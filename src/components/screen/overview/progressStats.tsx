@@ -1,8 +1,8 @@
 import { Text, View } from "react-native";
 import { Card } from "heroui-native/card";
 import { cn } from "heroui-native/utils";
-import { FontAwesome6, Ionicons, MaterialCommunityIcons } from "../lib/icon";
-import { SectionHeader } from "../header/sectionHeader";
+import { FontAwesome6, Ionicons, MaterialCommunityIcons } from "../../lib/icon";
+import { SectionHeader } from "../../header/sectionHeader";
 import { LinearGradient } from "expo-linear-gradient";
 
 interface ProgressStat {

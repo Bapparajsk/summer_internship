@@ -1,6 +1,6 @@
-import { FontAwesome6, MaterialIcons, Octicons } from '../lib/icon';
+import { FontAwesome6, MaterialIcons, Octicons } from '../../lib/icon';
 import { Text, View } from 'react-native';
-import { SectionHeader } from '../header/sectionHeader';
+import { SectionHeader } from '../../header/sectionHeader';
 
 export type ActivityType =
     | 'payment'
