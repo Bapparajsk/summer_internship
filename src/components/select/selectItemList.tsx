@@ -8,7 +8,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import If from '../lib/if';
 import { getCommonIcon } from '../lib/icon';
 
-export type SelectItemListProps = Pick<SelectPopoverProps, "items" | "activeItemId" | "itemStyle" | "onSelect" | "showActiveIcon" | "showActiveColor" | "activeItemIds" | "iconSize" | "separators"> & {
+export type SelectItemListProps = Pick<SelectPopoverProps, "items" | "activeItemId" | "itemStyle" | "onSelect" | "showActiveIcon" | "showActiveColor" | "activeItemIds" | "iconSize" | "separators" | "onCloseTriggerId"> & {
     selectedSelect: SelectOption | undefined;
     setSelectedSelect: (item: SelectOption) => void;
     setOpen: (open: boolean) => void;
@@ -24,6 +24,7 @@ export const SelectItemList = ({
     showActiveColor,
     iconSize,
     separators,
+    onCloseTriggerId,
     setSelectedSelect,
     setOpen,
     onSelect
@@ -51,9 +52,18 @@ export const SelectItemList = ({
                                         onSelect?.(Select);
                                     } else {
                                         setSelectedSelect(Select);
-                                        setOpen(false);
                                     }
 
+                                    if (onCloseTriggerId && onCloseTriggerId.includes(Select.id)) {
+                                        setOpen(false);
+                                    } 
+                                    else if(activeItemIds) {
+                                        return;
+                                    }
+                                    else if(onCloseTriggerId === undefined) {
+                                        onSelect?.(Select);
+                                        setOpen(false);
+                                    }
                                 }}
                                 className={cn("flex-row items-center rounded-2xl px-2 py-1.5", Select.classNames?.container)}
                             >
@@ -66,7 +76,7 @@ export const SelectItemList = ({
                                 )}
 
                                 <Text
-                                    className={cn(`mx-2 font-poppins-semibold`,
+                                    className={cn(`mx-1 font-poppins-semibold`,
                                         `text-text-secondary`,
                                         { "text-primary": showActiveColor && active },
                                         itemStyle?.labelClassName,

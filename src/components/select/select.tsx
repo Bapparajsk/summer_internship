@@ -26,6 +26,7 @@ export const SelectPopover = ({
     containerClassName,
     iconSize = 16,
     separators,
+    onCloseTriggerId,
     onSelect,
 }: SelectPopoverProps) => {
 
@@ -141,6 +142,7 @@ export const SelectPopover = ({
                             showActiveIcon={showActiveIcon}
                             showActiveColor={showActiveColor}
                             separators={separators}
+                            onCloseTriggerId={onCloseTriggerId}
                         />
                     </Animated.View>
                 )}

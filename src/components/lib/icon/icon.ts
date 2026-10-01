@@ -7,6 +7,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
+import FontAwesome5  from '@expo/vector-icons/FontAwesome5';
 
 
 type IconInfo = {
@@ -124,8 +125,8 @@ const commonIconMap = {
         name: "sensors"
     },
     "hash" : {
-        Icon: FontAwesome6,
-        name: "hashtag"
+        Icon: FontAwesome5,
+        name: "slack-hash"
     }
 }
 

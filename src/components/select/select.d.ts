@@ -34,7 +34,8 @@ export type SelectPopoverProps = {
     showActiveColor?: boolean;
     triggerClassName?: string;
     containerClassName?: string;
-    onSelect?: (item: SelectOption) => void;
     iconSize?: number;
     separators?: number[];
+    onCloseTriggerId?: SelectOption["id"][];
+    onSelect?: (item: SelectOption) => void;
 };
