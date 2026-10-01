@@ -1,356 +1,334 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { MaterialIcons } from "@expo/vector-icons";
+import { cn, PressableFeedback } from "heroui-native";
+import { Text, View } from "react-native";
+import { SegmentedProgress } from "../progressBar";
+import { getCommonIcon } from "../lib/icon";
 
-import { PressableFeedback } from 'heroui-native';
+type Difficulty = "Easy" | "Medium" | "Hard" | "Expert";
 
-type Difficulty =
-    | 'Easy'
-    | 'Medium'
-    | 'Hard'
-    | 'Expert';
+type QuizType = "new" | "continue" | "live" | "join";
 
 export type QuizCardProps = {
+    type: QuizType;
+
     title: string;
     chapter: string;
+    description?: string;
 
-    difficulty: Difficulty;
+    difficulty?: Difficulty;
 
     questions: number;
     duration: number;
 
-    xp: number;
+    // Normal quiz
+    accuracy?: number;
 
-    participants: number;
-    accuracy: number;
+    // Continue quiz
+    solved?: number;
 
-    status?: 'active' | 'completed' | 'locked';
-    badge?: BadgeType;
-    score?: number;
+    // Live / join quiz
+    participants?: number;
+    host?: string;
+
+    // Join quiz
+    code?: string;
+
+    // icon
+    icon?: string;
 
     onPress?: () => void;
+    onScanQR?: () => void;
 };
 
-
-type BadgeType =
-    | 'Trending'
-    | 'Most Attempted'
-    | 'Recommended'
-    | 'New Quiz'
-    | 'AI Generated';
-
-
-const difficultyColor = {
-    Easy: '#22C55E',
-    Medium: '#EAB308',
-    Hard: '#EF4444',
-    Expert: '#A855F7',
+const difficultyColor: Record<Difficulty, string> = {
+    Easy: "#22C55E",
+    Medium: "#EAB308",
+    Hard: "#EF4444",
+    Expert: "#A855F7",
 };
 
-
-
-const formatCount = (value: number) => {
-    if (value >= 1000) {
-        return `${(value / 1000).toFixed(1)}k`;
-    }
-
-    return value.toString();
-};
-
-
-const badgeConfig = {
-    Trending: {
-        icon: 'local-fire-department',
-        color: '#FB923C',
+const typeConfig = {
+    new: {
+        action: "Start",
+        actionIcon: "arrow-forward",
     },
-    'Most Attempted': {
-        icon: 'emoji-events',
-        color: '#FACC15',
-    },
-    Recommended: {
-        icon: 'recommend',
-        color: '#22D3EE',
-    },
-    'New Quiz': {
-        icon: 'bolt',
-        color: '#A78BFA',
-    },
-    'AI Generated': {
-        icon: 'auto-awesome',
-        color: '#22D3EE',
-    },
-};
 
-export const QuizCard = ({
+    continue: {
+        action: "Continue",
+        actionIcon: "play-circle",
+    },
+
+    live: {
+        action: "Join",
+        actionIcon: "sensors",
+    },
+
+    join: {
+        icon: "dns",
+        action: "Join",
+        actionIcon: "login",
+    },
+} as const;
+
+export function QuizCard({
+    type,
     title,
     chapter,
-
+    description,
     difficulty,
-
     questions,
     duration,
-
-    xp,
-
-    participants,
     accuracy,
-
-    status = 'active',
-    badge = 'Recommended',
-    score,
-
+    solved,
+    participants,
+    host,
+    code,
+    icon = "quiz",
     onPress,
-}: QuizCardProps) => {
-    const color =
-        difficultyColor[difficulty];
+    onScanQR,
+}: QuizCardProps) {
+    const config = typeConfig[type];
+    const { Icon, name: iconName } = getCommonIcon(icon);
 
-    const badgeStyle =
-        badgeConfig[badge];
+    const difficultyColorValue = difficulty
+        ? difficultyColor[difficulty]
+        : "#22D3EE";
 
-    const needsImprovement = (score ?? 0) < 80;
-
-    const actionLabel = needsImprovement
-        ? 'Improve Score'
-        : 'Reattempt';
-
-    const actionIcon = needsImprovement
-        ? 'trending-up'
-        : 'refresh';
 
     return (
         <View
-            className="overflow-hidden rounded-[28px] border border-white/10 bg-white/4 p-4"
+            className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/4 p-4 mb-3"
         >
-            {status === "locked" && (
-                <View className="absolute inset-0 z-10 flex-row items-center justify-center bg-black/25" />
-
+            {/* Live glow */}
+            {type === "live" && (
+                <View
+                    className="absolute -right-8 -top-8 h-24 w-24 rounded-full"
+                    style={{
+                        backgroundColor: "rgba(34,211,238,0.08)",
+                    }}
+                />
             )}
-            {/* Glow */}
-            <View
-                className="absolute -right-8 -top-8 h-24 w-24 rounded-full"
-                style={{
-                    backgroundColor:
-                        `${color}10`,
-                }}
-            />
 
             {/* Header */}
-            <View className="flex-row items-start justify-between">
-
-                <View className="flex-1">
-                    <Text
-                        numberOfLines={1}
-                        className="font-poppins-semibold"
-                    >
-                        {title}
-                    </Text>
-
-                    <Text className="mt-1 text-xs text-zinc-500">
-                        {chapter}
-                    </Text>
-                </View>
-
-                <View
-                    className="rounded-full px-2.5 py-1"
-                    style={{
-                        backgroundColor:
-                            `${color}15`,
-                    }}
-                >
-                    <Text
-                        className="text-[10px] font-poppins-semibold uppercase leading-normal"
-                        style={{
-                            color,
-                        }}
-                    >
-                        {difficulty}
-                    </Text>
-                </View>
-
-            </View>
-
-            {/* Quiz Info */}
-            <View className="mt-4 flex-row items-center">
-
-                <View className="flex-row items-center">
-                    <MaterialIcons
-                        name="schedule"
-                        size={14}
-                        color="#71717A"
-                    />
-
-                    <Text className="ml-1 text-xs text-zinc-400">
-                        {duration}m
-                    </Text>
-                </View>
-
-                <View className="ml-4 flex-row items-center">
-                    <MaterialIcons
-                        name="quiz"
-                        size={14}
-                        color="#71717A"
-                    />
-
-                    <Text className="ml-1 text-xs text-zinc-400">
-                        {questions} Q
-                    </Text>
-                </View>
-
-                <View className="ml-4 flex-row items-center">
-                    <MaterialIcons
-                        name="stars"
-                        size={14}
-                        color="#FACC15"
-                    />
-
-                    <Text className="ml-1 text-xs text-yellow-400">
-                        {xp} XP
-                    </Text>
-                </View>
-
-            </View>
-
-            {/* Community Stats */}
-            <View className="mt-4 flex-row items-center justify-between rounded-2xl bg-white/3 px-3 py-2">
-
-                <View className="flex-row items-center">
-                    <MaterialIcons
-                        name="groups"
-                        size={16}
-                        color="#A78BFA"
-                    />
-
-                    <Text className="ml-1 text-xs text-zinc-400">
-                        {formatCount(participants)} Students
-                    </Text>
-                </View>
-
-                <View className="flex-row items-center">
-                    <MaterialIcons
-                        name="track-changes"
-                        size={16}
-                        color="#22D3EE"
-                    />
-
-                    <Text className="ml-1 text-xs text-zinc-400">
-                        {accuracy}% Accuracy
-                    </Text>
-                </View>
-
-            </View>
-
-            {/* Active */}
-            {status === 'active' && (
-                <View className="mt-4 flex-row items-center justify-between">
-
-                    <View
-                        className="mb-3 self-start flex-row items-center rounded-full px-2.5 py-1"
-                        style={{
-                            backgroundColor:
-                                `${badgeStyle.color}15`,
-                        }}
-                    >
-                        <MaterialIcons
-                            name={badgeStyle.icon as any}
-                            size={12}
-                            color={badgeStyle.color}
-                        />
-
-                        <Text
-                            className="ml-1 text-[10px] font-poppins-semibold uppercase leading-normal"
-                            style={{
-                                color: badgeStyle.color,
-                            }}
-                        >
-                            {badge}
-                        </Text>
-                    </View>
-
-                    <PressableFeedback
-                        className="flex-row items-center rounded-full px-3 py-2 gap-x-1"
-                        style={{ backgroundColor: 'rgba(34,211,238,0.12)' }}
-                        onPress={onPress}
-                    >
-                        <Text className="text-sm text-cyan-400">
-                            Start Quiz
-                        </Text>
-                        <MaterialIcons
-                            name="arrow-forward"
-                            size={18}
+            <View className="flex-row items-center justify-between">
+                <View className="flex-1 flex-row items-center">
+                    {type === "live" ? (
+                        <View className="mr-1.5 h-2 w-2 rounded-full bg-cyan-400" />
+                    ) : (
+                        <Icon
+                            name={iconName}
+                            size={16}
                             color="#22D3EE"
                         />
-                    </PressableFeedback>
-                </View>
-            )}
+                    )}
 
-            {/* Completed */}
-            {status === 'completed' && (
-                <View className="flex-row items-center justify-between mt-4">
+                    {type === "live" ? (
+                        <>
+                            <View className="rounded-md bg-cyan-400/15 px-1.5 py-0.5">
+                                <Text className="text-[10px] font-poppins-semibold uppercase tracking-wider text-cyan-400">
+                                    LIVE
+                                </Text>
+                            </View>
 
-                    {/* Score */}
-                    <View className="flex-row items-center">
-                        <MaterialIcons
-                            name="emoji-events"
-                            size={20}
-                            color="#FACC15"
-                        />
-
-                        <Text className="ml-2 text-2xl font-poppins-semibold">
-                            {score}%
+                            {host && (
+                                <Text
+                                    numberOfLines={1}
+                                    className="ml-1.5 flex-1 text-xs font-poppins-medium text-text-tertiary"
+                                >
+                                    · Hosted by {host}
+                                </Text>
+                            )}
+                        </>
+                    ) : (
+                        <Text
+                            numberOfLines={1}
+                            className="ml-1.5 flex-1 text-xs font-poppins-medium text-text-tertiary"
+                        >
+                            {chapter}
                         </Text>
-                    </View>
+                    )}
+                </View>
 
-                    {/* Dynamic Action */}
-                    <PressableFeedback
-                        className="flex-row items-center rounded-full px-3 py-2"
+                {/* Difficulty */}
+                {difficulty && type !== "live" && (
+                    <View
+                        className="rounded-full px-2.5 py-1"
                         style={{
-                            backgroundColor:
-                                needsImprovement
-                                    ? 'rgba(251,146,60,0.12)'
-                                    : 'rgba(34,211,238,0.12)',
+                            backgroundColor: `${difficultyColorValue}15`,
                         }}
                     >
-                        <MaterialIcons
-                            name={actionIcon as any}
-                            size={16}
-                            color={
-                                needsImprovement
-                                    ? '#FB923C'
-                                    : '#22D3EE'
-                            }
-                        />
-
                         <Text
-                            className="ml-1 text-xs font-semibold"
+                            className="text-[10px] font-poppins-semibold uppercase"
                             style={{
-                                color:
-                                    needsImprovement
-                                        ? '#FB923C'
-                                        : '#22D3EE',
+                                color: difficultyColorValue,
                             }}
                         >
-                            {actionLabel}
+                            {difficulty}
                         </Text>
-                    </PressableFeedback>
+                    </View>
+                )}
 
-                </View>
-            )}
+                {/* Live participants */}
+                {type === "live" && participants !== undefined && (
+                    <View className="ml-2 flex-row items-center">
+                        <MaterialIcons
+                            name="group"
+                            size={14}
+                            color="#22D3EE"
+                        />
 
-            {/* Locked */}
-            {status === 'locked' && (
-                <View className="mt-4 flex-row items-center">
+                        <Text className="ml-1 text-xs font-poppins-medium text-cyan-400">
+                            {participants}
+                        </Text>
+                    </View>
+                )}
+            </View>
 
-                    <MaterialIcons
-                        name="lock"
-                        size={18}
-                        color="#71717A"
-                    />
+            {/* Content */}
+            <View className="mt-2">
+                <Text
+                    numberOfLines={1}
+                    className="text-base font-poppins-semibold tracking-tight text-text-primary"
+                >
+                    {title}
+                </Text>
 
-                    <Text className="ml-2 text-sm text-zinc-500">
-                        Complete previous chapter to unlock
+                {description && (
+                    <Text
+                        numberOfLines={1}
+                        className="mt-1 text-xs font-poppins-medium text-text-tertiary"
+                    >
+                        {description}
                     </Text>
+                )}
+            </View>
 
+            {/* Continue progress */}
+            {type === "continue" && solved !== undefined && (
+                <View className="mt-3 flex-row items-center gap-2">
+                    <View className="h-1.5 flex-1 overflow-hidden">
+                        <SegmentedProgress
+                            progress={solved / questions * 100}
+                        />
+                    </View>
+
+                    <Text className="text-[11px] font-poppins-medium text-cyan-400">
+                        {solved}/{questions} solved
+                    </Text>
                 </View>
             )}
+
+            {/* Footer */}
+            <View className="mt-4 flex-row items-center justify-between">
+                {/* Metadata */}
+                <View className="flex-row items-center">
+                    {type === "join" ? (
+                        <View>
+                            <View className="flex-row items-center">
+                                <Text className="text-[11px] font-poppins-medium text-text-tertiary">
+                                    Code:
+                                </Text>
+
+                                <Text className="ml-1 text-[11px] font-poppins-semibold tracking-wider text-cyan-400">
+                                    {code}
+                                </Text>
+                            </View>
+
+                            {host && participants !== undefined && (
+                                <Text className="mt-0.5 text-[10px] font-poppins-medium text-text-tertiary">
+                                    {host} · {participants} Players
+                                </Text>
+                            )}
+                        </View>
+                    ) : (
+                        <>
+                            <View className="flex-row items-center">
+                                <MaterialIcons
+                                    name="quiz"
+                                    size={14}
+                                    color="#71717A"
+                                />
+
+                                <Text className="ml-1 text-[11px] font-poppins-medium text-text-tertiary">
+                                    {questions} Qs
+                                </Text>
+                            </View>
+
+                            <Text className="mx-2 text-text-tertiary">
+                                ·
+                            </Text>
+
+                            <View className="flex-row items-center">
+                                <MaterialIcons
+                                    name="schedule"
+                                    size={14}
+                                    color="#71717A"
+                                />
+
+                                <Text className="ml-1 text-[11px] font-poppins-medium text-text-tertiary">
+                                    {duration} min
+                                </Text>
+                            </View>
+
+                            {accuracy !== undefined && (
+                                <>
+                                    <Text className="mx-2 text-text-tertiary">
+                                        ·
+                                    </Text>
+
+                                    <Text className="text-[11px] font-poppins-medium text-cyan-400">
+                                        {accuracy}% avg
+                                    </Text>
+                                </>
+                            )}
+                        </>
+                    )}
+                </View>
+
+                {/* Actions */}
+                <View className="flex-row items-center gap-2">
+                    {/* QR */}
+                    {type === "join" && (
+                        <PressableFeedback
+                            onPress={onScanQR}
+                            className="h-9 w-9 items-center justify-center rounded-xl bg-white/6"
+                        >
+                            <MaterialIcons
+                                name="qr-code-scanner"
+                                size={18}
+                                color="#A1A1AA"
+                            />
+                        </PressableFeedback>
+                    )}
+
+                    {/* Main action */}
+                    <PressableFeedback
+                        onPress={onPress}
+                        className={cn("flex-row items-center rounded-xl px-3.5 py-2",
+                            {
+                                "bg-primary/10": type === "new" || type === "join",
+                                "bg-primary/20": type === "live" || type === "continue",
+                            }
+                        )}
+                    >
+                        <Text className={cn("text-xs font-poppins-semibold",
+                            {
+                                "text-white": type === "new" || type === "join",
+                                "text-primary": type === "live" || type === "continue",
+                            }
+                        )}>
+                            {config.action}
+                        </Text>
+
+                        <MaterialIcons
+                            name={config.actionIcon as any}
+                            size={16}
+                            color={type === "new" || type === "join" ? "#FFFFFF" : "#5cc6e2"}
+                            style={{ marginLeft: 4 }}
+                        />
+                    </PressableFeedback>
+                </View>
+            </View>
         </View>
     );
 }

@@ -1,49 +1,115 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
-import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Chip, Dialog } from "heroui-native";
-// import { FilterPopover, type FilterOption } from '../popover';
+// import { Chip, Dialog } from "heroui-native";
 import { QuizCardProps, QuizCard } from '../../quiz';
 import { FlashList } from "@shopify/flash-list";
 
-const QUIZZES: QuizCardProps[] = [
+export const tempQuizData: QuizCardProps[] = [
     {
-        title: "SQL Joins Mastery",
-        chapter: "Chapter 4",
-        difficulty: "Hard",
-        questions: 20,
-        duration: 15,
-        xp: 120,
-        participants: 1248,
-        accuracy: 82,
-        badge: 'Trending',
-        status: "active"
-    },
-    {
-        title: "Normalization Rules",
-        chapter: "Chapter 5",
+        type: "new",
+        title: "Master Binary Trees",
+        chapter: "Data Structures",
+        description:
+            "Test your knowledge of traversal, BSTs and tree algorithms.",
         difficulty: "Medium",
-        questions: 15,
+        icon: "dsa",
+        questions: 20,
         duration: 10,
-        xp: 90,
-        participants: 986,
-        accuracy: 95,
-        status: "completed",
-        score: 10
+        accuracy: 82,
     },
+
     {
-        title: "Transaction Management",
-        chapter: "Chapter 8",
-        difficulty: "Expert",
+        type: "new",
+        title: "Graph Algorithms",
+        chapter: "Data Structures",
+        description:
+            "Explore BFS, DFS, shortest paths and graph traversal.",
+        difficulty: "Hard",
+        icon: "dsa",
         questions: 25,
-        duration: 20,
-        xp: 250,
-        participants: 0,
-        accuracy: 0,
-        status: "locked"
-    }
+        duration: 15,
+        accuracy: 76,
+    },
+
+    {
+        type: "continue",
+        title: "C++ STL Mastery",
+        chapter: "C++ Standards",
+        description:
+            "Iterators, algorithms, and container memory overhead.",
+        difficulty: "Expert",
+        icon: "cpp",
+        questions: 15,
+        duration: 7,
+        solved: 8,
+    },
+
+    {
+        type: "continue",
+        title: "Operating Systems Core",
+        chapter: "Operating Systems",
+        description:
+            "Practice processes, threads, scheduling and memory.",
+        difficulty: "Hard",
+        icon: "os",
+        questions: 20,
+        duration: 12,
+        solved: 13,
+    },
+
+    {
+        type: "live",
+        title: "Campus DSA Challenge",
+        chapter: "Data Structures",
+        description: "Real-time competitive sprint with live leaderboard.",
+        icon: "dsa",
+        questions: 20,
+        duration: 10,
+        participants: 12,
+        host: "Arjun",
+    },
+
+    {
+        type: "live",
+        title: "C++ Speed Battle",
+        chapter: "Competitive Programming",
+        description: "Fast-paced C++ challenge with your campus community.",
+        icon: "cpp",
+        questions: 15,
+        duration: 8,
+        participants: 24,
+        host: "Rahul",
+    },
+
+    {
+        type: "join",
+        title: "Operating Systems Battle",
+        chapter: "Operating Systems",
+        description: "Virtual memory, page tables, and scheduler algorithms.",
+        icon: "os",
+        difficulty: "Medium",
+        questions: 20,
+        duration: 10,
+        code: "Q7X4K9",
+        host: "Rahul",
+        participants: 16,
+    },
+
+    {
+        type: "join",
+        title: "Database Challenge",
+        chapter: "Databases",
+        icon: "db",
+        description:  "SQL, indexing, transactions and database design.",
+        difficulty: "Hard",
+        questions: 18,
+        duration: 12,
+        code: "DB82PX",
+        host: "Priya",
+        participants: 9,
+    },
 ];
 
 export const QuizNavigator = () => {
@@ -56,21 +122,12 @@ export const QuizNavigator = () => {
         <View className='mt-3'>
         
             <FlashList
-                data={QUIZZES}
+                data={tempQuizData}
+                keyExtractor={(item, index) => `${item.title}-${index}`}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <QuizCard
-                        title={item.title}
-                        chapter={item.chapter}
-                        difficulty={item.difficulty}
-                        questions={item.questions}
-                        duration={item.duration}
-                        xp={item.xp}
-                        participants={item.participants}
-                        accuracy={item.accuracy}
-                        badge={item.badge}
-                        status={item.status}
-                        score={item.score}
-                        onPress={() => setIsOpen(item)}
+                        {...item}
                     />
                 )}
             />

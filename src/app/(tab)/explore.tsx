@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen';
-import { QuizExploreControls, TrendingSections } from "@/components/screen/explore";
+import { QuizExploreControls, TrendingSections, QuizNavigator } from "@/components/screen/explore";
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
@@ -19,6 +19,7 @@ export default function ExploreScreen() {
     <ScreenWrapper path="/(tab)/explore" onScroll={scrollHandler}>
       <QuizExploreControls />
       <TrendingSections/>
+      <QuizNavigator />
     </ScreenWrapper>
   )
 }
