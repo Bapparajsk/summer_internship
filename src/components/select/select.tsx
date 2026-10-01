@@ -6,11 +6,13 @@ import Animated, { FadeIn, LinearTransition } from 'react-native-reanimated';
 import { cn, PressableFeedback, Separator } from 'heroui-native';
 import { SelectOption, SelectPopoverProps } from "./select.d";
 import { SelectItemList } from "./selectItemlist";
+import { getCommonIcon } from "../lib/icon";
 
     
 export const SelectPopover = ({
     items,
     activeItemId,
+    activeItemIds = undefined,
     itemStyle,
     zIndex,
     activeContent,
@@ -23,6 +25,7 @@ export const SelectPopover = ({
     triggerClassName,
     containerClassName,
     iconSize = 16,
+    separators,
     onSelect,
 }: SelectPopoverProps) => {
 
@@ -34,6 +37,8 @@ export const SelectPopover = ({
         console.warn("SelectPopover: No items provided.");
         return null;
     }
+
+    const { Icon, name: iconName } = getCommonIcon(selectedSelect.iconName || "sensors");
 
     return (
         <View className="relative" style={{ zIndex: zIndex || 10 }}>
@@ -94,8 +99,8 @@ export const SelectPopover = ({
                     ) : (
                         <Fragment>
                             {selectedSelect.iconName && (
-                                <MaterialIcons
-                                    name={selectedSelect.iconName}
+                                <Icon
+                                    name={iconName as any}
                                     size={16}
                                     color="#22D3EE"
                                 />
@@ -127,6 +132,7 @@ export const SelectPopover = ({
                         <SelectItemList
                             items={items}
                             selectedSelect={selectedSelect}
+                            activeItemIds={activeItemIds}
                             setSelectedSelect={setSelectedSelect}
                             setOpen={setOpen}
                             onSelect={onSelect}
@@ -134,6 +140,7 @@ export const SelectPopover = ({
                             itemStyle={itemStyle}
                             showActiveIcon={showActiveIcon}
                             showActiveColor={showActiveColor}
+                            separators={separators}
                         />
                     </Animated.View>
                 )}

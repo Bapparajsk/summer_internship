@@ -139,7 +139,7 @@ export const ProfileHeroCard = ({
                     items={options}
                     showActiveIcon={false}
                     showActiveColor={false}
-                    activeIsOpenText="Account Settings"
+                    activeIsOpenText="Account Center"
                     activeIsOpenTextPosition="right"
                     activeContent={
                         <MaterialCommunityIcons

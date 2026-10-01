@@ -56,7 +56,21 @@ export const iconMap: Record<string, RecordValueType> = {
     }
 };
 
-const commonIconMap: Record<string, IconInfo> = {
+export function getBottomTabIcon(name: string) {
+    return iconMap[name] || {
+        active: {
+            Icon: AntDesign,
+            name: "exclamation"
+        },
+        inactive: {
+            Icon: AntDesign,
+            name: "exclamation"
+        }
+    };
+}
+
+
+const commonIconMap = {
     "dsa" : {
         Icon: Fontisto,
         name: "graphql"
@@ -84,24 +98,41 @@ const commonIconMap: Record<string, IconInfo> = {
     "networks" : {
         Icon: Octicons,
         name: "git-branch"
+    },
+    "edit" :{
+        Icon: Entypo,
+        name: "edit"
+    },
+    "image" : {
+        Icon: MaterialIcons,
+        name: "camera-front"
+    },
+    "logout" : {
+        Icon: AntDesign,
+        name: "logout"
+    },
+    "new-card" : {
+        Icon: MaterialIcons,
+        name: "playlist-add"
+    },
+    "play-circle-outline" : {
+        Icon: Feather,
+        name: "play-circle"
+    },
+    "sensors" : {
+        Icon: MaterialIcons,
+        name: "sensors"
+    },
+    "hash" : {
+        Icon: FontAwesome6,
+        name: "hashtag"
     }
 }
 
-export function getBottomTabIcon(name: string) {
-    return iconMap[name] || {
-        active: {
-            Icon: AntDesign,
-            name: "exclamation"
-        },
-        inactive: {
-            Icon: AntDesign,
-            name: "exclamation"
-        }
-    };
-}
+export type IconName = keyof typeof commonIconMap;
 
-export const getCommonIcon = (name: string) => {
-    return commonIconMap[name] || {
+export const getCommonIcon = (name: IconName) => {
+    return commonIconMap[name] ?? {
         Icon: AntDesign,
         name: "exclamation"
     };

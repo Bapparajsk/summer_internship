@@ -112,15 +112,15 @@ export const tempQuizData: QuizCardProps[] = [
     },
 ];
 
-export const QuizNavigator = () => {
+
+export const QuizList = () => {
 
     // const [activeFilter, setActiveFilter] = useState<FilterOption>(FILTERS[0]);
     const [isOpen, setIsOpen] = useState<QuizCardProps | null>(null);
     const router = useRouter();
 
     return (
-        <View className='mt-3'>
-        
+        <View>
             <FlashList
                 data={tempQuizData}
                 keyExtractor={(item, index) => `${item.title}-${index}`}

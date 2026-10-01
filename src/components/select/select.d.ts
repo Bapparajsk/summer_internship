@@ -1,10 +1,10 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode } from "react";
+import { IconName } from "../lib/icon";
 
 export type SelectOption = {
     id: string;
     label: string;
-    iconName?: keyof typeof MaterialIcons.glyphMap;
+    iconName?: IconName;
     classNames?: {
         container?: string;
         label?: string;
@@ -21,8 +21,8 @@ export type SelectPopoverItemStyle = {
 
 export type SelectPopoverProps = {
     items: SelectOption[];
-    items1?: SelectOption[];
     activeItemId?: string;
+    activeItemIds?: SelectOption["id"][];
     itemStyle?: SelectPopoverItemStyle
     zIndex?: number;
     activeContent?: ReactNode;
@@ -36,4 +36,5 @@ export type SelectPopoverProps = {
     containerClassName?: string;
     onSelect?: (item: SelectOption) => void;
     iconSize?: number;
+    separators?: number[];
 };

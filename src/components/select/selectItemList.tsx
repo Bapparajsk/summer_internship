@@ -1,62 +1,91 @@
 import { Text } from 'react-native'
 import { Fragment } from 'react'
 import { SelectOption, SelectPopoverProps } from './select.d';
-import { cn, PressableFeedback } from 'heroui-native';
+import { cn, PressableFeedback, Separator } from 'heroui-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { isValidValueOrDefault } from './utils';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import If from '../lib/if';
+import { getCommonIcon } from '../lib/icon';
 
-export type SelectItemListProps = Pick<SelectPopoverProps, "items" | "activeItemId" | "itemStyle" | "onSelect" | "showActiveIcon" | "showActiveColor" | "iconSize"> & {
+export type SelectItemListProps = Pick<SelectPopoverProps, "items" | "activeItemId" | "itemStyle" | "onSelect" | "showActiveIcon" | "showActiveColor" | "activeItemIds" | "iconSize" | "separators"> & {
     selectedSelect: SelectOption | undefined;
     setSelectedSelect: (item: SelectOption) => void;
     setOpen: (open: boolean) => void;
 };
 
 
-export const SelectItemList = ({ items, selectedSelect, setSelectedSelect, setOpen, onSelect, itemStyle, showActiveIcon, showActiveColor, iconSize } : SelectItemListProps) => {
+export const SelectItemList = ({
+    items,
+    selectedSelect,
+    activeItemIds,
+    itemStyle,
+    showActiveIcon,
+    showActiveColor,
+    iconSize,
+    separators,
+    setSelectedSelect,
+    setOpen,
+    onSelect
+}: SelectItemListProps) => {
     return (
         <Fragment>
-            {items.map(Select => {
-                const active = selectedSelect?.id === Select.id;
+            {items.map((Select, index) => {
+                const active = (activeItemIds && activeItemIds?.includes(Select.id)) ?? selectedSelect?.id === Select.id;
+
+                const { Icon, name: iconName } = getCommonIcon(Select.iconName || "sensors");
 
                 return (
-                    <Animated.View key={Select.id} entering={FadeIn.delay(100)}>
-                        <PressableFeedback
-                            onPress={() => {
-                                setSelectedSelect(Select);
-                                setOpen(false);
-                                onSelect?.(Select);
-                            }}
-                            className={cn("flex-row items-center rounded-2xl px-2 py-1.5", Select.classNames?.container)}
-                        >
-                            {Select.iconName && (
-                                <MaterialIcons
-                                    name={Select.iconName}
-                                    size={iconSize}
-                                    color={Select.classNames?.startIconColor || (showActiveColor && active ? isValidValueOrDefault(itemStyle?.activeColor, '#22D3EE') : "rgba(255, 255, 255, 0.42)")}
-                                />
-                            )}
+                    <Fragment key={`select-item-${Select.id}`}>
+                        <If condition={Boolean(separators?.includes(index))}>
+                            <If.Then>
+                                <Animated.View entering={FadeIn.delay(100)}>
+                                    <Separator />
+                                </Animated.View>
+                            </If.Then>
+                        </If>
+                        <Animated.View key={`quiz-card-key-${Select.id}`} entering={FadeIn.delay(100)}>
+                            <PressableFeedback
+                                onPress={() => {
+                                    if (activeItemIds) {
+                                        onSelect?.(Select);
+                                    } else {
+                                        setSelectedSelect(Select);
+                                        setOpen(false);
+                                    }
 
-                            <Text
-                                className={cn(`mx-2 font-poppins-semibold`,
-                                    `text-text-secondary`,
-                                    { "text-primary": showActiveColor && active },
-                                    itemStyle?.labelClassName,
-                                    Select.classNames?.label
-                                )}
+                                }}
+                                className={cn("flex-row items-center rounded-2xl px-2 py-1.5", Select.classNames?.container)}
                             >
-                                {Select.label}
-                            </Text>
+                                {Select.iconName && (
+                                    <Icon
+                                        name={iconName as any}
+                                        size={iconSize}
+                                        color={Select.classNames?.startIconColor || (showActiveColor && active ? isValidValueOrDefault(itemStyle?.activeColor, '#22D3EE') : "rgba(255, 255, 255, 0.42)")}
+                                    />
+                                )}
 
-                            {showActiveIcon && active && (
-                                <MaterialIcons
-                                    name="check"
-                                    size={iconSize}
-                                    color={isValidValueOrDefault(Select.classNames?.endIconColor, "#22D3EE")}
-                                />
-                            )}
-                        </PressableFeedback>
-                    </Animated.View>
+                                <Text
+                                    className={cn(`mx-2 font-poppins-semibold`,
+                                        `text-text-secondary`,
+                                        { "text-primary": showActiveColor && active },
+                                        itemStyle?.labelClassName,
+                                        Select.classNames?.label
+                                    )}
+                                >
+                                    {Select.label}
+                                </Text>
+
+                                {showActiveIcon && active && (
+                                    <MaterialIcons
+                                        name="check"
+                                        size={iconSize}
+                                        color={isValidValueOrDefault(Select.classNames?.endIconColor, "#22D3EE")}
+                                    />
+                                )}
+                            </PressableFeedback>
+                        </Animated.View>
+                    </Fragment>
                 );
             })}
         </Fragment>

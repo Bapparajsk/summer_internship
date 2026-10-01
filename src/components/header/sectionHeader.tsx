@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, View } from "react-native";
 import { Href, Link } from "expo-router";
 import { FontAwesome6 } from "@expo/vector-icons";
