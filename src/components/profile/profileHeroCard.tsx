@@ -1,10 +1,10 @@
-import { MaterialIcons } from '../lib/icon';
+import { MaterialCommunityIcons, MaterialIcons } from '../lib/icon';
 import {
     Image,
     Text,
     View
 } from 'react-native';
-import { Button } from 'heroui-native/button';
+import { SelectPopover, SelectOption } from '../select/select';
 
 type ProfileHeroProps = {
     name: string;
@@ -24,6 +24,12 @@ type ProfileHeroProps = {
     onEdit?: () => void;
     onShare?: () => void;
 };
+
+const options: SelectOption[] = [
+    { id: "edit-name", label: "Edit Name", iconName: "edit" },
+    { id: "profile-image", label: "Profile Image", iconName: "account-circle" },
+    { id: "3", label: "Private", iconName: "lock" }
+];
 
 function StatItem({
     icon,
@@ -77,7 +83,7 @@ export const ProfileHeroCard = ({
     onShare,
 }: ProfileHeroProps) => {
     return (
-        <View className="overflow-hidden rounded-[34px] border border-border bg-white/4 px-4 py-4">
+        <View className="relative rounded-[34px] border border-border bg-white/4 px-4 py-4">
             {/* Profile Row */}
             <View className="flex-row items-center">
 
@@ -120,21 +126,21 @@ export const ProfileHeroCard = ({
             </View>
 
             <View className="absolute right-4 top-4 z-10 flex-row gap-2">
-                <Button isIconOnly size='sm' variant='ghost' onPress={onEdit} className='bg-cyan-500/15'>
-                    <MaterialIcons
-                        name="edit"
-                        size={18}
-                        color="#00D5BE"
-                    />
-                </Button>
-                <Button isIconOnly size='sm' variant='outline' onPress={onShare} className='bg-white/3'>
-                    <MaterialIcons
-                        name="share"
-                        size={18}
-                        color="#A1A1AA"
-                    />
-                </Button>
-
+                <SelectPopover
+                    items={options}
+                    showActiveIcon={false}
+                    showActiveColor
+                    activeIsOpenText="Privacy"
+                    activeIsOpenTextPosition="right"
+                    activeContent={
+                        <MaterialCommunityIcons 
+                            name="account-cog-outline" 
+                            size={18} 
+                            color="#9CA3AF" 
+                        />
+                    }
+                    triggerClassName="px-3 py-2"
+                />
             </View>
 
             {/* Stats */}
