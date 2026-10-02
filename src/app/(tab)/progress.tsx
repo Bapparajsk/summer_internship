@@ -1,5 +1,6 @@
 import { ScreenWrapper } from '@/components/screen';
 import { ProgressHeader, ProgressOverview } from '@/components/screen/progress';
+import { AccuracyTrend } from '@/components/screen/progress/accuracyTrend';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
@@ -19,6 +20,11 @@ export default function ProgressScreen() {
     <ScreenWrapper path="/(tab)/progress" onScroll={scrollHandler}>
       <ProgressHeader />
       <ProgressOverview />
+      <AccuracyTrend 
+        onPointPress={(point) => {
+          console.log(point)
+        }}
+      />
     </ScreenWrapper>
   )
 }
