@@ -1,10 +1,23 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { ScreenWrapper } from '@/components/screen';
+import { ProgressHeader } from '@/components/screen/progress/progressHeader';
+import { useScrollStore } from '@/store/scroll-store';
+import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
-export default function progress() {
+export default function ProgressScreen() {
+
+  const scrollY = useScrollStore(
+    (state) => state.scrollY.progress
+  );
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.set(event.contentOffset.y);
+    },
+  });
+
   return (
-    <View>
-      <Text>progress</Text>
-    </View>
+    <ScreenWrapper path="/(tab)/progress" onScroll={scrollHandler}>
+      <ProgressHeader />
+    </ScreenWrapper>
   )
 }

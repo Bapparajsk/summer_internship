@@ -5,10 +5,9 @@ import { Text, View } from 'react-native';
 import Animated, { FadeIn, LinearTransition } from 'react-native-reanimated';
 import { cn, PressableFeedback, Separator } from 'heroui-native';
 import { SelectOption, SelectPopoverProps } from "./select.d";
-import { SelectItemList } from "./selectItemlist";
+import { SelectItemList } from "./selectList";
 import { getCommonIcon } from "../lib/icon";
 
-    
 export const SelectPopover = ({
     items,
     activeItemId,
