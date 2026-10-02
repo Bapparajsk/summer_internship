@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen';
-import { ProgressHeader, ProgressOverview } from '@/components/screen/progress/progressHeader';
+import { ProgressHeader, ProgressOverview } from '@/components/screen/progress';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 

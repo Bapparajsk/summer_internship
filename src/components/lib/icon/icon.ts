@@ -127,6 +127,18 @@ const commonIconMap = {
     "hash" : {
         Icon: FontAwesome5,
         name: "slack-hash"
+    },
+    "check-all" : {
+        Icon: MaterialCommunityIcons,
+        name: "check-all"
+    },
+    "flame" : {
+        Icon: Octicons,
+        name: "flame"
+    },
+    "target" : {
+        Icon: MaterialCommunityIcons,
+        name: "target"
     }
 }
 
