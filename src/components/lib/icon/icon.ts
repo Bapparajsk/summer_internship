@@ -106,7 +106,7 @@ const commonIconMap = {
     },
     "image" : {
         Icon: MaterialIcons,
-        name: "camera-front"
+        name: "add-photo-alternate"
     },
     "logout" : {
         Icon: AntDesign,

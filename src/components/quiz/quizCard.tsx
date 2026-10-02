@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { cn, PressableFeedback } from "heroui-native";
 import { Text, View } from "react-native";
 import { SegmentedProgress } from "../progressBar";
-import { getCommonIcon } from "../lib/icon";
+import { getCommonIcon, IconName } from "../lib/icon";
 
 type Difficulty = "Easy" | "Medium" | "Hard" | "Expert";
 
@@ -34,7 +34,7 @@ export type QuizCardProps = {
     code?: string;
 
     // icon
-    icon?: string;
+    icon?: IconName;
 
     onPress?: () => void;
     onScanQR?: () => void;
@@ -83,16 +83,14 @@ export function QuizCard({
     participants,
     host,
     code,
-    icon = "quiz",
+    icon = "dsa",
     onPress,
     onScanQR,
 }: QuizCardProps) {
     const config = typeConfig[type];
     const { Icon, name: iconName } = getCommonIcon(icon);
 
-    const difficultyColorValue = difficulty
-        ? difficultyColor[difficulty]
-        : "#22D3EE";
+    const difficultyColorValue = difficulty ? difficultyColor[difficulty] : "#22D3EE";
 
 
     return (

@@ -101,7 +101,7 @@ export const tempQuizData: QuizCardProps[] = [
         type: "join",
         title: "Database Challenge",
         chapter: "Databases",
-        icon: "db",
+        icon: "dbms",
         description:  "SQL, indexing, transactions and database design.",
         difficulty: "Hard",
         questions: 18,
