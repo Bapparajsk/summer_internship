@@ -93,7 +93,7 @@ const ProgressCard = ({
                 className="absolute inset-0"
             />
 
-            <Card.Body className="">
+            <Card.Body>
                 <View className="flex-row items-center gap-2.5">
                     <StatIcon type={stat.type} />
                     <Text

@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen';
-import { ProgressHeader } from '@/components/screen/progress/progressHeader';
+import { ProgressHeader, ProgressOverview } from '@/components/screen/progress/progressHeader';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
@@ -18,6 +18,7 @@ export default function ProgressScreen() {
   return (
     <ScreenWrapper path="/(tab)/progress" onScroll={scrollHandler}>
       <ProgressHeader />
+      <ProgressOverview />
     </ScreenWrapper>
   )
 }
