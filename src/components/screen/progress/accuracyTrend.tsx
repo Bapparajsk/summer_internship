@@ -4,7 +4,6 @@ import {
     Text,
     View,
 } from "react-native";
-import { TrendingUp, TrendingDown } from "lucide-react-native";
 import Svg, {
     Circle,
     Defs,
@@ -19,6 +18,7 @@ import Animated, {
     useSharedValue,
     withTiming,
 } from "react-native-reanimated";
+import { Ionicons } from "@expo/vector-icons";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -35,7 +35,6 @@ export type AccuracyPoint = {
 type AccuracyTrendProps = {
     data?: AccuracyPoint[];
     periodLabel?: string;
-    onPointPress?: (point: AccuracyPoint, index: number) => void;
 };
 
 const DEFAULT_DATA: AccuracyPoint[] = [
@@ -227,7 +226,6 @@ function formatChange(change: number) {
 export function AccuracyTrend({
     data = DEFAULT_DATA,
     periodLabel = "vs. previous period",
-    onPointPress,
 }: AccuracyTrendProps) {
     const [chartWidth, setChartWidth] = useState(0);
 
@@ -282,12 +280,12 @@ export function AccuracyTrend({
     }, [linePath]);
 
     const animatedLineProps = useAnimatedProps(() => ({
-        strokeDashoffset: 1 - progress.value,
-        opacity: progress.value,
+        strokeDashoffset: 1 - progress.get(),
+        opacity: progress.get(),
     }));
 
     const animatedAreaProps = useAnimatedProps(() => ({
-        opacity: progress.value * 0.9,
+        opacity: progress.get() * 0.9,
     }));
 
     const lastPoint = points.at(-1);
@@ -314,7 +312,7 @@ export function AccuracyTrend({
                     Accuracy trend
                 </Text>
 
-                <View className="h-[150px] items-center justify-center">
+                <View className="h-37.5 items-center justify-center">
                     <Text className="font-poppins-medium text-xs text-text-tertiary">
                         No accuracy data available
                     </Text>
@@ -323,11 +321,7 @@ export function AccuracyTrend({
         );
     }
 
-    const TrendIcon =
-        change >= 0 ? TrendingUp : TrendingDown;
-
-    const changeColor =
-        change >= 0 ? PRIMARY : "#F87171";
+    const changeColor = change >= 0 ? PRIMARY : "#F87171";
 
     return (
         <View>
@@ -359,10 +353,13 @@ export function AccuracyTrend({
                                             : "rgba(248,113,113,0.10)",
                                 }}
                             >
-                                <TrendIcon
+                                <Ionicons
                                     size={11}
                                     color={changeColor}
                                     strokeWidth={2.5}
+                                    name={
+                                        change >= 0? "trending-up-outline"  : "trending-down-outline"
+                                    }
                                 />
 
                                 <Text
