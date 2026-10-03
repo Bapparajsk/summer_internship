@@ -1,63 +1,77 @@
 import { FlatList, Text, View } from "react-native";
 import { SegmentedProgress } from "../../progressBar";
 import { PressableFeedback } from "heroui-native/pressable-feedback";
-import { getCommonIcon } from "../../lib/icon";
+import { getCommonIcon, IconName } from "../../lib/icon";
 import { SectionHeader } from "../../header/sectionHeader";
 
-const topics = [
+export type Topic = {
+    id: string;
+    name: string;
+    questions: number;
+    progress: number;
+    iconName: IconName;
+};
+
+const topics: Topic[] = [
     {
         id: "dsa",
         name: "DSA",
         questions: 420,
         progress: 82,
-        iconName: "graphql"
+        iconName: "dsa"
     },
     {
         id: "cpp",
         name: "C++",
         questions: 280,
         progress: 64,
+        iconName: "cpp"
     },
     {
         id: "java",
         name: "Java",
         questions: 310,
         progress: 48,
+        iconName: "java"
     },
     {
         id: "python",
         name: "Python",
         questions: 350,
         progress: 72,
+        iconName: "python"
     },
     {
         id: "os",
         name: "OS",
         questions: 195,
         progress: 35,
+        iconName: "os"
     },
     {
         id: "dbms",
         name: "DBMS",
         questions: 240,
         progress: 56,
+        iconName: "dbms"
     },
     {
         id: "networks",
         name: "Networks",
         questions: 180,
         progress: 28,
+        iconName: "networks"
     },
 ];
 
 interface TopicCardProps {
-    item: (typeof topics)[number];
+    item: Topic;
 }
 
 const TopicCard = ({
     item
 }: TopicCardProps) => {
-    const { Icon, name } = getCommonIcon(item.id);
+    const { Icon, name } = getCommonIcon(item.iconName);
 
 
     return (

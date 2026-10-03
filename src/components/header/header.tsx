@@ -9,9 +9,8 @@ import Animated, {
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
-import { PressableFeedback } from "heroui-native";
-import { Fontisto } from "../lib/icon";
 import { useScrollStore } from "@/store/scroll-store";
+import { NotificationButton } from "./notificationButton";
 
 const TITLE_OFFSET = 500;
 const SUBTITLE_OFFSET = 500;
@@ -346,7 +345,6 @@ export const AnimatedHeader = () => {
             }}
             pointerEvents="box-none"
         >
-
             <Animated.View
                 pointerEvents="none"
                 style={[
@@ -392,19 +390,7 @@ export const AnimatedHeader = () => {
                 </Animated.View>
 
                 <Animated.View style={buttonStyle}>
-                    <PressableFeedback
-                        className="h-15 w-15 items-center justify-center rounded-full bg-white/10 border-border border"
-                        accessibilityRole="button"
-                        accessibilityLabel="Notifications"
-                    >
-                        <Fontisto
-                            name="bell"
-                            size={21}
-                            color="white"
-                        />
-
-                        <View className="absolute right-5.25 top-4.75 h-2 w-2 rounded-full bg-primary" />
-                    </PressableFeedback>
+                    <NotificationButton />
                 </Animated.View>
             </View>
         </Animated.View>
