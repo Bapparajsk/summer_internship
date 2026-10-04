@@ -89,7 +89,7 @@ export const UniversityInfoCard = ({
                     color="#22D3EE"
                 />
 
-                <Text className="ml-1 text-xs text-cyan-400">
+                <Text className="ml-1 font-poppins-medium uppercase text-[12px] leading-normal text-cyan-400">
                     Official
                 </Text>
             </PressableFeedback>
