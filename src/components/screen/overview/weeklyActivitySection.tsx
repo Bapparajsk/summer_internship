@@ -1,4 +1,4 @@
-import { Card } from "heroui-native";
+import { Card, cn } from "heroui-native";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
@@ -66,10 +66,12 @@ const ActivityBar = ({
             <View className="h-5 items-center justify-center">
                 {selected && (
                     <Text
-                        className={`font-poppins-medium text-[10px] ${peak
-                            ? "text-primary"
-                            : "text-text-secondary"
-                            }`}
+                        className={cn("font-poppins-medium text-[10px]", 
+                            {
+                                "text-primary" : peak,
+                                "text-text-secondary" : !peak
+                            }
+                        )}
                     >
                         {value}
                     </Text>
@@ -88,20 +90,21 @@ const ActivityBar = ({
                     onPress={onPress}
                     onPressIn={handlePressIn}
                     onPressOut={handlePressOut}
-                    className={`w-full rounded-full ${today
-                            ? "bg-success"
-                            : "bg-primary"
-                        }`}
+                    className={cn("w-full rounded-full", {
+                        "bg-success" : today,
+                        "bg-primary" : !today
+                    })}
                 />
             </View>
 
             {/* Day */}
             <View className="mt-1.5 items-center">
                 <Text
-                    className={`font-poppins-semibold text-xs ${today || selected
-                        ? "text-primary"
-                        : "text-text-tertiary"
-                        }`}
+                    className={cn("font-poppins-semibold text-[10px]",
+                        {
+                            "text-primary": today || selected,
+                            "text-text-tertiary": !(today || selected)
+                        })}
                 >
                     {day}
                 </Text>

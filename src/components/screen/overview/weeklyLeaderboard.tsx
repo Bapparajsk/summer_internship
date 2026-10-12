@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { cn, PressableFeedback } from "heroui-native";
 import { SectionHeader } from "../../header/sectionHeader";
 import { Octicons } from "../../lib/icon";
+import If from "@/components/lib/if";
 
 interface LeaderboardUser {
     rank: number;
@@ -54,11 +55,19 @@ const UserAvatar = ({
 
     return (
         <View className="h-8 w-8 items-center justify-center rounded-full bg-surface-container-highest">
-            <Text className="font-poppins-semibold text-[11px] text-text-secondary">
+            <Text className="font-poppins-semibold text-[10px] leading-normal text-text-secondary">
                 {user.initials}
             </Text>
         </View>
     );
+}
+
+const XpLable = ({ lable }: { lable: string }) => {
+    return (
+        <Text className="font-poppins-semibold text-[10px] font-semibold text-primary">
+            {lable} XP
+        </Text>
+    )
 }
 
 const LeaderboardRow = ({
@@ -66,6 +75,8 @@ const LeaderboardRow = ({
 }: {
     user: LeaderboardUser;
 }) => {
+
+
     return (
         <PressableFeedback
             className={cn("flex-row items-center justify-between rounded-xl px-2.5 py-2 border border-border",
@@ -83,9 +94,9 @@ const LeaderboardRow = ({
                 }}
             />
             {/* Left */}
-            <View className="flex-1 flex-row items-center gap-1.5">
+            <View className="flex-1 flex-row items-center gap-x-1">
                 <Text
-                    className={cn("w-7 text-center font-poppins-semibold text-xs", {
+                    className={cn("w-7 text-center font-poppins-semibold text-[10px]", {
                         "text-primary": user.isCurrentUser,
                         "text-text-tertiary": !user.isCurrentUser
                     })}
@@ -97,7 +108,7 @@ const LeaderboardRow = ({
 
                 <Text
                     numberOfLines={1}
-                    className={cn("flex-1 font-poppins-medium text-sm", {
+                    className={cn("flex-1 font-poppins-semibold text-xs", {
                         "text-primary": user.isCurrentUser,
                         "text-text-primary": !user.isCurrentUser
                     })}
@@ -107,20 +118,19 @@ const LeaderboardRow = ({
             </View>
 
             {/* Right */}
-            {user.change ? (
-                <View className="flex-row items-center gap-1.5">
-                    <Text className="font-poppins-semibold text-[11px] font-semibold text-primary">
-                        +{user.change} XP
-                    </Text>
-                    <Octicons name="arrow-up" size={14} color="#5CC6E2" />
-                </View>
-            ) : (
-                <View className="flex-row items-center gap-1.5">
-                    <Text className="font-poppins-semibold text-[11px] font-semibold text-primary">
-                        {user.xp.toLocaleString()} XP
-                    </Text>
-                </View>
-            )}
+            <View className="flex-row items-center gap-1">
+                <If condition={Boolean(user.change)}>
+                    <If.Then>
+                        <View className="flex-row gap-1">
+                            <XpLable lable={`+${user.change}`} />
+                            <Octicons name="arrow-up" size={14} color="#5CC6E2" />
+                        </View>
+                    </If.Then>
+                    <If.Else>
+                        <XpLable lable={user.xp.toLocaleString()} />
+                    </If.Else>
+                </If>
+            </View>
         </PressableFeedback>
     );
 }
@@ -137,30 +147,19 @@ export const WeeklyLeaderboard = () => {
             />
 
             {/* Card */}
-            <Card className="rounded-[30px] border border-border">
-                {/* Card gradient */}
-                <LinearGradient
-                    colors={[
-                        "#262A31",
-                        "#1C2026",
-                        "transparent",
-                    ]}
-                    locations={[0, 0.5, 1]}
-                    className="absolute inset-0"
-                />
+            <Card className="rounded-[30px] border border-border bg-white/4">
                 <Card.Body className="gap-3">
-
                     {/* League header */}
                     <View className="flex-row items-center justify-between border-b border-border-subtle pb-3">
-                        <View className="flex-row items-center gap-2">
-                            <View className="h-2 w-2 rounded-full bg-primary" />
+                        <View className="flex-row items-center gap-1.5">
+                            <View className="size-1.5 rounded-full bg-primary" />
 
-                            <Text className="font-poppins-semibold text-[11px] uppercase tracking-wider text-text-secondary">
+                            <Text className="font-poppins-semibold text-[10px] uppercase tracking-wider text-text-secondary">
                                 Diamond League
                             </Text>
                         </View>
 
-                        <Text className="font-poppins-medium text-[11px] text-text-tertiary">
+                        <Text className="font-poppins-medium text-[10px] text-text-tertiary">
                             Ends in 2d 14h
                         </Text>
                     </View>

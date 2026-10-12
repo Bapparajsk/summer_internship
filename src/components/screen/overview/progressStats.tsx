@@ -7,7 +7,8 @@ import { LinearGradient } from "expo-linear-gradient";
 
 interface ProgressStat {
     label: string;
-    value: string;
+    value?: number;
+    parentage?: number
     meta: string;
     type: "solved" | "accuracy" | "streak";
 }
@@ -15,19 +16,19 @@ interface ProgressStat {
 const stats: ProgressStat[] = [
     {
         label: "Solved",
-        value: "1,248",
+        value: 1248,
         meta: "+34 this week",
         type: "solved",
     },
     {
         label: "Accuracy",
-        value: "82%",
+        parentage: 82,
         meta: "+4% this week",
         type: "accuracy",
     },
     {
         label: "Day streak",
-        value: "12",
+        value: 12,
         meta: "Best: 18 days",
         type: "streak",
     },
@@ -53,7 +54,7 @@ const StatIcon = ({
     if (type === "solved") {
         return (
             <IconWrapper>
-                <FontAwesome6 name="list-check" size={17} color="#8FA5B8" />
+                <FontAwesome6 name="list-check" size={14} color="#8FA5B8" />
             </IconWrapper>
         );
     }
@@ -68,7 +69,7 @@ const StatIcon = ({
 
     return (
         <IconWrapper>
-            <FontAwesome6 name="fire-flame-curved" size={17} color="#FBBF24" />
+            <FontAwesome6 name="fire-flame-curved" size={14} color="#FBBF24" />
         </IconWrapper>
     );
 }
@@ -82,7 +83,7 @@ const ProgressCard = ({
     const isStreak = stat.type === "streak";
 
     return (
-        <Card className="rounded-xl flex-1 border border-border">
+        <Card className="rounded-xl flex-1 border border-border p-2.5">
             <LinearGradient
                 colors={[
                     "#262A31",
@@ -94,24 +95,28 @@ const ProgressCard = ({
             />
 
             <Card.Body>
-                <View className="flex-row items-center gap-2.5">
+                <View className="flex-row items-center gap-1.5">
                     <StatIcon type={stat.type} />
                     <Text
-                        className={cn("font-poppins-semibold text-xl tracking-tight",
-                            isAccuracy ? "text-primary" : isStreak ? "text-warning" : "text-text-primary"
+                        className={cn("font-poppins-semibold text-base tracking-tight",
+                            {
+                                "text-primary" : isAccuracy,
+                                "text-warning" : isStreak,
+                                "text-text-primary" : !isAccuracy && !isStreak
+                            },
                         )}
                     >
-                        {stat.value}
+                        {stat.value?.toLocaleString() ?? `${stat.parentage}%`}
                     </Text>
                 </View>
 
                 <View className="mt-2">
-                    <Text className="mt-0.5 font-poppins-medium text-xs text-text-secondary">
+                    <Text className="font-poppins-semibold text-[10px] text-text-secondary">
                         {stat.label}
                     </Text>
 
                     <Text
-                        className={cn("mt-0.5 font-poppins-light text-[10px]",
+                        className={cn("font-poppins-medium text-[8px] leading-px",
                             isAccuracy ? "text-primary" : isStreak ? "text-warning" : "text-text-tertiary")}
                     >
                         {stat.meta}

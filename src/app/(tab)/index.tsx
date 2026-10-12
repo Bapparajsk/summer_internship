@@ -8,6 +8,7 @@ const tip = {
   topic: "DBMS",
   label: "Remember",
   text: "A database index can significantly reduce lookup cost.",
+  highlight: "O(1)"
 }
 
 export default function OverviewScreen() {

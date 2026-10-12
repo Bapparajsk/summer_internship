@@ -353,7 +353,7 @@ export const AnimatedHeader = () => {
                         top: -insets.top,
                         left: 0,
                         right: 0,
-                        height: insets.top + 70,
+                        height: insets.top + 60,
                         overflow: "hidden",
                     },
                     backgroundStyle,

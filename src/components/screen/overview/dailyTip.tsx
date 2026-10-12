@@ -13,13 +13,13 @@ export const DailyTip = ({ tip }: DailyTipProps) => {
                 <FontAwesome6 name="lightbulb" size={17} color="#5CC6E2" />
             </View>
 
-            <Text className="flex-1 font-poppins-medium text-xs leading-5 text-text-secondary">
+            <Text numberOfLines={4} className="flex-1 font-poppins-medium text-[10px] text-text-secondary">
                 <Text className="font-poppins-semibold text-text-primary">
                     {tip.label}:
                 </Text>{" "}
                 {tip.text}{" "}
                 {tip.highlight && (
-                    <Text className="font-mono text-primary">
+                    <Text className="font-poppins-semibold text-primary">
                         {tip.highlight}
                     </Text>
                 )}
