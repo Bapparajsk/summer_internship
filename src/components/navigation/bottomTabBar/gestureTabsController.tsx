@@ -8,7 +8,7 @@ import { scheduleOnRN } from "react-native-worklets";
 import Tab from "./tab";
 import { AnimatedView } from "./tabIndicator";
 
-const TAB_WIDTH = 80;
+const TAB_WIDTH = 64;
 const INDICATOR_OFFSET = 3;
 
 export type GestureTabsControllerProps =
@@ -42,7 +42,6 @@ export const GestureTabsController = ({
 
             scheduleOnRN(Haptics.selectionAsync);
         })
-
         .onUpdate(event => {
 
             const maxX = (routes.length - 1) * TAB_WIDTH + INDICATOR_OFFSET;
@@ -71,7 +70,6 @@ export const GestureTabsController = ({
                 hoveredIndex.value = nextIndex;
             }
         })
-
         .onEnd(() => {
 
             const newIndex = hoveredIndex.value;

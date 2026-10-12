@@ -3,6 +3,7 @@ import { SegmentedProgress } from "../../progressBar";
 import { PressableFeedback } from "heroui-native/pressable-feedback";
 import { getCommonIcon, IconName } from "../../lib/icon";
 import { SectionHeader } from "../../header/sectionHeader";
+import { LinearGradient } from "expo-linear-gradient";
 
 export type Topic = {
     id: string;
@@ -76,7 +77,7 @@ const TopicCard = ({
 
     return (
         <PressableFeedback
-            className={`mr-2 h-24 w-34 overflow-hidden rounded-[28px] p-3.5 border border-border bg-white/4`}
+            className={`mr-2 h-24 w-34 overflow-hidden rounded-[28px] p-3 border border-border bg-white/4`}
         >
             <PressableFeedback.Ripple
                 animation={{
@@ -86,12 +87,19 @@ const TopicCard = ({
                 }}
             />
             {/* Top */}
-            <View className="flex-row items-center gap-2">
+            <View className="flex-row items-center gap-1">
                 <View
-                    className={`h-9 w-9 items-center justify-center rounded-xl bg-surface-container-highest`}
+                    className={`size-9 relative items-center justify-center overflow-hidden rounded-full`}
                 >
+                    {/* soft topleft to bottom right gradient primimua card */}
+                    <LinearGradient
+                        colors={['#8FA5B8', '#4A6D8C']}
+                        start={[0, 0]}
+                        end={[1, 1]}
+                        className="absolute inset-0 opacity-20"
+                    />
                     <Icon
-                        size={19}
+                        size={17}
                         color={"#8FA5B8"}
                         strokeWidth={2}
                         name={name}
@@ -101,7 +109,7 @@ const TopicCard = ({
                 <View>
                     <Text
                         numberOfLines={1}
-                        className={`font-poppins-semibold text-sm text-text-primary`}
+                        className={`font-poppins-semibold text-xs text-text-primary`}
                     >
                         {item.name}
                     </Text>
@@ -113,10 +121,10 @@ const TopicCard = ({
             <View className="mt-auto">
 
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-poppins-medium self-end text-[11px] text-text-tertiary">
+                    <Text className="font-poppins-medium self-end text-[10px] text-text-tertiary">
                         Questions
                     </Text>
-                    <Text className="font-poppins-medium self-end text-[11px] text-text-tertiary">
+                    <Text className="font-poppins-medium self-end text-[10px] text-text-tertiary">
                         {item.questions}
                     </Text>
                 </View>
@@ -133,7 +141,7 @@ const TopicCard = ({
 export const TopicSelection = () => {
 
     return (
-        <View className="gap-3">
+        <View className="gap-1.5">
 
             <SectionHeader
                 title="Choose a topic"
@@ -148,7 +156,7 @@ export const TopicSelection = () => {
                 keyExtractor={(item) => item.id}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                    paddingHorizontal: 16,
+                    paddingHorizontal: 12,
                 }}
                 renderItem={({ item }) => (
                     <TopicCard

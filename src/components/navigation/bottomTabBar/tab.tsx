@@ -16,6 +16,8 @@ export type TabProps =
 
 const isProfileTab = (label: string) => label.toLowerCase() === 'profile';
 
+const ICON_SIZE = 18;
+
 export default function Tab({
     route,
     index,
@@ -56,38 +58,41 @@ export default function Tab({
             key={route.key}
             onPress={onPress}
             activeOpacity={0.8}
-            className={'w-20 h-14 rounded-full items-center justify-center overflow-hidden'}
+            className={'w-16 h-12 rounded-full items-center justify-center overflow-hidden border border-transparent'}
         >
-            {isProfileTab(label.toString()) ?
-                <Image
-                    style={{
-                        width: 22,
-                        height: 22,
-                        borderRadius: 9999,
-                    }}
-                    source={{ uri: "https://img.freepik.com/premium-photo/avatar-profile-picture-white-background_880763-10255.jpg?w=1480" }}
-                />
-                :
-                <If condition={isFocused}>
-                    <If.Then>
-                        <active.Icon
-                            name={active.name}
-                            size={22}
-                            color={"rgba(255, 255, 255, 0.95)"}
-                        />
-                    </If.Then>
+            <If condition={isProfileTab(label.toString())}>
+                <If.Then>
+                    <Image
+                        style={{
+                            width: ICON_SIZE,
+                            height: ICON_SIZE,
+                            borderRadius: 9999,
+                        }}
+                        source={{ uri: "https://img.freepik.com/premium-photo/avatar-profile-picture-white-background_880763-10255.jpg?w=1480" }}
+                    />
+                </If.Then>
+                <If.Else>
+                    <If condition={isFocused}>
+                        <If.Then>
+                            <active.Icon
+                                name={active.name}
+                                size={ICON_SIZE}
+                                color={"rgba(255, 255, 255, 0.95)"}
+                            />
+                        </If.Then>
 
-                    <If.Else>
-                        <inactive.Icon
-                            name={inactive.name}
-                            size={22}
-                            color={"rgba(255, 255, 255, 0.30)"}
-                        />
-                    </If.Else>
-                </If>}
-
+                        <If.Else>
+                            <inactive.Icon
+                                name={inactive.name}
+                                size={ICON_SIZE}
+                                color={"rgba(255, 255, 255, 0.30)"}
+                            />
+                        </If.Else>
+                    </If>
+                </If.Else>
+            </If>
             <Text
-                className={'text-xs mt-0.5 font-poppins-semibold'}
+                className={'text-[9px] leading-normal mt-0.5 font-poppins-semibold'}
                 style={{ color: isFocused ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.30)" }}
             >
                 {label.toString()}

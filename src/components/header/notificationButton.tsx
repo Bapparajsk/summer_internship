@@ -14,17 +14,17 @@ export const NotificationButton = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
             <BottomSheet.Trigger asChild>
                 <PressableFeedback
-                    className="h-15 w-15 items-center justify-center rounded-full bg-white/10 border-border border"
+                    className="size-13 items-center justify-center rounded-full bg-white/10 border-border border"
                     accessibilityRole="button"
                     accessibilityLabel="Notifications"
                 >
                     <Fontisto
                         name="bell"
-                        size={21}
+                        size={18}
                         color="white"
                     />
 
-                    <View className="absolute right-5.25 top-4.75 h-2 w-2 rounded-full bg-primary" />
+                    <View className="absolute right-4.25 top-3.75 h-2 w-2 rounded-full bg-primary" />
                 </PressableFeedback>
             </BottomSheet.Trigger>
             <BottomSheet.Portal>

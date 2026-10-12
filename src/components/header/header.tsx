@@ -377,13 +377,13 @@ export const AnimatedHeader = () => {
             <View className="flex-row items-center justify-between px-5">
                 <Animated.View style={textContainerStyle}>
                     <Animated.View style={titleStyle}>
-                        <Text className="text-text-primary text-2xl tracking-wide font-poppins-semibold">
+                        <Text className="text-text-primary text-xl tracking-wide font-poppins-semibold">
                             Hello, Bappa Raj
                         </Text>
                     </Animated.View>
 
                     <Animated.View style={subtitleStyle}>
-                        <Text className="text-text-secondary text-xs font-poppins-medium">
+                        <Text className="text-text-secondary text-[10px] font-poppins-medium">
                             Good morning, Engineer!
                         </Text>
                     </Animated.View>

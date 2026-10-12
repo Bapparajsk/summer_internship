@@ -16,8 +16,8 @@ export const AnimatedView = ({
                 {
                     position: "absolute",
 
-                    width: 80,
-                    height: 56,
+                    width: 64,
+                    height: 48,
 
                     borderRadius: 999,
                     backgroundColor: "#7BE2FF80",

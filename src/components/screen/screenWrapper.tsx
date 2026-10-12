@@ -25,7 +25,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
     stickyHeaderIndices,
     stickyHeaderHiddenOnScroll,
     showFooter = true,
-    SCREEN_HORIZONTAL_PADDING = 16,
+    SCREEN_HORIZONTAL_PADDING = 12,
     onScroll
 }) => {
 
@@ -58,7 +58,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                     paddingHorizontal: SCREEN_HORIZONTAL_PADDING,
                     paddingBottom: 40 + bottomBarHeight,
                     position: "relative",
-                    gap: 20,
+                    gap: 12,
                 }}
                 stickyHeaderIndices={stickyHeaderIndices}
                 stickyHeaderHiddenOnScroll={stickyHeaderHiddenOnScroll}
@@ -72,7 +72,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
 
 export const ContentWrapper: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className }) => {
     return (
-        <View className={cn("px-4", className)}>
+        <View className={cn("px-3", className)}>
             {children}
         </View>
     );

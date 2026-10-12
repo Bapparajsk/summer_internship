@@ -16,6 +16,28 @@ export type SectionHeaderProps = {
     className?: string;
 };
 
+const RightContent = ({ rightText, showRightIcon, rightIcon }: Pick<SectionHeaderProps, 'rightText' | 'showRightIcon' | 'rightIcon'>) => {
+    return (
+        <View className="flex-row items-center gap-0.5">
+            <Text className="font-poppins-medium text-xs text-primary">
+                {rightText}
+            </Text>
+
+            <If condition={Boolean(showRightIcon)}>
+                <If.Then>
+                    {(rightIcon ?? (
+                        <FontAwesome6
+                            name="angle-right"
+                            size={12}
+                            color="#5CC6E2"
+                        />
+                    ))}
+                </If.Then>
+            </If>
+        </View>
+    );
+}
+
 export const SectionHeader = ({
     href,
     title,
@@ -30,12 +52,12 @@ export const SectionHeader = ({
     const content = (
         <View className={cn("flex-row items-center justify-between", className)}>
             {/* Left */}
-            <View className="flex-row items-center gap-2">
+            <View className="flex-row items-center gap-1">
                 {startIcon}
 
                 <If condition={(typeof title === "string")}>
                     <If.Then>
-                        <Text className="font-poppins-semibold text-base text-text-primary">
+                        <Text className="font-poppins-semibold text-sm text-text-primary">
                             {title}
                         </Text>
                     </If.Then>
@@ -53,38 +75,20 @@ export const SectionHeader = ({
                     <View className="flex-row items-center">
                         <If condition={Boolean(href)}>
                             <If.Then>
-                                <Link href={href} asChild>
-                                    <View className="flex-row items-center gap-1">
-                                        <Text className="font-poppins-medium text-sm text-primary">
-                                            {rightText}
-                                        </Text>
-
-                                        {showRightIcon &&
-                                            (rightIcon ?? (
-                                                <FontAwesome6
-                                                    name="angle-right"
-                                                    size={14}
-                                                    color="#5CC6E2"
-                                                />
-                                            ))}
-                                    </View>
+                                <Link href={href as Href} asChild>
+                                    <RightContent
+                                        rightText={rightText}
+                                        showRightIcon={showRightIcon}
+                                        rightIcon={rightIcon}
+                                    />
                                 </Link>
                             </If.Then>
                             <If.Else>
-                                <View className="flex-row items-center gap-1">
-                                    <Text className="font-poppins-medium text-sm text-primary">
-                                        {rightText}
-                                    </Text>
-
-                                    {showRightIcon &&
-                                        (rightIcon ?? (
-                                            <FontAwesome6
-                                                name="angle-right"
-                                                size={14}
-                                                color="#5CC6E2"
-                                            />
-                                        ))}
-                                </View>
+                                <RightContent
+                                    rightText={rightText}
+                                    showRightIcon={showRightIcon}
+                                    rightIcon={rightIcon}
+                                />
                             </If.Else>
                         </If>
 

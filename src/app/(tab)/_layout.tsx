@@ -1,5 +1,5 @@
 import { AnimatedHeader } from "@/components/header";
-import { BottomTabBar } from "@/components/navigation/bottomTabBar/tabBar";
+import { BottomTabBar } from "@/components/navigation/bottomTabBar";
 import { useScrollStore } from "@/store/scroll-store";
 import { Tabs } from "expo-router";
 
