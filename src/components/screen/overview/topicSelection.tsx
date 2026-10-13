@@ -4,6 +4,7 @@ import { PressableFeedback } from "heroui-native/pressable-feedback";
 import { getCommonIcon, IconName } from "../../lib/icon";
 import { SectionHeader } from "../../header/sectionHeader";
 import { LinearGradient } from "expo-linear-gradient";
+import { ShimmerCard } from "@/components/ui/shimmerCard";
 
 export type Topic = {
     id: string;

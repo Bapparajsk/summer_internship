@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Card } from "heroui-native/card";
 import { PressableFeedback } from "heroui-native";
 import { Feather, FontAwesome6 } from "../../lib/icon";
+import { ShimmerCard } from "@/components/ui/shimmerCard";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -202,24 +203,26 @@ export const QuickQuizCard = ({
                 </PressableFeedback>
 
                 {/* Primary */}
-                <PressableFeedback
-                    onPress={onStart}
-                    className="h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-primary-border"
-                >
-                    <FontAwesome6 name="play" size={14} color="white" />
+                <ShimmerCard className="rounded-xl flex-1">
+                    <PressableFeedback
+                        onPress={onStart}
+                        className="h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-primary-border"
+                    >
+                        <FontAwesome6 name="play" size={14} color="white" />
 
-                    {/* soft top left to bottom right gradient */}
-                    <LinearGradient
-                        colors={["#5CC6E2", "#5CC6E2AA", "transparent"]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
-                        className="absolute inset-0 rounded-xl opacity-20"
-                    />
+                        {/* soft top left to bottom right gradient */}
+                        <LinearGradient
+                            colors={["#5CC6E2", "#5CC6E2AA", "transparent"]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            className="absolute inset-0 rounded-xl opacity-20"
+                        />
 
-                    <Text className="font-poppins-semibold text-xs text-text-primary">
-                        Start Quiz
-                    </Text>
-                </PressableFeedback>
+                        <Text className="font-poppins-semibold text-xs text-text-primary">
+                            Start Quiz
+                        </Text>
+                    </PressableFeedback>
+                </ShimmerCard>
             </Card.Footer>
         </Card>
     );

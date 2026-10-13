@@ -1,10 +1,10 @@
 import { Image, Text, View } from "react-native";
 import { Card } from "heroui-native/card";
-import { LinearGradient } from "expo-linear-gradient";
 import { cn, PressableFeedback } from "heroui-native";
 import { SectionHeader } from "../../header/sectionHeader";
 import { Octicons } from "../../lib/icon";
 import If from "@/components/lib/if";
+import { ShimmerCard } from "@/components/ui/shimmerCard";
 
 interface LeaderboardUser {
     rank: number;
@@ -62,21 +62,15 @@ const UserAvatar = ({
     );
 }
 
-const XpLable = ({ lable }: { lable: string }) => {
+const XpLabel = ({ label }: { label: string }) => {
     return (
         <Text className="font-poppins-semibold text-[10px] font-semibold text-primary">
-            {lable} XP
+            {label} XP
         </Text>
     )
 }
 
-const LeaderboardRow = ({
-    user,
-}: {
-    user: LeaderboardUser;
-}) => {
-
-
+const LeaderboardUser = ({ user }: { user: LeaderboardUser }) => {
     return (
         <PressableFeedback
             className={cn("flex-row items-center justify-between rounded-xl px-2.5 py-2 border border-border",
@@ -122,16 +116,31 @@ const LeaderboardRow = ({
                 <If condition={Boolean(user.change)}>
                     <If.Then>
                         <View className="flex-row gap-1">
-                            <XpLable lable={`+${user.change}`} />
+                            <XpLabel label={`+${user.change}`} />
                             <Octicons name="arrow-up" size={14} color="#5CC6E2" />
                         </View>
                     </If.Then>
                     <If.Else>
-                        <XpLable lable={user.xp.toLocaleString()} />
+                        <XpLabel label={user.xp.toLocaleString()} />
                     </If.Else>
                 </If>
             </View>
         </PressableFeedback>
+    )
+}
+
+const LeaderboardRow = ({ user }: { user: LeaderboardUser }) => {
+    return (
+        <If condition={user.rank === 1}>
+            <If.Then>
+                <ShimmerCard className={"rounded-xl"}>
+                    <LeaderboardUser user={user} />
+                </ShimmerCard>
+            </If.Then>
+            <If.Else>
+                <LeaderboardUser user={user} />
+            </If.Else>
+        </If>
     );
 }
 
@@ -150,7 +159,7 @@ export const WeeklyLeaderboard = () => {
             <Card className="rounded-[30px] border border-border bg-white/4">
                 <Card.Body className="gap-3">
                     {/* League header */}
-                    <View className="flex-row items-center justify-between border-b border-border-subtle pb-3">
+                    <View className="flex-row items-center j ustify-between border-b border-border-subtle pb-3">
                         <View className="flex-row items-center gap-1.5">
                             <View className="size-1.5 rounded-full bg-primary" />
 

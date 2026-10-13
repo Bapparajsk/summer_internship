@@ -1,11 +1,12 @@
 import { Card, cn } from "heroui-native";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withSpring,
 } from "react-native-reanimated";
+
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -66,10 +67,10 @@ const ActivityBar = ({
             <View className="h-5 items-center justify-center">
                 {selected && (
                     <Text
-                        className={cn("font-poppins-medium text-[10px]", 
+                        className={cn("font-poppins-medium text-[10px]",
                             {
-                                "text-primary" : peak,
-                                "text-text-secondary" : !peak
+                                "text-primary": peak,
+                                "text-text-secondary": !peak
                             }
                         )}
                     >
@@ -91,8 +92,8 @@ const ActivityBar = ({
                     onPressIn={handlePressIn}
                     onPressOut={handlePressOut}
                     className={cn("w-full rounded-full", {
-                        "bg-success" : today,
-                        "bg-primary" : !today
+                        "bg-success": today,
+                        "bg-primary": !today
                     })}
                 />
             </View>
