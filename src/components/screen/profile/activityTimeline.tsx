@@ -1,6 +1,7 @@
 import { FontAwesome6, MaterialIcons, Octicons } from '../../lib/icon';
 import { Text, View } from 'react-native';
 import { SectionHeader } from '../../header/sectionHeader';
+import { FlashList } from '@shopify/flash-list';
 
 export type ActivityType =
     | 'payment'
@@ -92,7 +93,7 @@ function ActivityItem({
     return (
         <View className="flex-row">
             {/* Timeline */}
-            <View className="items-center mr-4">
+            <View className="items-center mr-2">
 
                 <View
                     className="h-10 w-10 items-center justify-center rounded-full border border-white/10"
@@ -121,8 +122,8 @@ function ActivityItem({
             {/* Content */}
             <View className="flex-1 pb-6">
 
-                <View className="flex-row items-start justify-between">
-                    <Text style={{ color: config.color }} className="flex-1 font-poppins-semibold">
+                <View className="flex-row items-start justify-between mt-1">
+                    <Text style={{ color: config.color }} className="flex-1 text-xs font-poppins-semibold">
                         {activity.title}
                     </Text>
 
@@ -131,7 +132,7 @@ function ActivityItem({
                     </Text>
                 </View>
 
-                <Text className="mt-1 font-poppins-light text-[11px] text-text-secondary">
+                <Text className="font-poppins-medium text-[10px] text-text-secondary">
                     {activity.description}
                 </Text>
 
@@ -144,15 +145,19 @@ const ActivityTimeline = ({
     activities,
 }: ActivityTimelineProps) => {
     return (
-        <View className="rounded-[34px] border border-border bg-white/4 p-5">
-            {activities.map((activity, index) => (
+        <View className="rounded-[34px] border border-border bg-white/4 p-3">
+            {/* {activities.map((activity, index) => (
                 <ActivityItem
                     key={activity.id}
                     activity={activity}
                     isLast={index === activities.length - 1}
                 />
-            ))}
-
+            ))} */}
+            <FlashList
+                data={activities}
+                keyExtractor={item => item.id}
+                renderItem={(activity) => <ActivityItem activity={activity.item} isLast={activity.index === activities.length - 1}/>}
+            />
         </View>
     );
 }

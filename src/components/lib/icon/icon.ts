@@ -132,6 +132,14 @@ const commonIconMap = {
         Icon: MaterialCommunityIcons,
         name: "check-all"
     },
+    "check-circle":{
+        Icon: Octicons,
+        name: "check-circle"
+    },
+    "minus-circle": {
+        Icon: MaterialCommunityIcons,
+        name: "minus-circle-outline"
+    },
     "flame" : {
         Icon: Octicons,
         name: "flame"
@@ -139,6 +147,14 @@ const commonIconMap = {
     "target" : {
         Icon: MaterialCommunityIcons,
         name: "target"
+    },
+    "alert" : {
+        Icon: Octicons,
+        name: "alert"
+    },
+    "x-circle": {
+        Icon: Octicons,
+        name: "x-circle",
     }
 }
 

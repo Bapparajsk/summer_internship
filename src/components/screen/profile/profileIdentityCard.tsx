@@ -51,11 +51,6 @@ export const ProfileIdentityCard =({
                 <View className="flex-row items-center justify-between">
                     <View className="flex-row items-center gap-2">
                         <View className="h-10 w-10 items-center justify-center rounded-xl border border-primary-border bg-surface-container-high">
-                            {/* <Award
-                                size={21}
-                                color="#5CC6E2"
-                                strokeWidth={2}
-                            /> */}
                             <FontAwesome6 name="award" size={21} color="#5CC6E2" />
                         </View>
 
@@ -64,7 +59,7 @@ export const ProfileIdentityCard =({
                                 Quiz Explorer
                             </Text>
 
-                            <Text className="mt-0.5 font-poppins-medium text-xs text-text-secondary">
+                            <Text className="mt-0.5 font-poppins-medium text-[10px] text-text-secondary">
                                 {rank}
                             </Text>
                         </View>
@@ -84,7 +79,7 @@ export const ProfileIdentityCard =({
                             {solved.toLocaleString()}
                         </Text>
 
-                        <Text className="mt-0.5 font-poppins-medium text-[10px] text-text-tertiary">
+                        <Text className="font-poppins-semibold text-[8px] text-text-tertiary">
                             QUESTIONS SOLVED
                         </Text>
                     </View>
@@ -96,7 +91,7 @@ export const ProfileIdentityCard =({
                             {accuracy}%
                         </Text>
 
-                        <Text className="mt-0.5 font-poppins-medium text-[10px] text-text-tertiary">
+                        <Text className="font-poppins-semibold text-[8px] text-text-tertiary">
                             AVERAGE ACCURACY
                         </Text>
                     </View>
@@ -104,11 +99,11 @@ export const ProfileIdentityCard =({
 
                 {/* XP Header */}
                 <View className="mb-1.5 flex-row items-center justify-between">
-                    <Text className="font-poppins-medium text-xs text-text-secondary">
+                    <Text className="font-poppins-semibold text-xs text-text-secondary">
                         Experience
                     </Text>
 
-                    <Text className="font-poppins-semibold text-[10px] leading-normal text-text-primary">
+                    <Text className="font-poppins-semibold text-[10px]   text-text-primary">
                         {currentXP.toLocaleString()} /{" "}
                         {nextLevelXP.toLocaleString()} XP
                     </Text>
@@ -125,7 +120,7 @@ export const ProfileIdentityCard =({
 
                 {/* Footer */}
                 <View className="mt-2 flex-row items-center justify-between">
-                    <Text className="font-poppins-medium text-[10px] text-text-tertiary">
+                    <Text className="font-poppins-semibold text-[10px] text-text-tertiary">
                         {remainingXP > 0
                             ? `${remainingXP} XP to Level ${level + 1}`
                             : `Level ${level + 1} unlocked`}

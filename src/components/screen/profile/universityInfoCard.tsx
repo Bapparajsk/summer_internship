@@ -1,6 +1,7 @@
 import { MaterialIcons } from '../../lib/icon';
 import { Image, Text, View } from 'react-native';
 import { PressableFeedback, Toast, useToast } from 'heroui-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type UniversityInfoCardProps = {
     universityName: string;
@@ -46,7 +47,7 @@ export const UniversityInfoCard = ({
     };
 
     return (
-        <View className="overflow-hidden rounded-[30px] border border-border bg-white/4 p-5">
+        <View className="overflow-hidden rounded-[34px] border border-border bg-white/4 p-5">
 
             {/* Background Glow */}
             <View className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan-400/10" />
@@ -55,24 +56,24 @@ export const UniversityInfoCard = ({
             <View className="flex-row items-center">
 
                 {/* University Logo */}
-                <View className="h-16 w-16 items-center justify-center rounded-[28px] bg-white p-2">
+                <View className="size-14">
                     <Image
                         source={{ uri: "https://static.vecteezy.com/system/resources/previews/024/765/885/non_2x/education-badge-logo-design-university-high-school-emblem-logo-template-vector.jpg" }}
-                        className="h-full w-full rounded-[28px]"
+                        className="h-full w-full rounded-[24px]"
                         resizeMode="cover"
                     />
                 </View>
 
                 {/* University Details */}
-                <View className="ml-4 flex-1">
+                <View className="ml-2 flex-1">
                     <Text
                         numberOfLines={1}
-                        className="text-lg text-text-primary font-poppins-semibold"
+                        className="text-base text-text-primary font-poppins-semibold"
                     >
                         {universityName}
                     </Text>
 
-                    <Text className="mt-1 text-text-secondary text-xs font-poppins-medium">
+                    <Text className="text-text-secondary text-xs font-poppins-semibold">
                         {campus}
                     </Text>
                 </View>
@@ -81,7 +82,7 @@ export const UniversityInfoCard = ({
 
             <PressableFeedback
                 onPress={openUniversityWebsite}
-                className="absolute top-3 right-3 flex-row items-center rounded-full bg-cyan-500/10 px-3 py-2"
+                className="absolute top-3 right-3 flex-row items-center rounded-full bg-cyan-500/10 px-2 py-1"
             >
                 <MaterialIcons
                     name="language"
@@ -89,25 +90,25 @@ export const UniversityInfoCard = ({
                     color="#22D3EE"
                 />
 
-                <Text className="ml-1 font-poppins-medium uppercase text-[12px] leading-normal text-cyan-400">
+                <Text className="ml-0.5 font-poppins-medium uppercase text-[10px] leading-normal text-cyan-400">
                     Official
                 </Text>
             </PressableFeedback>
 
             {/* Info Grid */}
-            <View className="mt-5 flex-row gap-3">
-                <InfoCard
-                    iconColor='#22D3EE'
-                    iconName='school'
-                    title='Department'
-                    value={department}
-                />
-
+            <View className="mt-3 gap-2">
                 <InfoCard
                     iconColor='#A78BFA'
                     iconName='person'
                     title='Principal'
                     value={advisor}
+                />
+
+                <InfoCard
+                    iconColor='#22D3EE'
+                    iconName='school'
+                    title='Department'
+                    value={department}
                 />
             </View>
 
@@ -127,7 +128,18 @@ function InfoCard({
     value: string;
 }) {
     return (
-        <View className="flex-1 rounded-2xl bg-white/4 p-3">
+        <View 
+            className="relative flex-1 overflow-hidden rounded-2xl py-2 px-2 border"
+            style={{ borderColor: iconColor+"56" }}
+        >
+
+            <LinearGradient
+                colors={[iconColor, iconColor +"AA", "transparent"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                className="absolute inset-0 rounded-xl opacity-20"
+            />
+
             <View className="flex-row items-center">
                 <MaterialIcons
                     name={iconName as any}
@@ -135,14 +147,14 @@ function InfoCard({
                     color={iconColor}
                 />
 
-                <Text className="ml-2 text-xs uppercase text-text-secondary font-poppins-semibold">
+                <Text className="ml-1 text-xs uppercase text-text-secondary font-poppins-semibold">
                     {title}
                 </Text>
             </View>
 
             <Text
                 numberOfLines={1}
-                className="mt-2 text-xs text-text-primary font-poppins-medium"
+                className="mt-0.5 text-[10px] text-text-primary font-poppins-medium"
             >
                 {value}
             </Text>
