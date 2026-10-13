@@ -2,14 +2,14 @@ import { LinearGradient } from "expo-linear-gradient";
 import { PressableFeedback } from "heroui-native";
 import { Text, View } from "react-native";
 import { SegmentedProgress } from "../../progressBar";
-import { getCommonIcon } from "../../lib/icon";
+import { getCommonIcon, IconName } from "../../lib/icon";
 
 type Discipline = {
     id: string;
     title: string;
     quizzes: string;
     progress: number;
-    icon: string;
+    icon: IconName;
     keyWords: string[];
     tag: string;
 };
@@ -21,7 +21,7 @@ const disciplines: Discipline[] = [
         quizzes: "80+ quizzes",
         progress: 64,
         icon: "cpp",
-        keyWords: ["C++", "Programming", "Best Practices"],
+        keyWords: ["Smart Pointers & (RAII)", "Compile-Time Evaluation", "Lambda Expressions", "Modern Type Safety Overhaul"],
         tag: "new",
     },
     {
@@ -30,7 +30,7 @@ const disciplines: Discipline[] = [
         quizzes: "60+ quizzes",
         progress: 35,
         icon: "os",
-        keyWords: ["Operating Systems", "Kernel", "System Programming"],
+        keyWords: ["System Calls", "File System Management", "Process Management & Scheduling"],
         tag: "new",
     }
 ];
@@ -49,30 +49,20 @@ function DisciplineCard({
     return (
         <PressableFeedback
             onPress={() => onPress?.(item)}
-            className="flex-1 w-full"
+            className="flex-1"
         >
-
-            <View className="relative min-h-33 rounded-[34px] border border-border bg-white/4 overflow-hidden p-3.5">
+            <View className="relative rounded-[28px] h-40 border border-border bg-white/4 overflow-hidden p-3">
                 <LinearGradient
                     colors={[
-                        "#262A31",
-                        "#1C2026",
+                        "#5CC6E2",
+                        "#5CC6E280",
                         "transparent",
                     ]}
-                    start={{ x: 1, y: 0 }}
-                    end={{ x: 0, y: 1 }}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
                     locations={[0, 0.5, 1]}
-                    className="absolute inset-0"
+                    className="absolute inset-0 opacity-20"
                 />
-
-                {/* fechner Chip */}
-                <View className="absolute top-3 right-3">
-                    <View className="rounded-full bg-primary-soft px-2 py-1">
-                        <Text className="font-poppins-medium text-[8px] text-primary leading-normal">
-                            {item.tag}
-                        </Text>
-                    </View>
-                </View>
 
                 {/* Icon + Arrow */}
                 <View className="flex-row items-center justify-between">
@@ -87,7 +77,7 @@ function DisciplineCard({
                         </View>
                         <Text
                             numberOfLines={1}
-                            className="font-poppins-semibold text-sm text-text-primary"
+                            className="font-poppins-semibold text-xs text-text-primary"
                         >
                             {item.title}
                         </Text>
@@ -95,23 +85,23 @@ function DisciplineCard({
                 </View>
 
                 <View className="my-2">
-                    <Text numberOfLines={2} className="font-poppins-medium text-xs text-text-primary">
-                        {item.keyWords.join(", ")}
+                    <Text numberOfLines={4} className="font-poppins-medium text-[10px] text-text-primary">
+                        {item.keyWords.join(", ")}.
                     </Text>
                 </View>
 
                 {/* Content */}
                 <View className="mt-auto">
                     <View className="flex-row items-center justify-between">
-                        <Text className="font-poppins-medium text-xs text-text-secondary">
+                        <Text className="font-poppins-medium text-[10px] text-text-secondary">
                             {item.quizzes.trim().split(" ")[1]}
                         </Text>
-                        <Text className="font-poppins-medium text-xs text-text-secondary">
+                        <Text className="font-poppins-medium text-[10px] text-text-secondary">
                             {item.quizzes.trim().split(" ")[0]}
                         </Text>
                     </View>
                     {/* Progress */}
-                    <View className="mt-1 h-1.5 w-full overflow-hidden">
+                    <View className="h-1 w-full overflow-hidden">
                         <SegmentedProgress
                             progress={item.progress}
                         />
@@ -127,18 +117,12 @@ export function TrendingSections() {
     return (
         <View className="gap-3">
             {/* 2 Column Grid */}
-            <View className="flex-row flex-wrap gap-y-1.5 justify-between">
-                {
-                    Array.from({ length: Math.ceil(disciplines.length / 2) }, (_, i) => i * 2).map((index) => (
-                        <View className="w-full flex-row justify-between" key={index}>
-                            {disciplines.slice(index, index + 2).map((item) => (
-                                <View className="w-[49%]" key={item.id}>
-                                    <DisciplineCard item={item} />
-                                </View>
-                            ))}
-                        </View>
-                    ))
-                }
+            <View className="flex-row gap-y-1.5 justify-between">
+                {disciplines.map((item) => (
+                    <View className="w-[49%]" key={item.id}>
+                        <DisciplineCard item={item} />
+                    </View>
+                ))}
             </View>
         </View>
     );

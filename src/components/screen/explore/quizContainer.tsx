@@ -109,16 +109,16 @@ const QuizFilterDialog = ({
                 <Dialog.Overlay className="bg-black/50" />
 
                 <Dialog.Content>
-                    <Text className="font-poppins-semibold text-lg text-text-primary">
+                    <Text className="font-poppins-semibold text-base text-text-primary">
                         Filter by tags
                     </Text>
 
-                    <Text className="font-poppins-medium text-xs text-text-secondary">
+                    <Text className="font-poppins-medium text-[10px] text-text-secondary">
                         Select tags to filter quizzes.
                     </Text>
 
                     <View className="flex-row flex-wrap gap-2 mt-4">
-                        <Text className="font-poppins-medium text-sm text-text-secondary">
+                        <Text className="font-poppins-medium text-[10px] text-text-secondary">
                             Languages and frameworks: {tags.length > 0 ? tags.length : "-"}
                         </Text>
                     </View>
@@ -142,7 +142,7 @@ const QuizFilterDialog = ({
                                 >
                                     <Text
                                         className={cn(
-                                            "font-poppins-medium text-sm",
+                                            "font-poppins-medium text-[10px]",
                                             selected
                                                 ? "text-primary"
                                                 : "text-text-secondary"
@@ -235,15 +235,15 @@ export const QuizContainer = () => {
     };
 
     return (
-        <View className="gap-3">
+        <View className="gap-2">
             {/* Header */}
             <View className="flex-row justify-between">
                 <View className="justify-center">
-                    <Text className="font-poppins-semibold text-2xl text-text-primary">
+                    <Text className="font-poppins-semibold text-xl text-text-primary">
                         Quizzes for you
                     </Text>
 
-                    <Text className="font-poppins-medium text-xs text-text-tertiary">
+                    <Text className="font-poppins-medium text-[10px] text-text-tertiary">
                         Pick a challenge and start learning.
                     </Text>
                 </View>
@@ -264,16 +264,16 @@ export const QuizContainer = () => {
                                     color="#9CA3AF"
                                 />
 
-                                <Text className="font-poppins-medium text-sm text-text-secondary">
+                                <Text className="font-poppins-medium text-[10px] text-text-secondary">
                                     Filter
                                 </Text>
                             </View>
                         }
                         triggerClassName="px-3 py-2"
                         itemStyle={{
-                            labelClassName: "text-sm",
+                            labelClassName: "text-[10px]",
                         }}
-                        iconSize={14}
+                        iconSize={12}
                     />
                 </View>
             </View>
@@ -290,7 +290,7 @@ export const QuizContainer = () => {
                 {[...activeItemIds, ...tags].map((id) => (
                     <PressableFeedback
                         key={id}
-                        className="flex-row items-center gap-1.5 px-3 py-1.5 bg-black/10 rounded-full border border-border"
+                        className="flex-row items-center gap-1.5 px-2 py-1 bg-black/10 rounded-full border border-white/20"
                         onPress={() =>
                             handleRemoveFilter(id)
                         }
@@ -301,7 +301,7 @@ export const QuizContainer = () => {
                             color="#9CA3AF"
                         />
 
-                        <Text className="font-poppins-medium text-sm text-text-secondary">
+                        <Text className="font-poppins-medium text-[10px] text-text-secondary">
                             {id}
                         </Text>
                     </PressableFeedback>

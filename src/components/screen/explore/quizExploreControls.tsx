@@ -55,10 +55,10 @@ function SearchBarButton() {
     return (
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
             <BottomSheet.Trigger asChild>
-                <PressableFeedback className="h-14 w-full rounded-full bg-white/4 border border-border">
-                    <View className="flex-row items-center justify-items-start gap-2.5 h-full px-4">
-                        <Octicons name="search" size={18} color="#8FA5B8" />
-                        <Text className="font-poppins-medium text-text-secondary text-sm">
+                <PressableFeedback className="h-12 w-full rounded-full bg-white/4 border border-border">
+                    <View className="flex-row items-center justify-items-start gap-2 h-full px-4">
+                        <Octicons name="search" size={16} color="#8FA5B8" />
+                        <Text className="font-poppins-medium text-text-secondary text-xs">
                             Search quizzes...
                         </Text>
                     </View>
@@ -148,9 +148,7 @@ export const QuizExploreControls = () => {
     return (
         <View className="gap-2.5">
             <SearchBarButton />
-
-            <FilterCarousel
-            />
+            <FilterCarousel />
         </View>
     );
 }

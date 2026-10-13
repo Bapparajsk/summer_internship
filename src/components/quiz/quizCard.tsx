@@ -95,7 +95,7 @@ export function QuizCard({
 
     return (
         <View
-            className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/4 p-4 mb-3"
+            className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/4 p-3 mb-3"
         >
             {/* Live glow */}
             {type === "live" && (
@@ -156,7 +156,7 @@ export function QuizCard({
                         }}
                     >
                         <Text
-                            className="text-[10px] font-poppins-semibold uppercase"
+                            className="text-[8px] leading-normal font-poppins-semibold uppercase"
                             style={{
                                 color: difficultyColorValue,
                             }}
@@ -186,15 +186,15 @@ export function QuizCard({
             <View className="mt-2">
                 <Text
                     numberOfLines={1}
-                    className="text-base font-poppins-semibold tracking-tight text-text-primary"
+                    className="text-sm font-poppins-semibold tracking-tight text-text-primary"
                 >
                     {title}
                 </Text>
 
                 {description && (
                     <Text
-                        numberOfLines={1}
-                        className="mt-1 text-xs font-poppins-medium text-text-tertiary"
+                        numberOfLines={3}
+                        className="text-[10px] font-poppins-medium text-text-tertiary"
                     >
                         {description}
                     </Text>
@@ -243,11 +243,11 @@ export function QuizCard({
                             <View className="flex-row items-center">
                                 <MaterialIcons
                                     name="quiz"
-                                    size={14}
+                                    size={12}
                                     color="#71717A"
                                 />
 
-                                <Text className="ml-1 text-[11px] font-poppins-medium text-text-tertiary">
+                                <Text className="ml-1 text-[10px] font-poppins-medium text-text-tertiary">
                                     {questions} Qs
                                 </Text>
                             </View>
@@ -259,11 +259,11 @@ export function QuizCard({
                             <View className="flex-row items-center">
                                 <MaterialIcons
                                     name="schedule"
-                                    size={14}
+                                    size={12}
                                     color="#71717A"
                                 />
 
-                                <Text className="ml-1 text-[11px] font-poppins-medium text-text-tertiary">
+                                <Text className="ml-1 text-[10px] font-poppins-medium text-text-tertiary">
                                     {duration} min
                                 </Text>
                             </View>
@@ -274,7 +274,7 @@ export function QuizCard({
                                         ·
                                     </Text>
 
-                                    <Text className="text-[11px] font-poppins-medium text-cyan-400">
+                                    <Text className="text-[10px] font-poppins-medium text-cyan-400">
                                         {accuracy}% avg
                                     </Text>
                                 </>
