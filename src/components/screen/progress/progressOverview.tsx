@@ -1,6 +1,6 @@
 import { getCommonIcon, IconName } from "@/components/lib/icon";
 import { LinearGradient } from "expo-linear-gradient";
-import { Card } from "heroui-native";
+import { Card, cn } from "heroui-native";
 import { Text, View } from "react-native";
 
 
@@ -28,7 +28,7 @@ function StatCard({
     const { Icon, name } = getCommonIcon(icon);
 
     return (
-        <Card className="rounded-xl flex-1 border border-border">
+        <Card className="rounded-xl flex-1 border border-border p-2">
             <LinearGradient
                 colors={[
                     "#262A31",
@@ -56,7 +56,7 @@ function StatCard({
                 <View className="max-w-17.5 rounded-full bg-surface-container-highest px-1.5 py-0.5">
                     <Text
                         numberOfLines={1}
-                        className="font-poppins-medium text-[9px] text-text-secondary"
+                        className="font-poppins-medium text-[8px] leading-normal text-text-secondary"
                     >
                         {meta}
                     </Text>
@@ -64,14 +64,14 @@ function StatCard({
             </View>
 
             {/* Value */}
-            <View className="mt-auto">
+            <View className="mt-2">
                 <Text
-                    className={`font-poppins-semibold text-[23px] leading-7 tracking-tight ${valueClassName}`}
+                    className={cn(`font-poppins-semibold text-base leading-4 tracking-normal`, valueClassName)}
                 >
                     {value}
                 </Text>
 
-                <Text className="mt-0.5 font-poppins-medium text-[10px] text-text-tertiary">
+                <Text className="font-poppins-medium text-[10px] text-text-tertiary">
                     {label}
                 </Text>
             </View>

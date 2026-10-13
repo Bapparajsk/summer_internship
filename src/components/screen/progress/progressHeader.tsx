@@ -1,5 +1,8 @@
+import { BottomSheet } from "heroui-native";
 import { PressableFeedback } from "heroui-native/pressable-feedback";
+import { useState } from "react";
 import { Image, Text, View } from "react-native";
+import { QuizActivityCalendar } from "./quizActivityCalendar";
 
 
 
@@ -45,6 +48,8 @@ export const ProgressHeader = ({
 
     const day = new Date().getDate() as keyof typeof calendarIcons;
 
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <View className="flex-row items-start justify-between pt-1">
             <View className="flex-1">
@@ -52,26 +57,36 @@ export const ProgressHeader = ({
                     Performance Analytics
                 </Text>
 
-                <Text className="mt-0.5 font-poppins-semibold text-3xl tracking-tight text-text-primary">
+                <Text className="font-poppins-semibold text-xl tracking-tight text-text-primary">
                     Progress
                 </Text>
 
-                <Text className="mt-0.5 font-poppins-medium text-xs text-text-secondary">
+                <Text className="mt-0.5 font-poppins-medium text-[10px] text-text-secondary">
                     Track your technical mastery & velocity
                 </Text>
             </View>
 
-            <PressableFeedback
+            <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+                <BottomSheet.Trigger asChild>
+                    <PressableFeedback
                 onPress={onFilter}
-                className="ml-3 h-15 w-15 items-center justify-center rounded-full bg-white/5 border border-border"
+                className="ml-3 size-14 items-center justify-center rounded-full bg-white/5 border border-border"
                 hitSlop={8}
             >
                 <Image
                     source={calendarIcons[day]}
-                    className="h-8 w-8"
+                    className="size-7"
 
                 />
             </PressableFeedback>
+                </BottomSheet.Trigger>
+                <BottomSheet.Portal>
+                    <BottomSheet.Overlay />
+                    <BottomSheet.Content>
+                        <QuizActivityCalendar />
+                    </BottomSheet.Content>
+                </BottomSheet.Portal>
+            </BottomSheet>
         </View>
     );
 }

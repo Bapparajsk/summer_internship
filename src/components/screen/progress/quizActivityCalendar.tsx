@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Text, View } from "react-native";
 import { Flame } from "lucide-react-native";
+import { Separator } from "heroui-native";
 
 type Activity = {
     date: string; // YYYY-MM-DD
@@ -67,9 +68,9 @@ export const QuizActivityCalendar = () => {
     ).length;
 
     return (
-        <View className="overflow-hidden rounded-[34px] border border-border bg-white/4 px-4 py-6">
+        <View className="overflow-hidden mb-6">
             {/* Header */}
-            <View className="mb-4 flex-row items-start justify-between">
+            <View className="flex-row items-start justify-between">
                 <View>
                     <Text className="font-poppins-semibold text-base text-text-primary">
                         Quiz activity
@@ -88,6 +89,8 @@ export const QuizActivityCalendar = () => {
                     </Text>
                 </View>
             </View>
+
+            <Separator className="my-2"/>
 
             {/* Weekdays */}
             <View className="mb-1 flex-row">
@@ -129,7 +132,7 @@ export const QuizActivityCalendar = () => {
                             className="mb-1.5 w-[14.285%] px-0.5"
                         >
                             <View
-                                className={`h-10 items-center justify-center rounded-full ${completed
+                                className={`h-10 items-center justify-center rounded-[18px] border border-border ${completed
                                         ? multiple
                                             ? "bg-primary/30"
                                             : "bg-primary/15"
