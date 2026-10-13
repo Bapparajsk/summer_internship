@@ -19,38 +19,38 @@ export const AppFooter = ({
             {/* Brand */}
             <View className="flex-row items-center mt-5">
 
-                <Text className="ml-2 text-sm font-poppins-semibold">
-                    Aether Campus
+                <Text className="ml-2 text-sm font-poppins-semibold text-blue-100">
+                    Quiz App
                 </Text>
             </View>
 
             {/* Team Button */}
             <PressableFeedback
-                className="mt-3 flex-row items-center rounded-full border border-white/10 bg-white/4 px-4 py-2"
+                className="mt-3 flex-row items-center rounded-full border border-white/10 bg-white/4 px-3 py-1.5"
             >
                 <MaterialIcons 
                     name="groups"
-                    size={16}
+                    size={14}
                     color="#A78BFA"
                 />
 
-                <Text className="mx-2 font-poppins-semibold text-xs font-medium text-zinc-300">
+                <Text className="mx-2 font-poppins-semibold text-[10px] font-medium text-zinc-300">
                     Meet the Team
                 </Text>
 
                 <FontAwesome6
                     name="chevron-right"
-                    size={13}
+                    size={10}
                     color="#71717A"
                 />
             </PressableFeedback>
 
             {/* Version */}
-            <Text className="mt-3 font-poppins-medium text-center text-[11px] text-zinc-600">
+            <Text className="mt-3 font-poppins-medium text-center text-[10px] text-zinc-600">
                 v{version} • {university}
             </Text>
 
-            <Text className="mt-1 font-poppins-light text-center text-[10px] text-text-disabled">
+            <Text className="mt-1 font-poppins-medium text-center text-[10px] text-text-disabled">
                 © 2026 All Rights Reserved
             </Text>
         </View>
