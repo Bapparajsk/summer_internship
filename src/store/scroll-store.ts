@@ -14,8 +14,6 @@ type ScrollStore = {
         TabName,
         ReturnType<typeof makeMutable<number>>
     >;
-
-    setActiveTab: (tab: TabName) => void;
 };
 
 export const useScrollStore = create<ScrollStore>((set) => ({
@@ -26,9 +24,11 @@ export const useScrollStore = create<ScrollStore>((set) => ({
         explore: makeMutable(0),
         progress: makeMutable(0),
         profile: makeMutable(0),
-    },
-
-    setActiveTab: (tab) => {
-        set({ activeTab: tab });
-    },
+    }
 }));
+
+
+// actions
+export const setActiveTab = (tab: TabName) => {
+    useScrollStore.setState({ activeTab: tab });
+};

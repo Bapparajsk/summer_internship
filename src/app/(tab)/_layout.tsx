@@ -1,12 +1,11 @@
 import { AnimatedHeader } from "@/components/header";
 import { BottomTabBar } from "@/components/navigation/bottomTabBar";
-import { useScrollStore } from "@/store/scroll-store";
+import { setActiveTab , TabName} from "@/store/scroll-store";
 import { Tabs } from "expo-router";
 
+const activeTabsNames: TabName[] = ["index", "explore", "progress", "profile"];
+
 export default function TabsLayout() {
-    const setActiveTab = useScrollStore(
-        (state) => state.setActiveTab
-    );
 
     return (
         <Tabs
@@ -23,14 +22,9 @@ export default function TabsLayout() {
                     const routes = event.data.state.routes;
                     const index = event.data.state.index;
 
-                    const routeName = routes[index]?.name;
+                    const routeName = routes[index]?.name as TabName;
 
-                    if (
-                        routeName === "index" ||
-                        routeName === "explore" ||
-                        routeName === "progress" ||
-                        routeName === "profile"
-                    ) {
+                    if (activeTabsNames.includes(routeName)) {
                         setActiveTab(routeName);
                     }
                 },

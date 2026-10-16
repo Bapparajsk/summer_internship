@@ -155,6 +155,31 @@ const commonIconMap = {
     "x-circle": {
         Icon: Octicons,
         name: "x-circle",
+    },
+    "user": {
+        Icon: FontAwesome5,
+        name: "user"
+    },
+    "email": {
+        Icon: Octicons,
+        name: "mail"
+    },
+    "lock": {
+        Icon: Octicons,
+        name: "lock"
+    },
+    // logo
+    "logo-google": {
+        Icon: FontAwesome6,
+        name: "google"
+    },
+    "logo-facebook": {
+        Icon: FontAwesome6,
+        name: "facebook-f"
+    },
+    "logo-apple": {
+        Icon: FontAwesome6,
+        name: "apple"
     }
 }
 

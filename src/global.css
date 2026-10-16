@@ -38,6 +38,7 @@
 
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border-light: rgba(0,0,0, 0.50);
 
   --color-primary-soft: rgba(92, 198, 226, 0.14);
   --color-primary-border: rgba(92, 198, 226, 0.40);
