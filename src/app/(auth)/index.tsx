@@ -3,7 +3,6 @@ import { ActivityIndicator, Alert, View } from "react-native";
 import { Redirect } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
-import { SignupForm } from "@/components/auth/signup";
 import { SigninForm } from "@/components/auth/signin";
 
 export default function AuthScreen() {
@@ -17,7 +16,7 @@ export default function AuthScreen() {
     );
   }
 
-  if (isSignedIn) {
+  if (!isSignedIn) {
     return <Redirect href="/(tab)" />;
   }
 
@@ -41,7 +40,6 @@ export default function AuthScreen() {
         flexGrow: 1,
       }}
     >
-      {/* <SignupForm onSubmit={handleSignup} /> */}
       <SigninForm />
     </KeyboardAwareScrollView>
   );
