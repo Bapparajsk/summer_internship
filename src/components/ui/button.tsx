@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
 
 export type ButtonVariant =
     | "primary"
@@ -47,6 +48,10 @@ type ButtonProps = {
 
     /** Accessibility */
     accessibilityLabel?: string;
+
+    /** Haptic feedback */
+    haptic?: boolean
+    hapticStyle?: Haptics.ImpactFeedbackStyle;
 };
 
 const themeColors = {
@@ -168,6 +173,8 @@ export function Button({
     style,
     textStyle,
     accessibilityLabel,
+    haptic = true,
+    hapticStyle = Haptics.ImpactFeedbackStyle.Medium,
 }: ButtonProps) {
 
     const pressed = useSharedValue(0);
@@ -189,6 +196,10 @@ export function Button({
             stiffness: 320,
             mass: 0.45,
         });
+
+        if(haptic) {
+            Haptics.impactAsync(hapticStyle);
+        }
     }, []);
 
     const handlePressOut = useCallback(() => {
