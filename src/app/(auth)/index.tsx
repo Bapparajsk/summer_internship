@@ -4,6 +4,7 @@ import { Redirect } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 import { SignupForm } from "@/components/auth/signup";
+import { SigninForm } from "@/components/auth/signin";
 
 export default function AuthScreen() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -40,7 +41,8 @@ export default function AuthScreen() {
         flexGrow: 1,
       }}
     >
-      <SignupForm onSubmit={handleSignup} />
+      {/* <SignupForm onSubmit={handleSignup} /> */}
+      <SigninForm />
     </KeyboardAwareScrollView>
   );
 }
