@@ -1,8 +1,6 @@
 import { View } from 'react-native';
-
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-// import { Chip, Dialog } from "heroui-native";
 import { QuizCardProps, QuizCard } from '../../quiz';
 import { FlashList } from "@shopify/flash-list";
 
@@ -128,21 +126,12 @@ export const QuizList = () => {
                 renderItem={({ item }) => (
                     <QuizCard
                         {...item}
+                        onPress={() => {
+                            router.push("/quiz/waiting-room")
+                        }}
                     />
                 )}
             />
-
-            {/* <Dialog isOpen={isOpen !== null} onOpenChange={(open) => !open && setIsOpen(null)}>
-                <Dialog.Portal>
-                    <Dialog.Overlay className='bg-black/50' />
-                    <Dialog.Content className='p-0'>
-                        <QuizChallengeModal {...isOpen!} onStartChallenge={() => {
-                            setIsOpen(null);
-                            router.push("/quiz_game" as any);
-                        }} />
-                    </Dialog.Content>
-                </Dialog.Portal>
-            </Dialog> */}
         </View>
     )
 }

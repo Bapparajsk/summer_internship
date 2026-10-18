@@ -66,7 +66,7 @@ const typeConfig = {
     join: {
         icon: "dns",
         action: "Join",
-        actionIcon: "login",
+        actionIcon: "lock-outline",
     },
 } as const;
 
@@ -224,7 +224,7 @@ export function QuizCard({
                         <View>
                             <View className="flex-row items-center">
                                 <Text className="text-[11px] font-poppins-medium text-text-tertiary">
-                                    Code:
+                                    Room Code:
                                 </Text>
 
                                 <Text className="ml-1 text-[11px] font-poppins-semibold tracking-wider text-cyan-400">

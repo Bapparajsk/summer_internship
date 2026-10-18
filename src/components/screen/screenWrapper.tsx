@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { AppFooter } from "../footer";
 import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { cn } from "heroui-native";
+import { ReactNode } from "react";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(Animated.ScrollView);
 
@@ -15,8 +16,12 @@ interface ScreenContentProps {
     stickyHeaderHiddenOnScroll?: boolean;
     showFooter?: boolean;
     SCREEN_HORIZONTAL_PADDING?: number;
+    paddingTop?: number;
+    bottomContainer?: ReactNode
     onScroll?: ((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined> | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined> | undefined> | undefined
 }
+
+export const BOTTOM_CONTAINER_Z_INDEX = 99999;
 
 export const ScreenWrapper: React.FC<ScreenContentProps> = ({
     path,
@@ -26,6 +31,8 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
     stickyHeaderHiddenOnScroll,
     showFooter = true,
     SCREEN_HORIZONTAL_PADDING = 12,
+    paddingTop = 70,
+    bottomContainer,
     onScroll
 }) => {
 
@@ -46,7 +53,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                     left: 0,
                     right: 0,
                     height: 100,
-                    zIndex: 9999,
+                    zIndex: BOTTOM_CONTAINER_Z_INDEX - 1,
                 }}
             />
             <AnimatedScrollView
@@ -54,7 +61,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                 scrollEventThrottle={16}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    paddingTop: 70,
+                    paddingTop: paddingTop,
                     paddingHorizontal: SCREEN_HORIZONTAL_PADDING,
                     paddingBottom: 40 + bottomBarHeight,
                     position: "relative",
@@ -66,11 +73,12 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                 {children}
                 {showFooter && <AppFooter />}
             </AnimatedScrollView>
+            {bottomContainer}
         </SafeAreaView>
     );
 };
 
-export const ContentWrapper: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className }) => {
+export const ContentWrapper: React.FC<{ children?: ReactNode, className?: string }> = ({ children, className }) => {
     return (
         <View className={cn("px-3", className)}>
             {children}

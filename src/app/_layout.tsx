@@ -33,10 +33,12 @@ export default function RootLayout(): JSX.Element {
           <HeroUINativeProvider config={heroUiConfig}>
             <ThemeProvider value={DarkTheme}>
               <FontProvider>
-                <Stack screenOptions={{ headerShown: false }} >
-                  <Stack.Screen name="(auth)" />
+                <Stack screenOptions={{ headerShown: false, animation: "slide_from_bottom" }} >
+                  {/* <Stack.Screen name="(auth)" /> */}
                   <Stack.Screen name="(tab)" />
                   <Stack.Screen name="onboarding" />
+                  {/* quiz screens */}
+                  <Stack.Screen name="quiz" />
                 </Stack>
               </FontProvider>
             </ThemeProvider>
