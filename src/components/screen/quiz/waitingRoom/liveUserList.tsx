@@ -1,12 +1,10 @@
-
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { Image, Text, View } from "react-native";
-// import { UserRound, Users } from "lucide-react-native";
+import { cn } from "heroui-native";
+import { Text, View } from "react-native";
 
 export type LiveUser = {
     id: string;
     name: string;
-    avatar?: string | null;
     joinedAt: string;
     isYou?: boolean;
 };
@@ -21,9 +19,9 @@ export function LiveUserList({
     title = "Players in lobby",
 }: LiveUserListProps) {
     return (
-        <View className="gap-4 rounded-[34px] border border-border bg-white/3 p-4">
+        <View className="gap-4 rounded-[34px] border border-border bg-white/3 py-4 px-2">
             {/* Header */}
-            <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center justify-between px-2">
                 <View className="flex-row items-center gap-2">
                     <Text className="font-poppins-semibold text-base text-text-primary">
                         {title}
@@ -39,23 +37,17 @@ export function LiveUserList({
             </View>
 
             {/* User list */}
-            <View className="gap-3">
+            <View className="">
                 {users.map((user) => (
                     <View
                         key={user.id}
-                        className="flex-row items-center gap-3"
+                        className={cn("flex-row items-center gap-3 py-1.5 px-2", {
+                            "bg-white/8 rounded-2xl border border-border": user.isYou
+                        })}
                     >
                         {/* Avatar */}
                         <View className="size-8 items-center justify-center overflow-hidden rounded-full border border-border bg-surface-container-high">
-                            {user.avatar ? (
-                                <Image
-                                    source={{ uri: user.avatar }}
-                                    className="h-full w-full"
-                                    resizeMode="cover"
-                                />
-                            ) : (
-                                <FontAwesome name="user" size={16} color="#8FA5B8" />
-                            )}
+                            <FontAwesome name="user" size={16} color="#8FA5B8" />
                         </View>
 
                         {/* Name */}

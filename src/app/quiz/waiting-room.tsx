@@ -1,9 +1,9 @@
 import { RoomInfoHeader } from '@/components/screen/quiz/waitingRoom/roomInfoHeader'
-import { ScreenWrapper, BOTTOM_CONTAINER_Z_INDEX } from '@/components/screen'
+import { ScreenWrapper } from '@/components/screen'
 import { ParticipantArena, Participant } from '@/components/screen/quiz/waitingRoom/participantArena'
 import { LiveUser, LiveUserList } from '@/components/screen/quiz/waitingRoom/liveUserList';
-import { Button } from 'heroui-native';
-import { NativeBottomContainer } from '@/components/ui/nativeBottomContainer';
+import { BottomContent } from '@/components/screen/quiz/waitingRoom/bottomContent';
+import { SettingButton } from '@/components/screen/quiz/waitingRoom/settingButton';
 
 const users: LiveUser[] = [
     {
@@ -15,32 +15,26 @@ const users: LiveUser[] = [
     {
         id: "2",
         name: "Sarah",
-        avatar: "https://i.pravatar.cc/150?img=47",
         joinedAt: "12s ago",
     },
     {
         id: "3",
         name: "Devon",
-        avatar: "https://i.pravatar.cc/150?img=12",
         joinedAt: "40s ago",
     },
     {
         id: "11",
         name: "Arjun",
-        avatar: "https://i.pravatar.cc/150?img=13",
         joinedAt: "Just now",
-        isYou: true,
     },
     {
         id: "12",
         name: "Sarah",
-        avatar: "https://i.pravatar.cc/150?img=47",
         joinedAt: "12s ago",
     },
     {
         id: "13",
         name: "Devon",
-        avatar: "https://i.pravatar.cc/150?img=12",
         joinedAt: "40s ago",
     },
 ];
@@ -136,14 +130,9 @@ export default function WaitingRoom() {
         <ScreenWrapper
             path={"quiz/waiting-room"}
             showFooter={false} paddingTop={10}
-            bottomContainer={
-                <NativeBottomContainer zIndex={BOTTOM_CONTAINER_Z_INDEX}>
-                    <Button>
-                        click me
-                    </Button>
-                </NativeBottomContainer>
-            }
+            bottomContainer={<BottomContent />}
         >
+           <SettingButton />
             <RoomInfoHeader
                 hostName="Arjun"
                 hostAvatar="https://example.com/avatar.jpg"

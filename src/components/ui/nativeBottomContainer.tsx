@@ -22,7 +22,7 @@ export const NativeBottomContainer = ({ children, zIndex, bottomOffset = 10 }:Na
         bottom.value = withSpring(15 + insets.bottom, {
             damping: 18,
             stiffness: 180,
-            // mass: 0.5,
+            mass: 0.5,
         });
     }, [insets.bottom]);
 

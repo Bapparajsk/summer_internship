@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import { Button } from '../ui/button'
+import { Button } from '../ui/button/button'
 
 export const SocialLogin = () => {
     return (

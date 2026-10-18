@@ -1,9 +1,10 @@
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Fontisto } from '../lib/icon'
-import { BottomSheet, PressableFeedback } from 'heroui-native'
+import { BottomSheet } from 'heroui-native'
 import { useState } from 'react';
 import { Text, View } from 'react-native'
 import { NotificationList } from '../notification';
+import { MotionButton } from '../ui/button/motionButton';
 
 export const NotificationButton = () => {
 
@@ -13,9 +14,7 @@ export const NotificationButton = () => {
 
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
             <BottomSheet.Trigger asChild>
-                <PressableFeedback
-                    className="size-13 items-center justify-center rounded-full bg-white/10 border-border border"
-                    accessibilityRole="button"
+                <MotionButton
                     accessibilityLabel="Notifications"
                 >
                     <Fontisto
@@ -25,7 +24,7 @@ export const NotificationButton = () => {
                     />
 
                     <View className="absolute right-4.25 top-3.75 h-2 w-2 rounded-full bg-primary" />
-                </PressableFeedback>
+                </MotionButton>
             </BottomSheet.Trigger>
             <BottomSheet.Portal>
                 <BottomSheet.Overlay />
