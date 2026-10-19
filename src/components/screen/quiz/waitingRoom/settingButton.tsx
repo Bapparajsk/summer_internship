@@ -47,13 +47,9 @@ export const SettingButton = () => {
                     <BottomSheetScrollView className={"mt-3"} showsVerticalScrollIndicator={false}>
                         <RoomSecurityCard
                             roomCode="QF-82K9"
-                            inviteUrl="https://your-domain.com/join/QF-82K9"
+                            passkey='XP-7294'
                             initialEnabled
-                            initialMode="password"
                             onEnabledChange={(enabled) => {
-                                // Update your backend
-                            }}
-                            onModeChange={(mode) => {
                                 // Update your backend
                             }}
                         />

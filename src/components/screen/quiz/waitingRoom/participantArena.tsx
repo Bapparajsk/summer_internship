@@ -1,7 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import {
-    Image,
-    Pressable,
     Text,
     View,
     useWindowDimensions,
@@ -13,16 +11,14 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withRepeat,
-    withSpring,
     withTiming,
 } from "react-native-reanimated";
 import { Users } from "lucide-react-native";
-import { RadarSweep } from "./radarSweep";
 import { RadarTexture } from "@/components/ui/radarTexture";
+import { FontAwesome } from "@expo/vector-icons";
 
 
 const AnimatedView = Animated.View;
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const COLORS = {
     primary: "#5CC6E2",
@@ -46,7 +42,6 @@ export interface Participant {
 interface ParticipantArenaProps {
     participants: Participant[];
     totalPlayers?: number;
-    readyCount?: number;
     currentUserId?: string;
     isLoading?: boolean;
     maxVisible?: number;
@@ -59,7 +54,6 @@ const MAX_VISIBLE = 5;
 export function ParticipantArena({
     participants,
     totalPlayers,
-    readyCount,
     currentUserId,
     isLoading = false,
     maxVisible = MAX_VISIBLE,
@@ -139,15 +133,6 @@ export function ParticipantArena({
 
     const playerCount = Math.max(reportedTotal, validParticipants.length);
 
-    const readyPlayers =
-        typeof readyCount === "number" && Number.isFinite(readyCount)
-            ? Math.min(playerCount, Math.max(0, Math.floor(readyCount)))
-            : validParticipants.some((p) => p.status != null)
-                ? validParticipants.filter(
-                    (p) => p.status === "ready" || p.status == null,
-                ).length
-                : playerCount;
-
     const overflowCount = Math.max(
         0,
         playerCount - visibleParticipants.length,
@@ -160,7 +145,7 @@ export function ParticipantArena({
 
     if (isLoading) {
         return (
-            <View className="my-2 h-[310px] w-full items-center justify-center">
+            <View className="my-2 h-77.5 w-full items-center justify-center">
                 <AnimatedView entering={FadeInDown.duration(250)}>
                     <View className="h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/5">
                         <Users size={21} color={COLORS.primary} />
@@ -183,7 +168,7 @@ export function ParticipantArena({
             <AnimatedView
                 pointerEvents="none"
                 style={outerRingStyle}
-                className="absolute h-[280px] w-[280px] rounded-full border border-primary/15 bg-primary/5"
+                className="absolute size-70 rounded-full border border-primary/15 bg-primary/5"
             />
 
             {/* Fine radar texture */}
@@ -282,17 +267,6 @@ function ParticipantNode({
     index?: number;
     onPress?: (participant: Participant) => void;
 }) {
-    const [imageFailed, setImageFailed] = useState(false);
-    const scale = useSharedValue(1);
-
-    useEffect(() => {
-        setImageFailed(false);
-    }, [participant.avatar]);
-
-    const pressStyle = useAnimatedStyle(() => ({
-        transform: [{ scale: scale.value }],
-    }));
-
     const statusColor =
         participant.status === "offline"
             ? COLORS.danger
@@ -309,45 +283,19 @@ function ParticipantNode({
                 .damping(18)}
             className="items-center"
         >
-            <AnimatedPressable
-                style={pressStyle}
-                onPressIn={() => {
-                    scale.value = withSpring(0.92, {
-                        damping: 16,
-                        stiffness: 320,
-                    });
-                }}
-                onPressOut={() => {
-                    scale.value = withSpring(1, {
-                        damping: 16,
-                        stiffness: 320,
-                    });
-                }}
-                onPress={() => onPress?.(participant)}
-                disabled={!onPress}
+            <View
                 accessibilityRole={onPress ? "button" : undefined}
                 accessibilityLabel={`${participant.name}${participant.isHost ? ", host" : ""
                     }, ${participant.status ?? "ready"}`}
                 className={[
-                    "relative items-center justify-center rounded-full p-[2px]",
+                    "relative items-center justify-center rounded-full p-0.5",
                     highlighted
                         ? "bg-primary"
                         : "border border-border bg-surface-container-high",
                 ].join(" ")}
             >
-                <View className="h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-full bg-surface-container-highest">
-                    {participant.avatar && !imageFailed ? (
-                        <Image
-                            source={{ uri: participant.avatar }}
-                            className="h-full w-full"
-                            resizeMode="cover"
-                            onError={() => setImageFailed(true)}
-                        />
-                    ) : (
-                        <Text className="font-poppins-semibold text-sm text-primary">
-                            {participant.name.trim().charAt(0).toUpperCase() || "?"}
-                        </Text>
-                    )}
+                <View className="size-9.5 items-center justify-center overflow-hidden rounded-full bg-surface-container-highest">
+                    <FontAwesome name="user" size={16} color="#8FA5B8" />
                 </View>
 
                 {/* Status dot */}
@@ -355,12 +303,12 @@ function ParticipantNode({
                     style={{ backgroundColor: statusColor }}
                     className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-background"
                 />
-            </AnimatedPressable>
+            </View>
 
             {/* Name label */}
             <View
                 className={[
-                    "mt-1 max-w-[82px] rounded-full px-1.5 py-0.5",
+                    "mt-1 max-w-20.5 rounded-full px-1.5 py-0.5",
                     highlighted ? "bg-primary-soft" : "bg-surface-container-low",
                 ].join(" ")}
             >

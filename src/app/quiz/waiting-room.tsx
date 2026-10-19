@@ -147,6 +147,7 @@ export default function WaitingRoom() {
                 onParticipantPress={(participant) => {
                     console.log("Selected:", participant.name);
                 }}
+                // isLoading
             />
             <LiveUserList users={users} />
             
