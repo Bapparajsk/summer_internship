@@ -27,7 +27,7 @@ if (!publishableKey) {
 export default function RootLayout(): JSX.Element {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#000" }}>
         <KeyboardProvider>
           <StatusBar backgroundColor={"#000000"} networkActivityIndicatorVisible animated barStyle={"light-content"}/>
           <HeroUINativeProvider config={heroUiConfig}>
