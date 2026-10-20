@@ -18,8 +18,8 @@ export const Header = () => {
                             router.dismissTo("/(tab)/explore")
                         }}
                     >
-                        <Ionicons name="arrow-back-circle-outline" size={24} color={"#f87171"} />
-                        <Text className='text-xs font-poppins-medium text-danger '>
+                        <Ionicons name="arrow-back-circle-outline" size={20} color={"#f87171"} />
+                        <Text className='text-xs font-poppins-semibold text-danger '>
                             EXIT
                         </Text>
                     </MotionButton>

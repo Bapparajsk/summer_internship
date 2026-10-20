@@ -2,14 +2,13 @@ import { BottomSheet } from 'heroui-native';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Entypo, Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { MotionButton } from '@/components/ui/button/motionButton';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { LinearTransition } from 'react-native-reanimated';
-import If from '@/components/lib/if';
 import { RoomSecurityCard } from './roomSecurityCard';
 import { AnswerRevealTimingCard } from './answerRevealTimingCard';
 import { LifelineCard } from './lifelineCard';
+import { CloseButton } from '@/components/ui/button';
 
 
 export const SettingButton = () => {
@@ -67,31 +66,5 @@ export const SettingButton = () => {
                 </BottomSheet.Content>
             </BottomSheet.Portal>
         </BottomSheet>
-    );
-}
-
-function CloseButton({ isSaved }: { isSaved: boolean }) {
-    return (
-        <MotionButton
-            layout={LinearTransition.springify().stiffness(200).mass(0.5).damping(20)}
-            className='w-auto h-auto'
-        >
-            <If condition={isSaved}>
-                <If.Then>
-                    <View className='size-8 items-center justify-center'>
-                        <Feather name={"x-circle"} size={16} color={"#8FA5B8"} />
-                    </View>
-                </If.Then>
-                <If.Else>
-                    <View className='h-8 flex-row items-center justify-center px-2 gap-1'>
-                        <Feather name={"check-circle"} size={16} color={"#4ADE80"} />
-                        <Text className='text-[10px] leading-normal font-poppins-medium text-success'>
-                            Save changes
-                        </Text>
-                    </View>
-                </If.Else>
-            </If>
-
-        </MotionButton>
     );
 }

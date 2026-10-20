@@ -28,6 +28,7 @@ const sharedColors = {
         text: "#062535",
         pressedFace: "#22AFE9",
     },
+
 };
 
 export const themeColors = {

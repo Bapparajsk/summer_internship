@@ -1,23 +1,45 @@
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { cn } from "heroui-native";
+import { BottomSheet, cn, PressableFeedback } from "heroui-native";
+import { useState } from "react";
 import { Text, View } from "react-native";
+import { PlayerDetails, PlayerDetailsSheet } from "./playerDetailsSheet";
 
-export type LiveUser = {
-    id: string;
-    name: string;
-    joinedAt: string;
+export type LiveUser = PlayerDetails & {
     isYou?: boolean;
 };
 
 type LiveUserListProps = {
     users: LiveUser[];
     title?: string;
+    isHost: boolean
 };
+
+const fallbackPlayer: PlayerDetails = {
+    id: "123",
+    name: "raj",
+    isReady: true,
+    joinedAt: "Just now"
+}
 
 export function LiveUserList({
     users,
     title = "Players in lobby",
+    isHost = false
 }: LiveUserListProps) {
+
+    const [selectedUser, setSelectedUser] = useState<LiveUser | null>(null);
+
+    const handleOpenPlayerSheet = (user: LiveUser) => {
+        if (!isHost || user.isYou) return;
+        setSelectedUser(user);
+    };
+
+    const handleSheetOpenChange = (isOpen: boolean) => {
+        if (!isOpen) {
+            setSelectedUser(null);
+        }
+    };
+
     return (
         <View className="gap-4 rounded-[34px] border border-border bg-white/3 py-4 px-2">
             {/* Header */}
@@ -39,11 +61,15 @@ export function LiveUserList({
             {/* User list */}
             <View className="">
                 {users.map((user) => (
-                    <View
+                    <PressableFeedback
                         key={user.id}
                         className={cn("flex-row items-center gap-3 py-1.5 px-2", {
                             "bg-white/8 rounded-2xl border border-border": user.isYou
                         })}
+
+                        onPress={() => handleOpenPlayerSheet(user)}
+                        isDisabled={!isHost || user.isYou}
+                        animation={isHost && !user.isYou ? undefined : "disable-all"}
                     >
                         {/* Avatar */}
                         <View className="size-8 items-center justify-center overflow-hidden rounded-full border border-border bg-surface-container-high">
@@ -76,7 +102,7 @@ export function LiveUserList({
                         <Text className="font-poppins-medium text-[10px] text-text-tertiary">
                             {user.joinedAt}
                         </Text>
-                    </View>
+                    </PressableFeedback>
                 ))}
 
                 {users.length === 0 && (
@@ -85,6 +111,22 @@ export function LiveUserList({
                     </Text>
                 )}
             </View>
+            <BottomSheet isOpen={Boolean(selectedUser)} onOpenChange={handleSheetOpenChange}>
+                <BottomSheet.Portal>
+                    <BottomSheet.Overlay />
+                    <BottomSheet.Content>
+                        <PlayerDetailsSheet
+                            visible={selectedUser !== null}
+                            player={selectedUser ?? fallbackPlayer}
+                            onClose={() => handleSheetOpenChange(false)}
+                            onRemove={(player) => {
+                                // Call your API, then update the participant list.
+                                console.log("Remove player:", player.id);
+                            }}
+                        />
+                    </BottomSheet.Content>
+                </BottomSheet.Portal>
+            </BottomSheet>
         </View>
     );
 }

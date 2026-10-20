@@ -50,3 +50,8 @@ export type ButtonProps = {
 export type MotionButtonProps = {
     children: ReactNode
 }
+
+export type CloseButtonProps = {
+    isSaved?: boolean;
+    saveTitle?: string
+}

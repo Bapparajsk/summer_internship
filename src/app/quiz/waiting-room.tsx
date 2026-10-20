@@ -15,31 +15,37 @@ const users: LiveUser[] = [
         name: "Bapparaj",
         joinedAt: "Just now",
         isYou: true,
+        isReady: true
     },
     {
         id: "2",
         name: "Rana",
         joinedAt: "Just now",
+        isReady: true
     },
     {
         id: "3",
         name: "Ayon",
         joinedAt: "Just now",
+        isReady: false
     },
     {
         id: "11",
         name: "Subhasis",
         joinedAt: "Just now",
+        isReady: true
     },
     {
         id: "12",
         name: "Rohit",
         joinedAt: "Just now",
+        isReady: true
     },
     {
         id: "13",
         name: "Akash",
         joinedAt: "Just now",
+        isReady: true
     },
 ];
 
@@ -144,7 +150,7 @@ export default function WaitingRoom() {
                 }}
                 // isLoading
             />
-            <LiveUserList users={users} />
+            <LiveUserList users={users} isHost={true} />
             
         </ScreenWrapper>
     )
