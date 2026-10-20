@@ -1,41 +1,45 @@
-import { RoomInfoHeader } from '@/components/screen/quiz/waitingRoom/roomInfoHeader'
 import { ScreenWrapper } from '@/components/screen'
-import { ParticipantArena, Participant } from '@/components/screen/quiz/waitingRoom/participantArena'
-import { LiveUser, LiveUserList } from '@/components/screen/quiz/waitingRoom/liveUserList';
-import { BottomContent } from '@/components/screen/quiz/waitingRoom/bottomContent';
-import { Header } from '@/components/screen/quiz/waitingRoom/header';
+import { 
+    RoomInfoHeader, 
+    BottomContent, 
+    Header, 
+    LiveUserList, 
+    ParticipantArena, 
+    type Participant, 
+    type LiveUser 
+} from '@/components/screen/quiz/waitingRoom';
 
 const users: LiveUser[] = [
     {
         id: "1",
-        name: "Arjun",
+        name: "Bapparaj",
         joinedAt: "Just now",
         isYou: true,
     },
     {
         id: "2",
-        name: "Sarah",
-        joinedAt: "12s ago",
+        name: "Rana",
+        joinedAt: "Just now",
     },
     {
         id: "3",
-        name: "Devon",
-        joinedAt: "40s ago",
+        name: "Ayon",
+        joinedAt: "Just now",
     },
     {
         id: "11",
-        name: "Arjun",
+        name: "Subhasis",
         joinedAt: "Just now",
     },
     {
         id: "12",
-        name: "Sarah",
-        joinedAt: "12s ago",
+        name: "Rohit",
+        joinedAt: "Just now",
     },
     {
         id: "13",
-        name: "Devon",
-        joinedAt: "40s ago",
+        name: "Akash",
+        joinedAt: "Just now",
     },
 ];
 
@@ -57,40 +61,34 @@ export const tempParticipantArenaData = {
         },
         {
             id: "user-2",
-            name: "Sarah",
+            name: "Ayon",
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=47",
         },
         {
             id: "user-3",
-            name: "Devon",
+            name: "Rana",
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=12",
         },
         {
             id: "user-4",
-            name: "Elena",
+            name: "Subhasis",
             status: "waiting",
-            avatar: "https://i.pravatar.cc/150?img=44",
         },
         {
             id: "user-5",
-            name: "Kenji",
+            name: "Rohit",
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=11",
         },
         {
             id: "user-6",
             name: "Arjun",
             isHost: true,
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=13",
         },
         {
             id: "user-7",
             name: "Maya",
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=49",
         },
         {
             id: "user-8",
@@ -102,13 +100,11 @@ export const tempParticipantArenaData = {
             id: "user-9",
             name: "Ava",
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=45",
         },
         {
             id: "user-10",
             name: "Noah",
             status: "offline",
-            avatar: "https://i.pravatar.cc/150?img=14",
         },
         {
             id: "user-11",
@@ -120,7 +116,6 @@ export const tempParticipantArenaData = {
             id: "user-12",
             name: "Leo",
             status: "ready",
-            avatar: "https://i.pravatar.cc/150?img=52",
         },
     ] satisfies Participant[],
 };
@@ -135,8 +130,7 @@ export default function WaitingRoom() {
         >
             <Header />
             <RoomInfoHeader
-                hostName="Arjun"
-                hostAvatar="https://example.com/avatar.jpg"
+                hostName="Bapparaj"
                 title="Data Structures Challenge"
                 category="DSA & Algorithms"
                 questionCount={20}

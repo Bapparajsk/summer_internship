@@ -1,8 +1,7 @@
-import { Image, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 interface RoomInfoHeaderProps {
     hostName?: string;
-    hostAvatar?: string;
     title?: string;
     category?: string;
     questionCount?: number;
@@ -11,8 +10,7 @@ interface RoomInfoHeaderProps {
 }
 
 export function RoomInfoHeader({
-    hostName = "Arjun",
-    hostAvatar,
+    hostName = "Bappa",
     title = "Data Structures Challenge",
     category = "DSA & Algorithms",
     questionCount = 20,
@@ -23,22 +21,6 @@ export function RoomInfoHeader({
         <View className="items-center px-4">
             {/* Host */}
             <View className="mb-2 flex-row items-center gap-2 rounded-full bg-surface-container-low px-3 py-1">
-                <View className="h-5 w-5 overflow-hidden rounded-full bg-surface-container-high">
-                    {hostAvatar ? (
-                        <Image
-                            source={{ uri: hostAvatar }}
-                            className="h-full w-full"
-                            resizeMode="cover"
-                        />
-                    ) : (
-                        <View className="flex-1 items-center justify-center">
-                            <Text className="font-poppins-semibold text-[9px] text-primary">
-                                {hostName.slice(0, 1).toUpperCase()}
-                            </Text>
-                        </View>
-                    )}
-                </View>
-
                 <Text className="font-poppins-light text-xs text-text-secondary">
                     Host:{" "}
                     <Text className="font-poppins-semibold text-text-primary">
