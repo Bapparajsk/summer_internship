@@ -1,7 +1,6 @@
 import { BottomSheet } from 'heroui-native';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { MotionButton } from '@/components/ui/button/motionButton';
@@ -12,7 +11,6 @@ import { RoomSecurityCard } from './roomSecurityCard';
 import { AnswerRevealTimingCard } from './answerRevealTimingCard';
 import { LifelineCard } from './lifelineCard';
 
-const StyledIonicons = withUniwind(Ionicons);
 
 export const SettingButton = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +21,7 @@ export const SettingButton = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
             <BottomSheet.Trigger asChild>
                 <MotionButton
-                    className='absolute top-1 right-1 size-10'
+                    className='size-10'
                     accessibilityLabel="setting"
                 >
                     <Entypo name="list" size={16} color="white" />

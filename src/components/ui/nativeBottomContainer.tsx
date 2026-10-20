@@ -27,7 +27,7 @@ export const NativeBottomContainer = ({ children, zIndex, bottomOffset = 10 }:Na
     }, [insets.bottom]);
 
     const animatedStyle = useAnimatedStyle(() => ({
-        bottom: bottom.value + 10,
+        bottom: bottom.value + bottomOffset,
     }));
 
     return (

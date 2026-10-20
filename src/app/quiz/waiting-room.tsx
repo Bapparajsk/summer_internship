@@ -3,7 +3,7 @@ import { ScreenWrapper } from '@/components/screen'
 import { ParticipantArena, Participant } from '@/components/screen/quiz/waitingRoom/participantArena'
 import { LiveUser, LiveUserList } from '@/components/screen/quiz/waitingRoom/liveUserList';
 import { BottomContent } from '@/components/screen/quiz/waitingRoom/bottomContent';
-import { SettingButton } from '@/components/screen/quiz/waitingRoom/settingButton';
+import { Header } from '@/components/screen/quiz/waitingRoom/header';
 
 const users: LiveUser[] = [
     {
@@ -129,10 +129,11 @@ export default function WaitingRoom() {
     return (
         <ScreenWrapper
             path={"quiz/waiting-room"}
-            showFooter={false} paddingTop={10}
+            showFooter={false} 
+            paddingTop={10}
             bottomContainer={<BottomContent />}
         >
-           <SettingButton />
+            <Header />
             <RoomInfoHeader
                 hostName="Arjun"
                 hostAvatar="https://example.com/avatar.jpg"
