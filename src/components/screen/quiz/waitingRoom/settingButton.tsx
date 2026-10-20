@@ -1,4 +1,4 @@
-import { BottomSheet, Button } from 'heroui-native';
+import { BottomSheet } from 'heroui-native';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -9,6 +9,8 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LinearTransition } from 'react-native-reanimated';
 import If from '@/components/lib/if';
 import { RoomSecurityCard } from './roomSecurityCard';
+import { AnswerRevealTimingCard } from './answerRevealTimingCard';
+import { LifelineCard } from './lifelineCard';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -43,40 +45,26 @@ export const SettingButton = () => {
                             </Text>
                         </View>
                         <CloseButton isSaved={isSave} />
-                    </View> 
-                    <BottomSheetScrollView className={"mt-3"} showsVerticalScrollIndicator={false}>
+                    </View>
+                    <BottomSheetScrollView className={"mt-3"} contentContainerClassName={"gap-y-3"} showsVerticalScrollIndicator={false}>
                         <RoomSecurityCard
                             roomCode="QF-82K9"
                             passkey='XP-7294'
-                            initialEnabled
+                            initialEnabled 
                             onEnabledChange={(enabled) => {
                                 // Update your backend
                             }}
                         />
-                        <View className="items-center mb-5">
-                            <View className="size-20 items-center justify-center rounded-full bg-green-500/10">
-                                <StyledIonicons
-                                    name="shield-checkmark"
-                                    size={40}
-                                    className="text-green-500"
-                                />
-                            </View>
-                        </View>
-                        <View className="mb-8 gap-2 items-center">
-                            <BottomSheet.Title className="text-center">
-                                Keep yourself safe
-                            </BottomSheet.Title>
-                            <BottomSheet.Description className="text-center">
-                                Update your software to the latest version for better security and
-                                performance.
-                            </BottomSheet.Description>
-                        </View>
-                        <View className="gap-3">
-                            <Button onPress={() => setIsOpen(false)}>Update Now</Button>
-                            <Button variant="tertiary" onPress={() => setIsOpen(false)}>
-                                Later
-                            </Button>
-                        </View>
+                        <AnswerRevealTimingCard
+                            initialMode="after-each"
+                            onModeChange={(mode) => {
+                                // Save the selected reveal timing
+                                console.log("Answer reveal mode:", mode);
+                            }}
+                        />
+                        <LifelineCard 
+
+                        />
                     </BottomSheetScrollView>
                 </BottomSheet.Content>
             </BottomSheet.Portal>

@@ -13,9 +13,9 @@ import Animated, {
     withRepeat,
     withTiming,
 } from "react-native-reanimated";
-import { Users } from "lucide-react-native";
 import { RadarTexture } from "@/components/ui/radarTexture";
 import { FontAwesome } from "@expo/vector-icons";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 
 const AnimatedView = Animated.View;
@@ -148,7 +148,7 @@ export function ParticipantArena({
             <View className="my-2 h-77.5 w-full items-center justify-center">
                 <AnimatedView entering={FadeInDown.duration(250)}>
                     <View className="h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/5">
-                        <Users size={21} color={COLORS.primary} />
+                        <FontAwesome5 name="users" size={21} color={COLORS.primary} />
                     </View>
                 </AnimatedView>
 
@@ -197,7 +197,7 @@ export function ParticipantArena({
             ) : (
                 <View className="absolute top-2 z-20 items-center">
                     <View className="h-11 w-11 items-center justify-center rounded-full border border-border bg-surface-container-high">
-                        <Users size={18} color={COLORS.secondary} />
+                        <FontAwesome5 name="users" size={18} color={COLORS.secondary} />
                     </View>
                     <Text className="mt-1 font-poppins-light text-[10px] text-text-secondary">
                         Waiting for players
@@ -234,7 +234,7 @@ export function ParticipantArena({
             {overflowCount > 0 && (
                 <View className="absolute bottom-0 z-20">
                     <View className="flex-row items-center gap-1.5 rounded-full bg-surface-container-high px-3 py-2">
-                        <Users size={14} color={COLORS.primary} />
+                        <FontAwesome5 name="users" size={14} color={COLORS.primary} />
                         <Text className="font-poppins-semibold text-[8px] font-semibold text-primary">
                             +{overflowCount} more
                         </Text>
