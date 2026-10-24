@@ -165,7 +165,7 @@ export function PlayerDetailsSheet({
 
                         <View className="mt-5 gap-2">
 
-                            <View className="w-full flex-coll gap-y-2">
+                            <View className="w-full flex-row gap-y-2">
                                 <View className="w-1/2 pr-1">
                                     <Button
                                         title="Cancel"

@@ -6,48 +6,7 @@ import {
     LiveUserList, 
     ParticipantArena, 
     type Participant, 
-    type LiveUser 
 } from '@/components/screen/quiz/waitingRoom';
-
-const users: LiveUser[] = [
-    {
-        id: "1",
-        name: "Bapparaj",
-        joinedAt: "Just now",
-        isYou: true,
-        isReady: true
-    },
-    {
-        id: "2",
-        name: "Rana",
-        joinedAt: "Just now",
-        isReady: true
-    },
-    {
-        id: "3",
-        name: "Ayon",
-        joinedAt: "Just now",
-        isReady: false
-    },
-    {
-        id: "11",
-        name: "Subhasis",
-        joinedAt: "Just now",
-        isReady: true
-    },
-    {
-        id: "12",
-        name: "Rohit",
-        joinedAt: "Just now",
-        isReady: true
-    },
-    {
-        id: "13",
-        name: "Akash",
-        joinedAt: "Just now",
-        isReady: true
-    },
-];
 
 
 export const tempParticipantArenaData = {
@@ -150,7 +109,7 @@ export default function WaitingRoom() {
                 }}
                 // isLoading
             />
-            <LiveUserList users={users} isHost={true} />
+            <LiveUserList isHost={true} />
             
         </ScreenWrapper>
     )

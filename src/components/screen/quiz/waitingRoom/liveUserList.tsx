@@ -1,15 +1,15 @@
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { BottomSheet, cn, PressableFeedback } from "heroui-native";
+import { BottomSheet, cn, PressableFeedback, useToast } from "heroui-native";
 import { useState } from "react";
 import { Text, View } from "react-native";
 import { PlayerDetails, PlayerDetailsSheet } from "./playerDetailsSheet";
+import Animated, { LinearTransition } from "react-native-reanimated";
 
 export type LiveUser = PlayerDetails & {
     isYou?: boolean;
 };
 
 type LiveUserListProps = {
-    users: LiveUser[];
     title?: string;
     isHost: boolean
 };
@@ -21,13 +21,54 @@ const fallbackPlayer: PlayerDetails = {
     joinedAt: "Just now"
 }
 
+const temp_users: LiveUser[] = [
+    {
+        id: "1",
+        name: "Bapparaj",
+        joinedAt: "Just now",
+        isYou: true,
+        isReady: true
+    },
+    {
+        id: "2",
+        name: "Rana",
+        joinedAt: "Just now",
+        isReady: true
+    },
+    {
+        id: "3",
+        name: "Ayon",
+        joinedAt: "Just now",
+        isReady: false
+    },
+    {
+        id: "11",
+        name: "Subhasis",
+        joinedAt: "Just now",
+        isReady: true
+    },
+    {
+        id: "12",
+        name: "Rohit",
+        joinedAt: "Just now",
+        isReady: true
+    },
+    {
+        id: "13",
+        name: "Akash",
+        joinedAt: "Just now",
+        isReady: true
+    },
+];
+
 export function LiveUserList({
-    users,
     title = "Players in lobby",
-    isHost = false
+    isHost = false,
 }: LiveUserListProps) {
 
+    const [users, setUsers] = useState<LiveUser[]>(temp_users);
     const [selectedUser, setSelectedUser] = useState<LiveUser | null>(null);
+    const { toast } = useToast();
 
     const handleOpenPlayerSheet = (user: LiveUser) => {
         if (!isHost || user.isYou) return;
@@ -41,7 +82,10 @@ export function LiveUserList({
     };
 
     return (
-        <View className="gap-4 rounded-[34px] border border-border bg-white/3 py-4 px-2">
+        <Animated.View
+            layout={LinearTransition.springify().stiffness(200).mass(0.5).damping(20)}
+            className="gap-4 rounded-[34px] border border-border bg-white/3 py-4 px-2"
+        >
             {/* Header */}
             <View className="flex-row items-center justify-between px-2">
                 <View className="flex-row items-center gap-2">
@@ -120,13 +164,23 @@ export function LiveUserList({
                             player={selectedUser ?? fallbackPlayer}
                             onClose={() => handleSheetOpenChange(false)}
                             onRemove={(player) => {
-                                // Call your API, then update the participant list.
-                                console.log("Remove player:", player.id);
+                                setUsers((previous) =>
+                                    previous.filter((user) => user.id !== player.id),
+                                );
+
+                                // toast.show({
+                                //     variant: 'success',
+                                //     label: 'You have upgraded your plan',
+                                //     description: 'You can continue using HeroUI Chat',
+                                //     // icon: <Icon name="check" />,
+                                //     actionLabel: 'Close',
+                                //     onActionPress: ({ hide }) => hide(),
+                                // });
                             }}
                         />
                     </BottomSheet.Content>
                 </BottomSheet.Portal>
             </BottomSheet>
-        </View>
+        </Animated.View>
     );
 }

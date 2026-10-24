@@ -1,5 +1,5 @@
 import { DarkTheme, Stack, ThemeProvider } from "expo-router";
-import { HeroUINativeProvider, HeroUINativeConfig } from "heroui-native";
+import { HeroUINativeProvider, HeroUINativeConfig, ToastProvider } from "heroui-native";
 import type { JSX } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Uniwind } from "uniwind";
@@ -29,19 +29,21 @@ export default function RootLayout(): JSX.Element {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#000" }}>
         <KeyboardProvider>
-          <StatusBar backgroundColor={"#000000"} networkActivityIndicatorVisible animated barStyle={"light-content"}/>
+          <StatusBar backgroundColor={"#000000"} networkActivityIndicatorVisible animated barStyle={"light-content"} />
           <HeroUINativeProvider config={heroUiConfig}>
-            <ThemeProvider value={DarkTheme}>
-              <FontProvider>
-                <Stack screenOptions={{ headerShown: false, animation: "slide_from_bottom" }} >
-                  {/* <Stack.Screen name="(auth)" /> */}
-                  <Stack.Screen name="(tab)" />
-                  <Stack.Screen name="onboarding" />
-                  {/* quiz screens */}
-                  <Stack.Screen name="quiz" />
-                </Stack>
-              </FontProvider>
-            </ThemeProvider>
+            <ToastProvider maxVisibleToasts={4}>
+              <ThemeProvider value={DarkTheme}>
+                <FontProvider>
+                  <Stack screenOptions={{ headerShown: false, animation: "slide_from_bottom" }} >
+                    {/* <Stack.Screen name="(auth)" /> */}
+                    <Stack.Screen name="(tab)" />
+                    <Stack.Screen name="onboarding" />
+                    {/* quiz screens */}
+                    <Stack.Screen name="quiz" />
+                  </Stack>
+                </FontProvider>
+              </ThemeProvider>
+            </ToastProvider>
           </HeroUINativeProvider>
         </KeyboardProvider>
       </GestureHandlerRootView>

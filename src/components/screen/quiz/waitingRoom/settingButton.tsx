@@ -9,6 +9,7 @@ import { RoomSecurityCard } from './roomSecurityCard';
 import { AnswerRevealTimingCard } from './answerRevealTimingCard';
 import { LifelineCard } from './lifelineCard';
 import { CloseButton } from '@/components/ui/button';
+import { RandomizationSettings } from './randomizationSettings';
 
 
 export const SettingButton = () => {
@@ -47,11 +48,12 @@ export const SettingButton = () => {
                         <RoomSecurityCard
                             roomCode="QF-82K9"
                             passkey='XP-7294'
-                            initialEnabled 
+                            initialEnabled
                             onEnabledChange={(enabled) => {
                                 // Update your backend
                             }}
                         />
+                        
                         <AnswerRevealTimingCard
                             initialMode="after-each"
                             onModeChange={(mode) => {
@@ -59,8 +61,17 @@ export const SettingButton = () => {
                                 console.log("Answer reveal mode:", mode);
                             }}
                         />
-                        <LifelineCard 
-
+                        <LifelineCard />
+                        <View className="mx-2 h-px bg-border-subtle" />
+                        <RandomizationSettings
+                            initialShuffleQuestions
+                            initialShuffleAnswers
+                            onShuffleQuestionsChange={(enabled) => {
+                                // Update room settings
+                            }}
+                            onShuffleAnswersChange={(enabled) => {
+                                // Update room settings
+                            }}
                         />
                     </BottomSheetScrollView>
                 </BottomSheet.Content>
