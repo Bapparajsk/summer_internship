@@ -1,4 +1,3 @@
-
 import { Fragment, useState } from "react";
 import { Text, View } from "react-native";
 import {
@@ -168,17 +167,17 @@ export function PlayerDetailsSheet({
                             <View className="w-full flex-row gap-y-2">
                                 <View className="w-1/2 pr-1">
                                     <Button
-                                        title="Cancel"
-                                        variant="outline"
-                                        onPress={() => setConfirmVisible(false)}
+                                        onPress={confirmRemoval}
+                                        title="Remove"
+                                        variant="danger"
+                                        leftIcon="remove-circle-outline"
                                     />
                                 </View>
                                 <View className="w-1/2 pl-1">
                                     <Button
-                                        onPress={confirmRemoval}
-                                        title="Remove"
-                                        variant="danger"
-                                        leftIcon="person-remove-sharp"
+                                        title="Cancel"
+                                        variant="outline"
+                                        onPress={() => setConfirmVisible(false)}
                                     />
                                 </View>
                             </View>
