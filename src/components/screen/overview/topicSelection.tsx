@@ -1,5 +1,5 @@
 import { FlatList, Text, View } from "react-native";
-import { SegmentedProgress } from "../../progressBar";
+import { SegmentedProgress } from "../../ui/progressBar";
 import { PressableFeedback } from "heroui-native/pressable-feedback";
 import { getCommonIcon, IconName } from "../../lib/icon";
 import { SectionHeader } from "../../header/sectionHeader";

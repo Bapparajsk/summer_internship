@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { SegmentedProgress } from "@/components/progressBar";
+import { SegmentedProgress } from "@/components/ui/progressBar";
 import { getCommonIcon, IconName } from "@/components/lib/icon";
 
 type Subject = {

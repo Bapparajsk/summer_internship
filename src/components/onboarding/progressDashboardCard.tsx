@@ -17,7 +17,7 @@ import Svg, {
     Stop,
 } from "react-native-svg";
 import { Card } from "heroui-native/card";
-import { SegmentedProgress } from "../progressBar";
+import { SegmentedProgress } from "../ui/progressBar";
 import { Ticker } from "../number";
 import { scheduleOnRN } from "react-native-worklets";
 

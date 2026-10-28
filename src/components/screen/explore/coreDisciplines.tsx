@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { PressableFeedback } from "heroui-native";
 import { Text, View } from "react-native";
-import { SegmentedProgress } from "../../progressBar";
+import { SegmentedProgress } from "../../ui/progressBar";
 import { getCommonIcon, IconName } from "../../lib/icon";
 
 type Discipline = {

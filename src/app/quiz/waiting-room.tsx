@@ -7,6 +7,8 @@ import {
     ParticipantArena, 
     type Participant, 
 } from '@/components/screen/quiz/waitingRoom';
+import { Link } from 'expo-router';
+import { Button } from 'heroui-native';
 
 
 export const tempParticipantArenaData = {
@@ -110,7 +112,11 @@ export default function WaitingRoom() {
                 // isLoading
             />
             <LiveUserList isHost={true} />
-            
+            <Link asChild href={"/quiz/game"}>
+                <Button>
+                    goto game
+                </Button>
+            </Link>
         </ScreenWrapper>
     )
 }

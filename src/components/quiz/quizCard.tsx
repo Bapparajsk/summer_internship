@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { cn, PressableFeedback } from "heroui-native";
 import { Text, View } from "react-native";
-import { SegmentedProgress } from "../progressBar";
+import { SegmentedProgress } from "../ui/progressBar";
 import { getCommonIcon, IconName } from "../lib/icon";
 
 type Difficulty = "Easy" | "Medium" | "Hard" | "Expert";
