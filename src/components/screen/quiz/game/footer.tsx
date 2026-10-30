@@ -43,8 +43,8 @@ const ProgressDot = memo(({ index, active }: ProgressDotProps) => {
         <Animated.View
             style={animatedStyle}
             className={cn("h-2.5 w-2.5 rounded-full bg-white/20", {
-                "bg-cyan-400": active,
-                "bg-emerald-400": status === "correct",
+                "bg-gray-400": active,
+                "bg-cyan-400": status === "correct",
                 "bg-rose-400": status === "incorrect",
             })}
         />
@@ -107,9 +107,10 @@ export const QuizFooter = memo(({
                 <View className="w-2/6">
                     <Button
                         title="Prev"
-                        variant="outline"
+                        disabled={currentQuestion === 1}
+                        variant={"outline"}
                         onPress={onPrev}
-                        leftIcon="arrow-back"
+                        leftIcon={currentQuestion === 1 ? "close-circle-outline" : "arrow-back"}
                         textStyle={{ marginLeft: 5 }}
                     />
                 </View>

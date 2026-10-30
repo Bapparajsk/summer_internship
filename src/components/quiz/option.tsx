@@ -92,9 +92,9 @@ export const QuizOption = memo(({
                 <View className="ml-3 flex-1 justify-center pr-2">
                     <Text
                         className={cn(
-                            'font-poppins-medium text-sm leading-6 line-through',
+                            'font-poppins-medium text-sm leading-6',
                             config.text,
-                            "text-text-disabled"
+                            // "text-text-disabled line-through"
                         )}
                     >
                         {text}
