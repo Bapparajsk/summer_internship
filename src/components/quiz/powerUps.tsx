@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 
 export const QuizPowerUps = () => {
     return (
-        <View className="mb-5 flex-row justify-center gap-2">
+        <View className="flex-row gap-2 border border-red-400">
             <PressableFeedback className="flex-row items-center rounded-full border border-white/10 bg-white/3 px-4 py-2">
                 <MaterialIcons
                     name="timer"
@@ -27,7 +27,6 @@ export const QuizPowerUps = () => {
                     Hint
                 </Text>
             </PressableFeedback>
-
         </View>
     );
 };

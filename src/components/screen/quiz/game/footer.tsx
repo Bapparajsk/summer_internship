@@ -1,18 +1,19 @@
 import { useQuizNavigationStore } from "@/store/quiz";
-import { MaterialIcons } from '@expo/vector-icons';
 import { memo, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withSpring
 } from 'react-native-reanimated';
-import { cn, PressableFeedback } from "heroui-native";
+import { cn } from "heroui-native";
+import { Button } from "@/components/ui/button";
 
 type QuizFooterProps = {
     currentQuestion: number;
     hasAnswered?: boolean;
-    onPress?: () => void;
+    onNext?: () => void;
+    onPrev?:() => void
 };
 
 type ProgressDotProps = {
@@ -22,42 +23,42 @@ type ProgressDotProps = {
 
 const ProgressDot = memo(({ index, active }: ProgressDotProps) => {
 
-        const status = useQuizNavigationStore(
-            state => state.navigations[index]?.status
+    const status = useQuizNavigationStore(
+        state => state.navigations[index]?.status
+    );
+
+    const scale = useSharedValue(active ? 1.2 : 1);
+
+    useEffect(() => {
+        scale.value = withSpring(
+            active ? 1.2 : 1,
+            {
+                stiffness: 220,
+                damping: 20,
+            }
         );
+    }, [active]);
 
-        const scale = useSharedValue(active ? 1.2 : 1);
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: scale.value }],
+        };
+    });
 
-        useEffect(() => {
-            scale.value = withSpring(
-                active ? 1.2 : 1,
+    return (
+        <Animated.View
+            style={animatedStyle}
+            className={cn(
+                "h-2.5 w-2.5 rounded-full bg-white/20",
                 {
-                    stiffness: 220,
-                    damping: 20,
+                    "bg-cyan-400": active,
+                    "bg-emerald-400": status === "correct",
+                    "bg-rose-400": status === "incorrect",
                 }
-            );
-        }, [active]);
-
-        const animatedStyle = useAnimatedStyle(() => {
-            return {
-                transform: [{ scale: scale.value }],
-            };
-        });
-
-        return (
-            <Animated.View
-                style={animatedStyle}
-                className={cn(
-                    "h-2.5 w-2.5 rounded-full bg-white/20",
-                    {
-                        "bg-cyan-400": active,
-                        "bg-emerald-400": status === "correct",
-                        "bg-rose-400": status === "incorrect",
-                    }
-                )}
-            />
-        );
-    }
+            )}
+        />
+    );
+}
 );
 
 ProgressDot.displayName = "ProgressDot"
@@ -65,7 +66,8 @@ ProgressDot.displayName = "ProgressDot"
 export const QuizFooter = ({
     currentQuestion,
     hasAnswered,
-    onPress,
+    onNext,
+    onPrev,
 }: QuizFooterProps) => {
 
     const totalQuestions = useQuizNavigationStore(state => state.totalQuestions);
@@ -108,31 +110,32 @@ export const QuizFooter = ({
             </View>
 
             {/* Action Button */}
+            <View className="flex-row">
+                <View className="w-2/6">
+                    <Button
+                        title="Prev"
+                        variant="outline"
+                        onPress={onPrev}
+                        leftIcon="arrow-back"
+                        textStyle={{ marginLeft: 5 }}
 
-            <PressableFeedback
-                onPress={onPress}
-                className="h-14 flex-row items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-500 shadow-lg shadow-cyan-500/30"
-            >
+                    />
+                </View>
+                <View className="w-4/6 pl-2">
+                    <Button
+                        onPress={onNext}
+                        title={buttonText}
+                        textStyle={{ marginRight: 5 }}
+                        variant="outline"
+                        theme="light"
+                        rightIcon={
+                            currentQuestion === totalQuestions
+                                ? 'flag'
+                                : 'arrow-forward'}
 
-                <Text className="text-text-primary">
-                    {buttonText}
-                </Text>
-
-                <MaterialIcons
-                    name={
-                        currentQuestion === totalQuestions
-                            ? 'flag'
-                            : 'arrow-forward'
-                    }
-                    size={18}
-                    color="#fff"
-                    style={{
-                        marginLeft: 8,
-                    }}
-                />
-
-            </PressableFeedback>
-
+                    />
+                </View>
+            </View>
         </View>
     );
 };

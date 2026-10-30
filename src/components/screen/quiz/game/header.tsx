@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
-
-import {ProgressLine} from '@/components/ui/progressBar';
+import { useShallow } from 'zustand/react/shallow';
+import { SegmentedProgress } from '@/components/ui/progressBar';
 
 import { useEffect } from 'react';
 import { tick, useQuizTimerStore, useQuizNavigationStore } from '@/store/quiz';
@@ -15,6 +15,9 @@ import Animated, {
     withSpring,
 } from 'react-native-reanimated';
 import { cn } from 'heroui-native';
+import { getCommonIcon, IconName } from '@/components/lib/icon';
+import { QuizPowerUps } from '@/components/quiz';
+import { difficultyColors, DifficultyColorsType } from '@/utils/quiz/difficulty.config';
 
 
 const QuizTimer = () => {
@@ -60,12 +63,12 @@ const QuizTimer = () => {
             Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Error
             );
-            router.replace({
-                pathname: "/quiz_game/game_over" as any,
-                params: {
-                    score: 8,
-                },
-            });
+            // router.replace({
+            //     pathname: "/quiz_game/game_over" as any,
+            //     params: {
+            //         score: 8,
+            //     },
+            // });
         }
     }, [timeLeft]);
 
@@ -134,44 +137,40 @@ const QuizTimer = () => {
 };
 
 type QuizGameHeaderProps = {
-    currentQuestion: number;
+    topic: string;
+    icon: IconName
+    difficulty: DifficultyColorsType
 };
 
-export const QuizGameHeader = ({
-    currentQuestion,
-}: QuizGameHeaderProps) => {
 
-    const {
-        totalAnswered,
-        totalQuestions,
-    } = useQuizNavigationStore((state) => ({
-        totalAnswered: state.totalAnswered,
-        totalQuestions: state.totalQuestions,
-    }));
+export const QuizGameHeader = ({ topic, icon, difficulty }: QuizGameHeaderProps) => {
+
+    const { totalAnswered, totalQuestions } = useQuizNavigationStore(
+        useShallow((state) => ({
+            totalAnswered: state.totalAnswered,
+            totalQuestions: state.totalQuestions,
+        }))
+    );
+
+    const { Icon, name } = getCommonIcon(icon);
+    const config = difficultyColors[difficulty];
 
 
     return (
-        <View className="px-4 pt-2 pb-4">
+        <View className="pt-1">
 
             {/* Header Row */}
             <View className="mb-3 flex-row items-center justify-between">
-
-                <View>
-                    <Text className="text-xs uppercase tracking-wider text-zinc-500">
+                <View className='justify-center'>
+                    <Text className="text-xs uppercase font-poppins-medium tracking-wider text-zinc-500">
                         Question
                     </Text>
-
-                    <Text className="mt-1 text-lg font-poppins-semibold text-white">
-                        {currentQuestion}
-                        <Text className="text-zinc-500">
-                            {' / '}
-                            {totalQuestions}
+                    <View className='flex-row gap-x-1 items-center justify-center'>
+                        <Icon name={name} color={"#ffffff"} size={12}/>
+                        <Text className='text-text-primary font-poppins-semibold'>
+                            {topic}
                         </Text>
-                    </Text>
-
-                    <Text className="mt-1 text-xs text-zinc-500">
-                        {totalAnswered} / {totalQuestions} Answered
-                    </Text>
+                    </View>
                 </View>
 
                 {/* Timer */}
@@ -179,8 +178,37 @@ export const QuizGameHeader = ({
 
             </View>
 
-            <ProgressLine total={totalQuestions} current={totalAnswered} />
+            {/* <ProgressLine total={totalQuestions} current={totalAnswered} /> */}
+            <View className='w-full h-1.5'>
+                <SegmentedProgress
+                    primaryColor='#22D3EE'
+                    progress={
+                        totalQuestions > 0
+                            ? Math.min(
+                                100,
+                                Math.max(0, (totalAnswered / totalQuestions) * 100)
+                            ) : 0
+                    }
+                />
+            </View>
 
+            <View className="flex-row items-center justify-between">
+                <View 
+                    className="rounded-full bg-amber-500/10 px-3 py-1 border"
+                    style={{ 
+                        backgroundColor: config.bg,
+                        borderColor: config.border 
+                    }}
+                >
+                    <Text 
+                        className="text-[10px] leading-normal font-poppins-medium capitalize"
+                        style={{ color: config.text}}
+                    >
+                        {difficulty}
+                    </Text>
+                </View>
+                <QuizPowerUps />
+            </View>
         </View>
     );
 };

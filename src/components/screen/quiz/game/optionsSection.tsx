@@ -1,17 +1,20 @@
 import { updateNavigation, useQuizNavigationStore } from "@/store/quiz";
 import * as Haptics from 'expo-haptics';
 import { memo } from "react";
-import { View } from "react-native";
-import { QuizQuestionCard, QuizPowerUps, QuizOptionCard, QuizStatus } from "@/components/quiz";
-import { QuizData } from "./control";
+import { View, ViewProps } from "react-native";
+import { QuizQuestionCard, QuizOptionCard, QuizStatus } from "@/components/quiz";
+import { QuizData } from "./temp-data";
 
-type QuizOptionsSectionProps = QuizData & {
+type QuizOptionsSectionProps = ViewProps & {
     questionIndex: number;
+    quiz: QuizData
+    index: number
 };
 
 const QuizOptionsSection = ({
     questionIndex,
-    ...quiz
+    quiz,
+    index,
 }: QuizOptionsSectionProps) => {
 
     const navigation = useQuizNavigationStore(state => state.navigations[questionIndex]);
@@ -50,19 +53,13 @@ const QuizOptionsSection = ({
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginTop: 12 }}>
 
-            <QuizQuestionCard
-                chapter={quiz.chapter}
-                difficulty={
-                    quiz.difficulty
-                }
-                question={
-                    quiz.question
-                }
-            />
+            <QuizQuestionCard>
+                {quiz.question}
+            </QuizQuestionCard>
 
-            <QuizPowerUps />
+            {/* <QuizPowerUps /> */}
 
             {quiz.options.map(
                 (
@@ -95,21 +92,14 @@ const QuizOptionsSection = ({
 
                     return (
                         <QuizOptionCard
-                            key={
-                                optionIndex
-                            }
+                            key={optionIndex}
                             letter={String.fromCharCode(
-                                65 +
-                                optionIndex
+                                65 + optionIndex
                             )}
                             text={option}
-                            status={
-                                optionStatus
-                            }
+                            status={optionStatus}
                             onPress={() =>
-                                handleSelect(
-                                    optionIndex
-                                )
+                                handleSelect(optionIndex)
                             }
                         />
                     );
