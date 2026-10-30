@@ -155,7 +155,6 @@ export const QuizGameHeader = ({ topic, icon, difficulty }: QuizGameHeaderProps)
     const { Icon, name } = getCommonIcon(icon);
     const config = difficultyColors[difficulty];
 
-
     return (
         <View className="pt-1">
 
@@ -192,7 +191,7 @@ export const QuizGameHeader = ({ topic, icon, difficulty }: QuizGameHeaderProps)
                 />
             </View>
 
-            <View className="flex-row items-center justify-between">
+            <View className="flex-row items-start justify-between mt-2">
                 <View 
                     className="rounded-full bg-amber-500/10 px-3 py-1 border"
                     style={{ 
