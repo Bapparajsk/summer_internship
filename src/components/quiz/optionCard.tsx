@@ -26,6 +26,7 @@ const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
             onContentSizeChange={(_, contentHeight) => {
                 setIsScrollable(contentHeight > containerHeight);
             }}
+            contentOffset={{ x: 0, y: 10 }}
         >
             {children}
         </ScrollView>

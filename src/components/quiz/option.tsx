@@ -1,92 +1,139 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { Text, View } from 'react-native';
+
 import { memo } from 'react';
+import { Text, View } from 'react-native';
 import { PressableFeedback, cn } from 'heroui-native';
 
-export type QuizStatus = 'correct' | 'incorrect' | 'unanswered';
+export type QuizStatus =
+    | 'correct'
+    | 'incorrect'
+    | 'unanswered';
 
-type QuizOptionCardProps = {
+type QuizOptionProps = {
     letter: string;
     text: string;
     status?: QuizStatus;
     onPress?: () => void;
+    disabled?: boolean;
 };
 
-export const QuizOption = memo(({ letter, text, status = "unanswered", onPress }: QuizOptionCardProps) => {
+const statusConfig = {
+    correct: {
+        container: 'border-primary/60 bg-primary/10',
+        letter: 'bg-primary',
+        letterText: 'text-background',
+        text: 'text-primary',
+        indicator: 'bg-primary',
+        symbol: '✓',
+    },
+    incorrect: {
+        container: 'border-danger/60 bg-danger/10',
+        letter: 'bg-danger',
+        letterText: 'text-white',
+        text: 'text-danger',
+        indicator: 'bg-danger',
+        symbol: '✗',
+    },
+    unanswered: {
+        container: 'border-border-subtle bg-white/4',
+        letter: 'bg-surface-container-high',
+        letterText: 'text-text-secondary',
+        text: 'text-text-primary',
+        indicator: 'border-2 border-white/10',
+        symbol: '',
+    },
+};
 
-    const isCorrect = status === "correct";
-    const isIncorrect = status === "incorrect";
-    const isUnanswered = status === "unanswered";
+export const QuizOption = memo(({
+    letter,
+    text,
+    status = 'unanswered',
+    onPress,
+    disabled = false,
+}: QuizOptionProps) => {
+
+    const isUnanswered = status === 'unanswered';
+
+    const isDisabled = disabled || !isUnanswered;
+
+
+
+    const config = statusConfig[status];
 
     return (
-        <PressableFeedback
-            isDisabled={
-                !isUnanswered
-            }
-            onPress={onPress}
-            className={cn(
-                "mb-3 rounded-2xl border p-4",
-                {
-                    "border-cyan-400 bg-cyan-500/10":
-                        isCorrect,
-
-                    "border-white/10 bg-white/3":
-                        isUnanswered,
-
-                    "border-rose-500 bg-rose-500/10":
-                        isIncorrect,
-                }
-            )}
-        >
-            <View className="flex-row items-center">
-
+        <View className='overflow-hidden relative rounded-xl'>
+            <PressableFeedback
+                onPress={onPress}
+                isDisabled={isDisabled}
+                animation={isDisabled ? 'disable-all' : undefined}
+                className={cn(
+                    'my-1.5 min-h-17 flex-row items-center rounded-xl border px-3.5 py-3 z-0',
+                    config.container,
+                    !isDisabled && 'active:opacity-30'
+                )}
+            >
+                {/* Option Letter */}
                 <View
-                    className={cn("h-10 w-10 items-center justify-center rounded-full", {
-                        "bg-cyan-500": status === "correct",
-                        "bg-white/5": status === "unanswered",
-                        "bg-rose-500": status === "incorrect",
-                    })}
+                    className={cn(
+                        'h-9 w-9 items-center justify-center rounded-lg',
+                        config.letter
+                    )}
                 >
                     <Text
-                        className={cn("font-poppins-semibold", {
-                            "text-white": status === "correct" || status === "incorrect",
-                            "text-zinc-400": status === "unanswered",
-                        })}
+                        className={cn(
+                            'font-poppins-semibold text-sm',
+                            config.letterText
+                        )}
                     >
                         {letter}
                     </Text>
                 </View>
 
-                <Text
-                    numberOfLines={2}
-                    className={cn("ml-4 flex-1 text-base", {
-                        "font-semibold text-white": status === "correct",
-                        "text-zinc-300": status === "unanswered",
-                        "text-rose-400": status === "incorrect",
-                    })}
-                >
-                    {text}
-                </Text>
+                {/* Option Text */}
+                <View className="ml-3 flex-1 justify-center pr-2">
+                    <Text
+                        className={cn(
+                            'font-poppins-medium text-sm leading-6 line-through',
+                            config.text,
+                            "text-text-disabled"
+                        )}
+                    >
+                        {text}
+                    </Text>
+                </View>
 
-                {status === "correct" && (
-                    <MaterialIcons
-                        name="check-circle"
-                        size={22}
-                        color="#22D3EE"
+                {/* Status Indicator */}
+                {isUnanswered ? (
+                    <View
+                        className={cn(
+                            'h-5 w-5 shrink-0 rounded-full',
+                            config.indicator
+                        )}
                     />
+                ) : (
+                    <View
+                        className={cn(
+                            'h-6 w-6 shrink-0 items-center justify-center rounded-full',
+                            config.indicator
+                        )}
+                    >
+                        <Text className="font-poppins-semibold text-sm text-background">
+                            {config.symbol}
+                        </Text>
+                    </View>
                 )}
 
-                {status === "incorrect" && (
-                    <MaterialIcons
-                        name="cancel"
-                        size={22}
-                        color="#F87171"
+                {isDisabled && (
+                    <PressableFeedback.Ripple
+                        animation={{
+                            backgroundColor: { value: '#8FA5B8' },
+                            opacity: { value: [0, 0.1, 0] },
+                            progress: { baseDuration: 450 },
+                        }}
                     />
                 )}
-            </View>
-        </PressableFeedback>
+            </PressableFeedback>
+        </View>
     );
-}
-);
+});
 
-QuizOption.displayName = "QuizOptionCard"
+QuizOption.displayName = 'QuizOption';

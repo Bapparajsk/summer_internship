@@ -89,9 +89,11 @@ export const QuizFooter = memo(({
         state => state.navigations[currentQuestion - 1]?.status !== "unanswered"
     );
 
-    const isLastQuestion = currentQuestion === totalQuestions;
+    const totalAnswered = useQuizNavigationStore(
+        state => state.totalAnswered
+    )
 
-    const buttonText = isLastQuestion
+    const buttonText = totalAnswered === totalQuestions
         ? "Finish Quiz"
         : hasAnswered
             ? "Next Question"
@@ -119,7 +121,7 @@ export const QuizFooter = memo(({
                         textStyle={{ marginRight: 5 }}
                         variant="outline"
                         theme="light"
-                        rightIcon={isLastQuestion ? "flag" : "arrow-forward"}
+                        rightIcon={totalAnswered === totalQuestions ? "flag" : "arrow-forward"}
                     />
                 </View>
             </View>
