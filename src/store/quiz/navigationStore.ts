@@ -62,41 +62,24 @@ export const updateNavigation = ({
     status: QuizStatus;
     selectedOption?: number;
 }) => {
-    useQuizNavigationStore.setState(
-        (state) => {
-            if (
-                index < 0 ||
-                index >=
-                state.navigations.length
-            ) {
-                return state;
-            }
+    useQuizNavigationStore.setState(state => {
+        const current = state.navigations[index];
 
-            const current = state.navigations[index];
-
-            if (
-                status === "unanswered" ||
-                current.status === status &&
-                current.selectedOption ===
-                selectedOption
-            ) {
-                return state;
-            }
-
-            const navigations = [
-                ...state.navigations,
-            ];
-
-            navigations[index] = {
-                ...current,
-                status,
-                selectedOption,
-            };
-
-            return {
-                navigations,
-                totalAnswered: state.totalAnswered + 1,
-            };
+        if (!current || current.status !== "unanswered") {
+            return state;
         }
-    );
+
+        const navigations = [...state.navigations];
+
+        navigations[index] = {
+            ...current,
+            status,
+            selectedOption,
+        };
+
+        return {
+            navigations,
+            totalAnswered: state.totalAnswered + 1,
+        };
+    });
 };

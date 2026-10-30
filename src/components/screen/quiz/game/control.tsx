@@ -95,7 +95,6 @@ export const GameControl = () => {
                         questionIndex={index}
                         quiz={quiz}
                         testID="pager-view-content"
-                        index={index}
                     />
                 ))}
             </PagerView>
@@ -104,7 +103,6 @@ export const GameControl = () => {
                 currentQuestion={currentQuestionIndex + 1}
                 onNext={handleNext}
                 onPrev={handlePrev}
-                hasAnswered={true}
             />
             <Dialog isOpen={isOpen} animation={'disable-all'}>
                 <Dialog.Portal>

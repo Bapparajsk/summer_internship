@@ -8,21 +8,21 @@ import { QuizData } from "./temp-data";
 type QuizOptionsSectionProps = ViewProps & {
     questionIndex: number;
     quiz: QuizData
-    index: number
 };
 
 const QuizOptionsSection = ({
     questionIndex,
     quiz,
-    index,
 }: QuizOptionsSectionProps) => {
 
-    const navigation = useQuizNavigationStore(state => state.navigations[questionIndex]);
+    const status = useQuizNavigationStore(
+        state => state.navigations[questionIndex]?.status ?? "unanswered"
+    );
 
-    const status = navigation?.status ?? "unanswered";
-
-    const selectedOption = navigation?.selectedOption;
-
+    const selectedOption = useQuizNavigationStore(
+        state => state.navigations[questionIndex]?.selectedOption
+    );
+    
     const handleSelect = async (optionIndex: number) => {
         if (status !== "unanswered") {
             return;
@@ -61,55 +61,34 @@ const QuizOptionsSection = ({
 
             {/* <QuizPowerUps /> */}
 
-            {quiz.options.map(
-                (
-                    option,
-                    optionIndex
-                ) => {
+            {quiz.options.map((option, optionIndex) => {
 
-                    let optionStatus:
-                        QuizStatus =
-                        "unanswered";
+                let optionStatus: QuizStatus = "unanswered";
 
-                    if (
-                        selectedOption !==
-                        undefined
-                    ) {
-                        if (
-                            optionIndex ===
-                            quiz.correctAnswer
-                        ) {
-                            optionStatus =
-                                "correct";
-                        } else if (
-                            optionIndex ===
-                            selectedOption
-                        ) {
-                            optionStatus =
-                                "incorrect";
-                        }
+                if (selectedOption !== undefined) {
+                    if (optionIndex === quiz.correctAnswer) {
+                        optionStatus = "correct";
+                    } else if (optionIndex === selectedOption) {
+                        optionStatus = "incorrect";
                     }
-
-                    return (
-                        <QuizOptionCard
-                            key={optionIndex}
-                            letter={String.fromCharCode(
-                                65 + optionIndex
-                            )}
-                            text={option}
-                            status={optionStatus}
-                            onPress={() =>
-                                handleSelect(optionIndex)
-                            }
-                        />
-                    );
                 }
-            )}
 
+                return (
+                    <QuizOptionCard
+                        key={optionIndex}
+                        letter={String.fromCharCode(65 + optionIndex)}
+                        text={option}
+                        status={optionStatus}
+                        onPress={() => handleSelect(optionIndex)}
+                    />
+                );
+            })}
         </View>
     );
 };
 
-export default memo(
-    QuizOptionsSection
-);
+function QuizOption() {
+
+}
+
+export default memo(QuizOptionsSection);
