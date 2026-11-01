@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { QuizGameSettings, LifelineSettings } from "./type.settingStore";
-import { emitSettingsChanged } from '@/events/roomSettingEvents';
+import { emitSettingsChanged } from '@/events/roomEvents';
 
 
 // // ------------------------------------
@@ -15,6 +15,7 @@ const defaultSettings: QuizGameSettings = {
     lifelines: {
         enabled: false,
         maxUses: 1,
+        usedCount: 0,
     },
 };
 
@@ -74,6 +75,7 @@ const updateLifelinesEnabled = (enabled: boolean) => {
             lifelines: {
                 ...prev.lifelines,
                 enabled,
+                usedCount: 0,
             },
         };
     });
@@ -96,4 +98,23 @@ export const updateLifelines = ({ maxUses }: Pick<LifelineSettings, "maxUses">) 
             },
         };
     });
+};
+
+export const usedLifeline = (): boolean => {
+    const lifeline = useQuizSettingsStore.getState().lifelines;
+
+    if (!lifeline.enabled) return false;
+
+    if (lifeline.usedCount >= lifeline.maxUses) {
+        return false;
+    }
+
+    useQuizSettingsStore.setState((prev) => ({
+        lifelines: {
+            ...prev.lifelines,
+            usedCount: prev.lifelines.usedCount + 1,
+        },
+    }));
+
+    return true;
 };

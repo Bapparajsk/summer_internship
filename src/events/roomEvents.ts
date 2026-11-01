@@ -1,5 +1,6 @@
 type EventMap = {
     settingsChanged: undefined;
+    lifelineUsed: undefined;
 };
 
 type Listener = () => void;
@@ -48,10 +49,14 @@ class TypedEventEmitter<Events extends Record<string, unknown>> {
     }
 }
 
-export const roomSettingEvents = new TypedEventEmitter<EventMap>();
+export const roomEvents = new TypedEventEmitter<EventMap>();
 
 // emits
 
 export const emitSettingsChanged = () => {
-    roomSettingEvents.emit("settingsChanged");
+    roomEvents.emit("settingsChanged");
 };
+
+export const emitLifelineUsed = () => {
+    roomEvents.emit("lifelineUsed");
+}

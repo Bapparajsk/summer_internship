@@ -3,8 +3,9 @@ import { updateNavigation, useQuizNavigationStore } from '@/store/quiz';
 import * as Haptics from 'expo-haptics';
 import { QuizOption, QuizStatus } from './option';
 import { QuizData } from '../screen/quiz/game/temp-data';
-import { ReactNode, useState } from 'react';
-
+import { ReactNode, useEffect, useState } from 'react';
+import { useQuizSettingsStore } from "@/store/quiz/settingStore";
+import { roomEvents } from "@/events/roomEvents";
 export type OptionCardProps = {
     questionIndex: number;
     options: QuizData["options"];
@@ -18,6 +19,16 @@ type OptionsDetails = {
     letter: string;
     isCurrentQuestion: boolean;
 }
+
+const buildOptionsDetails = (options: QuizData["options"], correctAnswer: QuizData["correctAnswer"]): OptionsDetails[] => {
+    return options.map((item, index) => ({
+        id: item.id,
+        option : item.option,
+        status: "unanswered",
+        letter: String.fromCharCode(65 + index),
+        isCurrentQuestion: item.id === correctAnswer,
+    }));
+};
 
 const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
 
@@ -42,15 +53,6 @@ const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
     )
 }
 
-const buildOptionsDetails = (options: QuizData["options"], correctAnswer: QuizData["correctAnswer"]): OptionsDetails[] => {
-    return options.map((item, index) => ({
-        id: item.id,
-        option : item.option,
-        status: "unanswered",
-        letter: String.fromCharCode(65 + index),
-        isCurrentQuestion: item.id === correctAnswer,
-    }));
-};
 
 export const OptionCard = ({ questionIndex, options, correctAnswer }: OptionCardProps) => {
 
@@ -87,6 +89,17 @@ export const OptionCard = ({ questionIndex, options, correctAnswer }: OptionCard
             status: isCorrect ? "correct" : "incorrect",
         });
     };
+
+    const handelEvent = () => {
+        
+    }
+
+    useEffect(() => {
+        return roomEvents.subscribe(
+            "lifelineUsed", 
+            handelEvent
+        );
+    },[])
 
     return (
         <ScrollOptionCard>
