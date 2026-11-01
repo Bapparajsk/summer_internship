@@ -8,8 +8,8 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { RoomSecurityCard } from './roomSecurityCard';
 import { AnswerRevealTimingCard } from './answerRevealTimingCard';
 import { LifelineCard } from './lifeline/lifelineCard';
-import { CloseButton } from '@/components/ui/button';
 import { RandomizationSettings } from './randomization/randomizationSettings';
+import { CloseButton } from './closeButton';
 
 
 export const SettingButton = () => {
@@ -40,7 +40,7 @@ export const SettingButton = () => {
                                 Room Setting
                             </Text>
                         </View>
-                        <CloseButton isSaved={false} />
+                        <CloseButton onClose={() => setIsOpen(false)} />
                     </View>
                     <BottomSheetScrollView className={"mt-3"} contentContainerClassName={"gap-y-3"} showsVerticalScrollIndicator={false}>
                         <RoomSecurityCard

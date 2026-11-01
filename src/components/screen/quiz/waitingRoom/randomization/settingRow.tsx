@@ -28,8 +28,6 @@ export const SettingRow = memo(({ title, id, description, icon }: Props) => {
         });
     };
 
-    console.log(`SettingRow render: ${title}, enabled: ${enabled}`);
-
     return (
         <View className="flex-row items-center justify-between gap-3 rounded-xl bg-surface-container p-3">
             <ControlField

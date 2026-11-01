@@ -2,8 +2,9 @@ import { Octicons } from '@expo/vector-icons'
 import { View, Text } from 'react-native'
 import Animated, { LinearTransition } from 'react-native-reanimated'
 import * as Clipboard from "expo-clipboard";
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { PressableFeedback } from 'heroui-native';
+import { useToggleFeedback } from '@/hooks/useToggleFeedback';
 
 export type RoomPasswordProps = {
     passkey: string;
@@ -12,36 +13,16 @@ export type RoomPasswordProps = {
 
 export const RoomPassword = ({ enabled, passkey }: RoomPasswordProps) => {
     const [showPasskey, setShowPasskey] = useState(false);
-    const [copied, setCopied] = useState(false);
+    const { active: copied, trigger: showCopied } = useToggleFeedback();
 
-    const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    const copyText = useCallback(async (value: string) => {
+    const handleCopy = async (value: string) => {
         try {
             await Clipboard.setStringAsync(value);
-
-            setCopied(true);
-
-            if (resetTimer.current) {
-                clearTimeout(resetTimer.current);
-            }
-
-            resetTimer.current = setTimeout(() => {
-                setCopied(false);
-                resetTimer.current = null;
-            }, 3000);
+            showCopied();
         } catch (error) {
-            console.error("Failed to copy passkey:", error);
+            console.error("Copy failed:", error);
         }
-    }, []);
-
-    useEffect(() => {
-        return () => {
-            if (resetTimer.current) {
-                clearTimeout(resetTimer.current);
-            }
-        };
-    }, []);
+    };
 
     return (
         <View className="gap-2.5">
@@ -104,7 +85,7 @@ export const RoomPassword = ({ enabled, passkey }: RoomPasswordProps) => {
                         <View className="mx-3 h-6 w-px bg-border" />
 
                         <PressableFeedback
-                            onPress={() => copyText(passkey)}
+                            onPress={() => handleCopy(passkey)}
                             hitSlop={8}
                             accessibilityLabel="Copy passkey"
                         >

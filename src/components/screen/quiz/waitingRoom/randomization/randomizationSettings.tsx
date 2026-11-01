@@ -8,7 +8,6 @@ import {
 import { SettingRow } from "./settingRow";
 
 export const RandomizationSettings = memo(() => {
-    console.log("RandomizationSettings render");
 
     return (
         <View className="gap-3">
