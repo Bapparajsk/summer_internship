@@ -7,15 +7,13 @@ import { MotionButton } from '@/components/ui/button/motionButton';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { RoomSecurityCard } from './roomSecurityCard';
 import { AnswerRevealTimingCard } from './answerRevealTimingCard';
-import { LifelineCard } from './lifelineCard';
+import { LifelineCard } from './lifeline/lifelineCard';
 import { CloseButton } from '@/components/ui/button';
-import { RandomizationSettings } from './randomizationSettings';
+import { RandomizationSettings } from './randomization/randomizationSettings';
 
 
 export const SettingButton = () => {
     const [isOpen, setIsOpen] = useState(false);
-
-    const [isSave, setIsSave] = useState(true)
 
     return (
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
@@ -42,7 +40,7 @@ export const SettingButton = () => {
                                 Room Setting
                             </Text>
                         </View>
-                        <CloseButton isSaved={isSave} />
+                        <CloseButton isSaved={false} />
                     </View>
                     <BottomSheetScrollView className={"mt-3"} contentContainerClassName={"gap-y-3"} showsVerticalScrollIndicator={false}>
                         <RoomSecurityCard
@@ -53,26 +51,10 @@ export const SettingButton = () => {
                                 // Update your backend
                             }}
                         />
-                        
-                        <AnswerRevealTimingCard
-                            initialMode="after-each"
-                            onModeChange={(mode) => {
-                                // Save the selected reveal timing
-                                console.log("Answer reveal mode:", mode);
-                            }}
-                        />
+                        <AnswerRevealTimingCard/>
                         <LifelineCard />
                         <View className="mx-2 h-px bg-border-subtle" />
-                        <RandomizationSettings
-                            initialShuffleQuestions
-                            initialShuffleAnswers
-                            onShuffleQuestionsChange={(enabled) => {
-                                // Update room settings
-                            }}
-                            onShuffleAnswersChange={(enabled) => {
-                                // Update room settings
-                            }}
-                        />
+                        <RandomizationSettings />
                     </BottomSheetScrollView>
                 </BottomSheet.Content>
             </BottomSheet.Portal>
