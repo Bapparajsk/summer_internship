@@ -7,7 +7,16 @@ import { ReactNode, useState } from 'react';
 
 export type OptionCardProps = {
     questionIndex: number;
-    quiz: QuizData
+    options: QuizData["options"];
+    correctAnswer: QuizData["correctAnswer"];
+}
+
+type OptionsDetails = {
+    id: string;
+    option: string;
+    status: QuizStatus;
+    letter: string;
+    isCurrentQuestion: boolean;
 }
 
 const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
@@ -33,22 +42,34 @@ const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
     )
 }
 
-export const OptionCard = ({ questionIndex, quiz }: OptionCardProps) => {
+const buildOptionsDetails = (options: QuizData["options"], correctAnswer: QuizData["correctAnswer"]): OptionsDetails[] => {
+    return options.map((item, index) => ({
+        id: item.id,
+        option : item.option,
+        status: "unanswered",
+        letter: String.fromCharCode(65 + index),
+        isCurrentQuestion: item.id === correctAnswer,
+    }));
+};
+
+export const OptionCard = ({ questionIndex, options, correctAnswer }: OptionCardProps) => {
+
+    const [optionsList, setOptionsList] = useState<OptionsDetails[]>(buildOptionsDetails(options, correctAnswer));
 
     const status = useQuizNavigationStore(
         state => state.navigations[questionIndex]?.status ?? "unanswered"
     );
-
     const selectedOption = useQuizNavigationStore(
         state => state.navigations[questionIndex]?.selectedOption
     );
 
-    const handleSelect = async (optionIndex: number) => {
+    const handleSelect = async (id: string) => {
         if (status !== "unanswered") {
             return;
         }
 
-        const isCorrect = optionIndex === quiz.correctAnswer;
+        // api call to check if the answer is correct
+        const isCorrect = optionsList.find((opt) => opt.id === id)?.isCurrentQuestion;
 
         if (isCorrect) {
             await Haptics.impactAsync(
@@ -62,26 +83,21 @@ export const OptionCard = ({ questionIndex, quiz }: OptionCardProps) => {
 
         updateNavigation({
             index: questionIndex,
-
-            selectedOption: optionIndex,
-
-            status: optionIndex ===
-                quiz.correctAnswer
-                ? "correct"
-                : "incorrect",
+            selectedOption: id,
+            status: isCorrect ? "correct" : "incorrect",
         });
     };
 
     return (
         <ScrollOptionCard>
-            {quiz.options.map((option, optionIndex) => {
+            {optionsList.map((option, optionIndex) => {
 
                 let optionStatus: QuizStatus = "unanswered";
 
                 if (selectedOption !== undefined) {
-                    if (optionIndex === quiz.correctAnswer) {
+                    if (option.isCurrentQuestion) {
                         optionStatus = "correct";
-                    } else if (optionIndex === selectedOption) {
+                    } else if (option.id === selectedOption) {
                         optionStatus = "incorrect";
                     }
                 }
@@ -90,9 +106,11 @@ export const OptionCard = ({ questionIndex, quiz }: OptionCardProps) => {
                     <QuizOption
                         key={optionIndex}
                         letter={String.fromCharCode(65 + optionIndex)}
-                        text={option}
+
+                        option={option.option}
+                        id={option.id}
                         status={optionStatus}
-                        onPress={() => handleSelect(optionIndex)}
+                        onPress={handleSelect}
                     />
                 );
             })}

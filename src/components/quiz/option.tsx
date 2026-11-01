@@ -9,10 +9,11 @@ export type QuizStatus =
     | 'unanswered';
 
 type QuizOptionProps = {
+    id: string;
     letter: string;
-    text: string;
+    option: string;
     status?: QuizStatus;
-    onPress?: () => void;
+    onPress?: (id: string) => void;
     disabled?: boolean;
 };
 
@@ -44,25 +45,23 @@ const statusConfig = {
 };
 
 export const QuizOption = memo(({
+    id,
     letter,
-    text,
+    option,
     status = 'unanswered',
     onPress,
     disabled = false,
 }: QuizOptionProps) => {
 
     const isUnanswered = status === 'unanswered';
-
     const isDisabled = disabled || !isUnanswered;
-
-
 
     const config = statusConfig[status];
 
     return (
         <View className='overflow-hidden relative rounded-xl'>
             <PressableFeedback
-                onPress={onPress}
+                onPress={() => onPress?.(id)}
                 isDisabled={isDisabled}
                 animation={isDisabled ? 'disable-all' : undefined}
                 className={cn(
@@ -97,7 +96,7 @@ export const QuizOption = memo(({
                             // "text-text-disabled line-through"
                         )}
                     >
-                        {text}
+                        {option}
                     </Text>
                 </View>
 

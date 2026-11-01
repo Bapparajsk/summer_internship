@@ -24,7 +24,7 @@ const QuizOptionsSection = ({
             </QuizQuestionCard>
 
             {/* <QuizPowerUps /> */}
-            <OptionCard questionIndex={questionIndex} quiz={quiz} />
+            <OptionCard questionIndex={questionIndex} correctAnswer={quiz.correctAnswer} options={quiz.options} />
         </View>
     );
 };

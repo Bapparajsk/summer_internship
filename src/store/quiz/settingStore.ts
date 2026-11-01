@@ -32,7 +32,6 @@ const updateQuizSettings = (updater: (prev: QuizGameSettings) => QuizGameSetting
     emitSettingsChanged();
 }
 
-
 // functions
 export const updateAnswerReveal = (newValue: QuizGameSettings["answerReveal"]) => {
     updateQuizSettings((prev) =>

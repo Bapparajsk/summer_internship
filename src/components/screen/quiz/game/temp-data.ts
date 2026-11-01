@@ -1,84 +1,95 @@
+export type QuizOption = {
+    id: string;
+    option: string;
+};
+
 export type QuizData = {
     id: string;
     question: string;
-    options: string[];
-    correctAnswer: number;
+    options: QuizOption[];
+    correctAnswer: QuizOption["id"];
 };
+
+const createOptions = (options: string[]): QuizOption[] =>
+    options.map((option, index) => ({
+        id: String.fromCharCode(97 + index),
+        option,
+    }));
 
 export const QUIZ_DATA: QuizData[] = [
     {
         id: '1',
         question: 'Which SQL statement is used to retrieve data from a database?',
-        options: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
-        correctAnswer: 0,
+        options: createOptions(['SELECT', 'INSERT', 'UPDATE', 'DELETE']),
+        correctAnswer: 'a',
     },
     {
         id: '2',
         question: 'Which clause is used to filter records?',
-        options: ['ORDER BY', 'GROUP BY', 'WHERE', 'HAVING'],
-        correctAnswer: 2,
+        options: createOptions(['ORDER BY', 'GROUP BY', 'WHERE', 'HAVING']),
+        correctAnswer: 'c',
     },
     {
         id: '3',
         question: 'Which SQL statement is used to insert new data?',
-        options: ['ADD', 'INSERT INTO', 'CREATE', 'UPDATE'],
-        correctAnswer: 1,
+        options: createOptions(['ADD', 'INSERT INTO', 'CREATE', 'UPDATE']),
+        correctAnswer: 'b',
     },
     {
         id: '4',
         question: 'Which command removes a table and all its data?',
-        options: ['DELETE', 'REMOVE', 'DROP', 'TRUNCATE'],
-        correctAnswer: 2,
+        options: createOptions(['DELETE', 'REMOVE', 'DROP', 'TRUNCATE']),
+        correctAnswer: 'c',
     },
     {
         id: '5',
         question: 'Which JOIN returns all matching rows from both tables?',
-        options: ['LEFT JOIN', 'RIGHT JOIN', 'FULL JOIN', 'INNER JOIN'],
-        correctAnswer: 2,
+        options: createOptions(['LEFT JOIN', 'RIGHT JOIN', 'FULL JOIN', 'INNER JOIN']),
+        correctAnswer: 'd',
     },
     {
         id: '6',
         question: 'Which key uniquely identifies a record?',
-        options: ['Foreign Key', 'Candidate Key', 'Primary Key', 'Composite Key'],
-        correctAnswer: 2,
+        options: createOptions(['Foreign Key', 'Candidate Key', 'Primary Key', 'Composite Key']),
+        correctAnswer: 'c',
     },
     {
         id: '7',
         question: 'What does DBMS stand for?',
-        options: [
+        options: createOptions([
             'Database Management System',
             'Data Backup Management System',
             'Database Monitoring Service',
             'Data Base Machine System',
-        ],
-        correctAnswer: 0,
+        ]),
+        correctAnswer: 'a',
     },
     {
         id: '8',
         question: 'Normalization reduces?',
-        options: [
+        options: createOptions([
             'Data redundancy',
             'Storage size',
             'Network traffic',
             'CPU usage',
-        ],
-        correctAnswer: 0,
+        ]),
+        correctAnswer: 'a',
     },
     {
         id: '9',
         question: 'Which normal form removes partial dependency?',
-        options: ['1NF', '2NF', '3NF', 'BCNF'],
-        correctAnswer: 1,
+        options: createOptions(['1NF', '2NF', '3NF', 'BCNF']),
+        correctAnswer: 'b',
     },
     {
         id: '10',
-        question: 'ACID stands forcorrectAnswer?',
-        options: [
+        question: 'What does ACID stand for?',
+        options: createOptions([
             'Atomicity, Consistency, Isolation, Durability',
             'Accuracy, Consistency, Integrity, Durability',
             'Atomicity, Control, Isolation, Durability',
             'Atomicity, Consistency, Integrity, Dependency',
-        ],
-        correctAnswer: 0,
+        ]),
+        correctAnswer: 'a',
     },
 ];

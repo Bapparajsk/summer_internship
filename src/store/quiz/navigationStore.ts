@@ -4,7 +4,7 @@ import { create } from "zustand";
 export type QuizNavigationType = {
     questionIndex: number;
     status: QuizStatus;
-    selectedOption?: number;
+    selectedOption?: string;
 };
 
 type QuizNavigationStore = {
@@ -60,7 +60,7 @@ export const updateNavigation = ({
 }: {
     index: number;
     status: QuizStatus;
-    selectedOption?: number;
+    selectedOption?: string;
 }) => {
     useQuizNavigationStore.setState(state => {
         const current = state.navigations[index];
