@@ -4,8 +4,9 @@ import { Text, View } from 'react-native';
 import { useQuizSettingsStore, usedLifeline } from '@/store/quiz/settingStore';
 import { roomEvents } from '@/events/roomEvents';
 import { memo } from 'react';
+import { useQuizNavigationStore } from '@/store/quiz';
 
-const PowerUpDots = memo(() => {
+const PowerUpDots = memo(({ isDisabled }: { isDisabled: boolean }) => {
 
     const maxUses = useQuizSettingsStore(
         state => state.lifelines.maxUses
@@ -20,7 +21,7 @@ const PowerUpDots = memo(() => {
     return (
         <View className="absolute -bottom-1 left-0 right-0 flex-row items-center justify-center gap-x-1">
             {Array.from({ length: remainingCount }).map((_, index) => (
-                <View key={index} className={cn("size-2 rounded-full bg-success")} />
+                <View key={index} className={cn("size-2 rounded-full bg-success", isDisabled && "bg-[#ffffff38]")} />
             ))}
         </View>
     )
@@ -28,21 +29,22 @@ const PowerUpDots = memo(() => {
 
 PowerUpDots.displayName = "PowerUpDots";
 
+const isUsedPowerSet = new Set<string>();
+
 export const QuizPowerUps = memo(() => {
 
-    const lifelineSettings = useQuizSettingsStore(
-        state => state.lifelines
-    );
 
-    const usedCount = useQuizSettingsStore(
-        state => state.lifelines.usedCount
-    );
+    const lifelineSettings = useQuizSettingsStore( state => state.lifelines );
+    const usedCount = useQuizSettingsStore( state => state.lifelines.usedCount );
+
+    const currentQuestionIndex = useQuizNavigationStore(state => state.currentQuestionIndex);
 
     const handleLifelineUsed = () => {
         const isUsed = usedLifeline();
 
         if (isUsed) {
-            roomEvents.emit("lifelineUsed", "50/50");
+            roomEvents.emit("lifelineUsed", `quiz-${currentQuestionIndex}`);
+            isUsedPowerSet.add(`quiz-${currentQuestionIndex}`);
         }
     };
 
@@ -50,30 +52,31 @@ export const QuizPowerUps = memo(() => {
         return null;
     }
 
+    const isDisabled = usedCount === lifelineSettings.maxUses || isUsedPowerSet.has(`quiz-${currentQuestionIndex}`);
+
     return (
         <View className="relative">
             <PressableFeedback
                 hitSlop={10}
-
-                animation={usedCount === lifelineSettings.maxUses ? "disable-all" : undefined}
-                isDisabled={usedCount === lifelineSettings.maxUses}
+                animation={isDisabled ? "disable-all" : undefined}
+                isDisabled={isDisabled}
 
                 className={cn("flex-row items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-2",
                     {
-                        "-scale-70 bg-white/4 border-border": usedCount === lifelineSettings.maxUses
+                        "-scale-70 bg-white/4 border-border": isDisabled
                     }
                 )}
                 
                 onPress={handleLifelineUsed}
             >
-                <Octicons name="zap" size={14} color={usedCount === lifelineSettings.maxUses ? "rgba(255, 255, 255, 0.22)" : "#22D3EE"} />
+                <Octicons name="zap" size={14} color={isDisabled ? "#ffffff38" : "#22D3EE"} />
                 <Text className={cn("ml-1 text-xs font-poppins-semibold text-cyan-400",
-                    {"text-text-disabled": usedCount === lifelineSettings.maxUses}
+                    {"text-text-disabled": isDisabled}
                 )}>
                     50/50
                 </Text>
             </PressableFeedback>
-            <PowerUpDots />
+            <PowerUpDots isDisabled={isDisabled} />
         </View>
     );
 });

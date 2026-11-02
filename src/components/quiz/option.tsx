@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { Text, View } from 'react-native';
 import { PressableFeedback, cn } from 'heroui-native';
-
+import Animated, { LinearTransition } from "react-native-reanimated";
 export type QuizStatus =
     | 'correct'
     | 'incorrect'
@@ -61,7 +61,10 @@ export const QuizOption = memo(({
     const config = statusConfig[status];
 
     return (
-        <View className='overflow-hidden relative rounded-xl'>
+        <Animated.View 
+            className={cn('overflow-hidden relative rounded-xl', isFalse && 'scale-95')}
+            layout={LinearTransition.springify().damping(120).stiffness(20).mass(0.5)}
+        >
             <PressableFeedback
                 onPress={() => onPress?.(id)}
                 isDisabled={isDisabled}
@@ -69,7 +72,6 @@ export const QuizOption = memo(({
                 className={cn(
                     'my-1.5 min-h-17 flex-row items-center rounded-xl border px-3.5 py-3 z-0',
                     config.container,
-                    !isDisabled && 'active:opacity-30'
                 )}
             >
                 {/* Option Letter */}
@@ -82,7 +84,8 @@ export const QuizOption = memo(({
                     <Text
                         className={cn(
                             'font-poppins-semibold text-sm',
-                            config.letterText
+                            config.letterText,
+                            isFalse && 'text-text-disabled'
                         )}
                     >
                         {letter}
@@ -133,7 +136,7 @@ export const QuizOption = memo(({
                     />
                 )}
             </PressableFeedback>
-        </View>
+        </Animated.View>
     );
 });
 

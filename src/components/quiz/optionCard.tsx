@@ -99,15 +99,15 @@ export const OptionCard = memo(({
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
 
-        const hiddenOptionIds = shuffled
-            .slice(0, 2)
-            .map(option => option.id);
+        const hiddenOptionIds = shuffled.slice(0, 2).map(option => option.id);
 
         setHiddenOptions(prev => [
             ...new Set([...prev, ...hiddenOptionIds]),
         ]);
 
     }, [status, options, correctAnswer]);
+
+
 
     useEffect(() => {
         return roomEvents.subscribe(
