@@ -1,21 +1,20 @@
 import { memo } from "react";
-import { View, ViewProps } from "react-native";
+import { View } from "react-native";
 import { QuizQuestionCard } from "@/components/quiz";
 import { QuizData } from "./temp-data";
 import { OptionCard } from "@/components/quiz/optionCard";
 
-type QuizOptionsSectionProps = ViewProps & {
+type QuizOptionsSectionProps =  {
     questionIndex: number;
     quiz: QuizData
-};
+    gameId: string
+}; 
 
 const QuizOptionsSection = ({
     questionIndex,
     quiz,
+    gameId
 }: QuizOptionsSectionProps) => {
-
-    
-
     return (
         <View style={{ flex: 1, marginTop: 12 }}>
 
@@ -24,7 +23,7 @@ const QuizOptionsSection = ({
             </QuizQuestionCard>
 
             {/* <QuizPowerUps /> */}
-            <OptionCard questionIndex={questionIndex} correctAnswer={quiz.correctAnswer} options={quiz.options} />
+            <OptionCard gameId={gameId} questionIndex={questionIndex} correctAnswer={quiz.correctAnswer} options={quiz.options} />
         </View>
     );
 };

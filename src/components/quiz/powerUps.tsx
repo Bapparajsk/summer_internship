@@ -42,7 +42,7 @@ export const QuizPowerUps = memo(() => {
         const isUsed = usedLifeline();
 
         if (isUsed) {
-            roomEvents.emit("lifelineUsed");
+            roomEvents.emit("lifelineUsed", "50/50");
         }
     };
 

@@ -9,6 +9,7 @@ export const CloseButton = ({ onClose }: { onClose: () => void }) => {
     useEffect(() => {
         return roomEvents.subscribe(
             "settingsChanged",
+            "updated",
             trigger
         );
     }, [trigger]);

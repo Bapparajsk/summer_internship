@@ -1,37 +1,24 @@
-import { ScrollView } from 'react-native'
-import { updateNavigation, useQuizNavigationStore } from '@/store/quiz';
+import { ScrollView } from 'react-native';
+import { memo, ReactNode, useCallback, useEffect, useState } from 'react';
 import * as Haptics from 'expo-haptics';
+
+import {
+    updateNavigation,
+    useQuizNavigationStore,
+} from '@/store/quiz';
+
 import { QuizOption, QuizStatus } from './option';
 import { QuizData } from '../screen/quiz/game/temp-data';
-import { ReactNode, useEffect, useState } from 'react';
-import { useQuizSettingsStore } from "@/store/quiz/settingStore";
-import { roomEvents } from "@/events/roomEvents";
+import { roomEvents } from '@/events/roomEvents';
+
 export type OptionCardProps = {
+    gameId: string;
     questionIndex: number;
-    options: QuizData["options"];
-    correctAnswer: QuizData["correctAnswer"];
-}
-
-type OptionsDetails = {
-    id: string;
-    option: string;
-    status: QuizStatus;
-    letter: string;
-    isCurrentQuestion: boolean;
-}
-
-const buildOptionsDetails = (options: QuizData["options"], correctAnswer: QuizData["correctAnswer"]): OptionsDetails[] => {
-    return options.map((item, index) => ({
-        id: item.id,
-        option : item.option,
-        status: "unanswered",
-        letter: String.fromCharCode(65 + index),
-        isCurrentQuestion: item.id === correctAnswer,
-    }));
+    options: QuizData['options'];
+    correctAnswer: QuizData['correctAnswer'];
 };
 
-const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
-
+const ScrollOptionCard = memo(({ children }: { children: ReactNode }) => {
     const [isScrollable, setIsScrollable] = useState(false);
     const [containerHeight, setContainerHeight] = useState(0);
 
@@ -40,38 +27,42 @@ const ScrollOptionCard = ({ children }: { children: ReactNode }) => {
             className={`flex-1 ${isScrollable ? 'pr-2' : ''}`}
             nestedScrollEnabled
             showsVerticalScrollIndicator={isScrollable}
-            onLayout={(e) => {
-                setContainerHeight(e.nativeEvent.layout.height);
-            }}
-            onContentSizeChange={(_, contentHeight) => {
-                setIsScrollable(contentHeight > containerHeight);
-            }}
-            contentOffset={{ x: 0, y: 10 }}
+            onLayout={(e) =>
+                setContainerHeight(e.nativeEvent.layout.height)
+            }
+            onContentSizeChange={(_, contentHeight) =>
+                setIsScrollable(contentHeight > containerHeight)
+            }
         >
             {children}
         </ScrollView>
-    )
-}
+    );
+});
 
+ScrollOptionCard.displayName = 'ScrollOptionCard';
 
-export const OptionCard = ({ questionIndex, options, correctAnswer }: OptionCardProps) => {
+export const OptionCard = memo(({
+    gameId,
+    questionIndex,
+    options,
+    correctAnswer,
+}: OptionCardProps) => {
 
-    const [optionsList, setOptionsList] = useState<OptionsDetails[]>(buildOptionsDetails(options, correctAnswer));
+    // Hidden options for this question only
+    const [hiddenOptions, setHiddenOptions] = useState<string[]>([]);
 
     const status = useQuizNavigationStore(
-        state => state.navigations[questionIndex]?.status ?? "unanswered"
+        state => state.navigations[questionIndex]?.status ?? 'unanswered'
     );
+
     const selectedOption = useQuizNavigationStore(
         state => state.navigations[questionIndex]?.selectedOption
     );
 
-    const handleSelect = async (id: string) => {
-        if (status !== "unanswered") {
-            return;
-        }
+    const handleSelect = useCallback(async (id: string) => {
+        if (status !== 'unanswered') return;
 
-        // api call to check if the answer is correct
-        const isCorrect = optionsList.find((opt) => opt.id === id)?.isCurrentQuestion;
+        const isCorrect = id === correctAnswer;
 
         if (isCorrect) {
             await Haptics.impactAsync(
@@ -86,47 +77,75 @@ export const OptionCard = ({ questionIndex, options, correctAnswer }: OptionCard
         updateNavigation({
             index: questionIndex,
             selectedOption: id,
-            status: isCorrect ? "correct" : "incorrect",
+            status: isCorrect ? 'correct' : 'incorrect',
         });
-    };
+    }, [status, correctAnswer, questionIndex]);
 
-    const handelEvent = () => {
-        
-    }
+    // Handle 50/50 event
+    const handleFiftyFiftyEvent = useCallback(() => {
+        if (status !== 'unanswered') return;
+
+        const incorrectOptions = options.filter(
+            option => option.id !== correctAnswer
+        );
+
+        if (incorrectOptions.length < 2) return;
+
+        // Randomly shuffle incorrect options
+        const shuffled = [...incorrectOptions];
+
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+
+        const hiddenOptionIds = shuffled
+            .slice(0, 2)
+            .map(option => option.id);
+
+        setHiddenOptions(prev => [
+            ...new Set([...prev, ...hiddenOptionIds]),
+        ]);
+
+    }, [status, options, correctAnswer]);
 
     useEffect(() => {
         return roomEvents.subscribe(
-            "lifelineUsed", 
-            handelEvent
+            'lifelineUsed',
+            gameId,
+            handleFiftyFiftyEvent
         );
-    },[])
+    }, [handleFiftyFiftyEvent, gameId]);
 
     return (
         <ScrollOptionCard>
-            {optionsList.map((option, optionIndex) => {
-
-                let optionStatus: QuizStatus = "unanswered";
+            {options.map((option, optionIndex) => {
+                
+                let optionStatus: QuizStatus = 'unanswered';
 
                 if (selectedOption !== undefined) {
-                    if (option.isCurrentQuestion) {
-                        optionStatus = "correct";
+                    if (option.id === correctAnswer) {
+                        optionStatus = 'correct';
                     } else if (option.id === selectedOption) {
-                        optionStatus = "incorrect";
+                        optionStatus = 'incorrect';
                     }
                 }
-
+                
                 return (
                     <QuizOption
-                        key={optionIndex}
+                        key={option.id}
                         letter={String.fromCharCode(65 + optionIndex)}
-
                         option={option.option}
                         id={option.id}
                         status={optionStatus}
                         onPress={handleSelect}
+                        disabled={hiddenOptions.includes(option.id) || status !== 'unanswered'}
+                        isFalse={hiddenOptions.includes(option.id)}
                     />
                 );
             })}
         </ScrollOptionCard>
-    )
-}
+    );
+});
+
+OptionCard.displayName = 'OptionCard';

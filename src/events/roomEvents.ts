@@ -1,62 +1,74 @@
 type EventMap = {
-    settingsChanged: undefined;
-    lifelineUsed: undefined;
+    settingsChanged: "updated";
+    lifelineUsed: string;
 };
 
 type Listener = () => void;
 
+type Subscription = {
+    target: string;
+    listener: Listener;
+};
+
 class TypedEventEmitter<Events extends Record<string, unknown>> {
-    private listeners = new Map<keyof Events, Set<Listener>>();
+    private listeners = new Map<keyof Events, Set<Subscription>>();
 
     subscribe<K extends keyof Events>(
         event: K,
+        target: string,
         listener: Listener
     ): () => void {
         let eventListeners = this.listeners.get(event);
 
         if (!eventListeners) {
-            eventListeners = new Set<Listener>();
+            eventListeners = new Set();
             this.listeners.set(event, eventListeners);
         }
 
-        eventListeners.add(listener);
+        const subscription = { target, listener };
+
+        eventListeners.add(subscription);
 
         return () => {
-            eventListeners?.delete(listener);
+            eventListeners!.delete(subscription);
 
-            if (eventListeners?.size === 0) {
+            if (eventListeners!.size === 0) {
                 this.listeners.delete(event);
             }
         };
     }
 
-    emit<K extends keyof Events>(event: K): void {
+    emit<K extends keyof Events>(event: K, target?: string ): void {
         const eventListeners = this.listeners.get(event);
 
         if (!eventListeners?.size) return;
 
-        // Snapshot protects iteration if listeners unsubscribe during emit.
-        [...eventListeners].forEach((listener) => listener());
+        for (const subscription of eventListeners) {
+            if (target !== undefined && subscription.target !== target) {
+                continue;
+            }
+
+            subscription.listener();
+            return; // Stop after the first matching listener is called
+        }
     }
 
     clear<K extends keyof Events>(event?: K): void {
         if (event !== undefined) {
             this.listeners.delete(event);
-            return;
+        } else {
+            this.listeners.clear();
         }
-
-        this.listeners.clear();
     }
 }
 
 export const roomEvents = new TypedEventEmitter<EventMap>();
 
 // emits
-
 export const emitSettingsChanged = () => {
-    roomEvents.emit("settingsChanged");
+    roomEvents.emit("settingsChanged", "updated");
 };
 
-export const emitLifelineUsed = () => {
-    roomEvents.emit("lifelineUsed");
-}
+export const emitLifelineUsed = (target: string) => {
+    roomEvents.emit("lifelineUsed", target);
+};

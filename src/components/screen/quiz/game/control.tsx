@@ -94,7 +94,7 @@ export const GameControl = () => {
                         key={quiz.id}
                         questionIndex={index}
                         quiz={quiz}
-                        testID="pager-view-content"
+                        gameId={`quiz-${index}`}
                     />
                 ))}
             </PagerView>

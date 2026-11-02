@@ -15,6 +15,7 @@ type QuizOptionProps = {
     status?: QuizStatus;
     onPress?: (id: string) => void;
     disabled?: boolean;
+    isFalse?: boolean;
 };
 
 const statusConfig = {
@@ -51,6 +52,7 @@ export const QuizOption = memo(({
     status = 'unanswered',
     onPress,
     disabled = false,
+    isFalse = false,
 }: QuizOptionProps) => {
 
     const isUnanswered = status === 'unanswered';
@@ -93,7 +95,7 @@ export const QuizOption = memo(({
                         className={cn(
                             'font-poppins-medium text-sm leading-6',
                             config.text,
-                            // "text-text-disabled line-through"
+                            {"text-text-disabled line-through": isFalse}
                         )}
                     >
                         {option}
