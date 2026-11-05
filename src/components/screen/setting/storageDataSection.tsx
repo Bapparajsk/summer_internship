@@ -4,7 +4,7 @@ import { View, Text, Pressable, Alert } from "react-native";
 import { Container } from "./container";
 import { PressableFeedback } from "heroui-native";
 import { AntDesign, Entypo, Octicons } from "@expo/vector-icons";
-import { SelectPopover } from "@/components/select";
+import { SelectOption, SelectPopover } from "@/components/select";
 
 type StorageRowProps = {
     title: string;
@@ -13,6 +13,36 @@ type StorageRowProps = {
     onPress: () => void;
     trailing?: React.ReactNode;
 };
+
+const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5";
+
+
+const networkOptions: SelectOption[] = [
+    {
+        id: "all",
+        label: "All Networks",
+        iconName: "access-point-network",
+        classNames: {
+            container: className,
+        },
+    },
+    {
+        id: "mobile_data",
+        label: "Mobile Data",
+        iconName: "signal",
+        classNames: {
+            container: className,
+        },
+    },
+    {
+        id: "wifi",
+        label: "Wi-Fi",
+        iconName: "wifi",
+        classNames: {
+            container: className,
+        },
+    },
+] as const;
 
 function StorageRow({
     title,
@@ -70,7 +100,6 @@ export function StorageDataSection() {
     };
 
 
-    const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5";
 
     return (
         <Container title="Storage & Data">
@@ -131,30 +160,13 @@ export function StorageDataSection() {
                             Data Use
                         </Text>
                         <Text className="font-poppins-light text-[11px] text-text-secondary">
-                            Mobile data / wifi
+                            Mobile data / wi-fi
                         </Text>
                     </View>
                 </View>
 
                     <SelectPopover
-                        items={[
-                            {
-                                id: "mobole_data",
-                                label: "Mobile Data",
-                                iconName: "signal",
-                                classNames: {
-                                    container: className
-                                },
-                            },
-                            {
-                                id: "wifi",
-                                label: "WiFi",
-                                iconName: "wifi",
-                                classNames: {
-                                    container: className
-                                }
-                            }
-                        ]}
+                        items={networkOptions}
                         containerClassName="border-white/20 mt-2"
                         triggerClassName="px-2 py-1.5"
                         itemStyle={{

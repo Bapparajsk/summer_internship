@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen'
-import { Header, HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection, PrivacySecuritySection } from '@/components/screen/setting'
+import { Header, HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection, PrivacySecuritySection, SignOutButton } from '@/components/screen/setting'
 
 export default function SettingScreen() {
   return (
@@ -10,6 +10,7 @@ export default function SettingScreen() {
       <NotificationsSection />
       <StorageDataSection />
       <PrivacySecuritySection />
+      <SignOutButton onPress={() => {}} />
     </ScreenWrapper>
   )
 }

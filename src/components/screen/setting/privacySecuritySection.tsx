@@ -30,7 +30,7 @@ function SecurityRow({
                 }}
             />
             <View className="flex-row items-center gap-3">
-                <View className="h-9 w-9 items-center justify-center rounded-xl bg-white/8 border-border">
+                <View className="h-9 w-9 items-center justify-center rounded-xl bg-white/8 border border-border ">
                     {icon}
                 </View>
 

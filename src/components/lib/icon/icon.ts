@@ -194,6 +194,10 @@ const commonIconMap = {
         Icon: FontAwesome6,
         name: "signal"
     },
+    "access-point-network" : {
+        Icon: MaterialCommunityIcons,
+        name: "access-point-network"
+    },
 
     "arrow-back-circle-outline": {
         Icon: Ionicons,
