@@ -179,6 +179,11 @@ const commonIconMap = {
         name: "chevron-right"
     },
 
+    "arrow-back-circle-outline": {
+        Icon: Ionicons,
+        name: "arrow-back-circle-outline"
+    },
+
     // logo
     "logo-google": {
         Icon: FontAwesome6,

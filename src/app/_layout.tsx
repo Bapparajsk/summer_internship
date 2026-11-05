@@ -38,6 +38,8 @@ export default function RootLayout(): JSX.Element {
                     {/* <Stack.Screen name="(auth)" /> */}
                     <Stack.Screen name="(tab)" />
                     <Stack.Screen name="onboarding" />
+                    <Stack.Screen name="setting" />
+
                     {/* quiz screens */}
                     <Stack.Screen name="quiz" />
                   </Stack>

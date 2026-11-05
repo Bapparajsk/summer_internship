@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { SelectPopover, SelectOption } from '../../select';
 import { cn } from 'heroui-native';
+import { useRouter } from 'expo-router';
 
 type Status = "Excellent" | "Good" | "Average" | "Poor" | "Failing";
 
@@ -123,6 +124,8 @@ const ProfileStatusBadge = ({ status }: { status: Status }) => {
     const config = getStatusConfig(status);
     const { Icon, name } = getCommonIcon(config.icon);
 
+    
+
     return (
         <View
             className="flex-row gap-x-0.5 rounded-full items-center px-1.5 py-0.5"
@@ -158,6 +161,9 @@ export const ProfileHeroCard = ({
     rank,
     achievements
 }: ProfileHeroProps) => {
+
+    const router = useRouter();
+
     return (
         <View className="relative rounded-[34px] border border-border bg-white/4 p-3">
             {/* Profile Row */}
@@ -218,6 +224,11 @@ export const ProfileHeroCard = ({
                     }}
                     iconSize={12}
                     activeIsOpenTextClassName='text-xs font-poppins-medium'
+                    onSelect={(item) => {
+                        if(item.id === "app-settings") {
+                            router.push("/setting")
+                        }
+                    }}
                 />
             </View>
 
