@@ -2,7 +2,7 @@ import { areAllValid } from "./utils";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fragment, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
-import Animated, { FadeIn, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeIn, LinearTransition, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { cn, PressableFeedback, Separator } from 'heroui-native';
 import { SelectOption, SelectPopoverProps } from "./select.d";
 import { SelectItemList } from "./selectList";
@@ -33,15 +33,28 @@ export const SelectPopover = ({
     const [open, setOpen] = useState(false);
     const [selectedSelect, setSelectedSelect] = useState<SelectOption>(items.find(item => item.id === activeItemId) || items[0]);
 
-    if(items.length === 0) {
+
+
+    const { Icon, name: iconName } = getCommonIcon(selectedSelect.iconName || "sensors");
+
+    const animatedIconStyle = useAnimatedStyle(() => ({
+        transform: [
+            {
+                rotate: withTiming(open ? '180deg' : '0deg', {
+                    duration: 200,
+                }),
+            },
+        ],
+    }));
+
+
+    if (items.length === 0) {
         console.warn("SelectPopover: No items provided.");
         return null;
     }
 
-    const { Icon, name: iconName } = getCommonIcon(selectedSelect.iconName || "sensors");
-
     return (
-        <View className="relative" style={{ zIndex: zIndex || 10 }}>
+        <View className="relative" style={{ zIndex: zIndex || 50 }}>
 
             {open && (
                 <PressableFeedback
@@ -78,7 +91,7 @@ export const SelectPopover = ({
                     }}
                     className={cn("flex-row items-center px-4 py-3", triggerClassName)}
                 >
-                    {activeContent ? ( 
+                    {activeContent ? (
                         <Fragment>
                             {areAllValid(open, activeIsOpenText, activeIsOpenTextPosition === "left") && (
                                 <Animated.View entering={FadeIn}>
@@ -110,12 +123,13 @@ export const SelectPopover = ({
                                 {selectedSelect.label}
                             </Text>
 
-                            <MaterialIcons
-                                name={open ? 'expand-less' : 'expand-more'}
-                                size={18}
-                                color="#A1A1AA"
-                                style={{ marginLeft: 8 }}
-                            />
+                            <Animated.View style={[{ marginLeft: 8 }, animatedIconStyle]}>
+                                <MaterialIcons
+                                    name="expand-more"
+                                    size={18}
+                                    color="#A1A1AA"
+                                />
+                            </Animated.View>
                         </Fragment>
                     )}
                 </PressableFeedback>

@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen'
-import { Header, HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection } from '@/components/screen/setting'
+import { Header, HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection, PrivacySecuritySection } from '@/components/screen/setting'
 
 export default function SettingScreen() {
   return (
@@ -9,6 +9,7 @@ export default function SettingScreen() {
       <PreferencesSection />
       <NotificationsSection />
       <StorageDataSection />
+      <PrivacySecuritySection />
     </ScreenWrapper>
   )
 }

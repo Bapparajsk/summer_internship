@@ -24,10 +24,10 @@ function StorageRow({
     return (
         <Pressable
             onPress={onPress}
-            className="h-18 flex-row items-center justify-between px-3 py-3 active:opacity-70"
+            className="h-18 flex-row items-center justify-between px-3 py-3"
         >
             <View className="flex-1 flex-row items-center gap-3">
-                <View className="h-9 w-9 items-center justify-center rounded-xl bg-surface-container-high">
+                <View className="h-9 w-9 items-center justify-center rounded-xl bg-white/8 border border-border">
                     {icon}
                 </View>
 
@@ -42,7 +42,7 @@ function StorageRow({
             </View>
 
             {trailing ?? <Entypo name="chevron-right" size={18} color="#8FA5B8" />}
-            
+
         </Pressable>
     );
 }
@@ -117,14 +117,25 @@ export function StorageDataSection() {
             <View className="h-px bg-border" />
 
             {/* Data usage */}
-            <StorageRow
-                title="Data Use"
-                description="Mobile data / wifi"
-                icon={<Entypo name="network" size={18} color="#8FA5B8" />}
-                onPress={() => {
-                    // router.push("/settings/data-usage");
-                }}
-                trailing={
+
+            <View
+                className="h-18 flex-row items-center justify-between px-3 py-3"
+            >
+                <View className="flex-1 flex-row items-center gap-3">
+                    <View className="h-9 w-9 items-center justify-center rounded-xl bg-white/8 border border-border">
+                        <Entypo name="network" size={18} color="#8FA5B8" />
+                    </View>
+
+                    <View className="flex-1 gap-0.5">
+                        <Text className="font-poppins-medium text-[14px] text-text-primary">
+                            Data Use
+                        </Text>
+                        <Text className="font-poppins-light text-[11px] text-text-secondary">
+                            Mobile data / wifi
+                        </Text>
+                    </View>
+                </View>
+
                     <SelectPopover
                         items={[
                             {
@@ -144,7 +155,7 @@ export function StorageDataSection() {
                                 }
                             }
                         ]}
-                        containerClassName="border-white/20"
+                        containerClassName="border-white/20 mt-2"
                         triggerClassName="px-2 py-1.5"
                         itemStyle={{
                             labelClassName: "text-[10px]"
@@ -152,8 +163,7 @@ export function StorageDataSection() {
                         iconSize={12}
                         activeIsOpenTextClassName='text-xs font-poppins-medium'
                     />
-                }
-            />
+            </View>
         </Container>
     );
 }
