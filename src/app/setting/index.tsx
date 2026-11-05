@@ -1,10 +1,14 @@
-import { Text } from 'react-native'
 import { ScreenWrapper } from '@/components/screen'
+import { Header, HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection } from '@/components/screen/setting'
 
 export default function SettingScreen() {
   return (
-    <ScreenWrapper path='setting' showFooter={false}>
-      <Text className='text-pink-50 text-9xl font-poppins-medium'>index</Text>
+    <ScreenWrapper path='setting' showFooter={false} paddingTop={10}>
+      <Header />
+      <HerderTitle />
+      <PreferencesSection />
+      <NotificationsSection />
+      <StorageDataSection />
     </ScreenWrapper>
   )
 }

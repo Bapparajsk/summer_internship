@@ -34,7 +34,7 @@ export default function RootLayout(): JSX.Element {
             <ToastProvider maxVisibleToasts={4}>
               <ThemeProvider value={DarkTheme}>
                 <FontProvider>
-                  <Stack screenOptions={{ headerShown: false, animation: "slide_from_bottom" }} >
+                  <Stack screenOptions={{ headerShown: false, animation: "fade_from_bottom" }} >
                     {/* <Stack.Screen name="(auth)" /> */}
                     <Stack.Screen name="(tab)" />
                     <Stack.Screen name="onboarding" />

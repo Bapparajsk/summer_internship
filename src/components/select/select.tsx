@@ -61,7 +61,7 @@ export const SelectPopover = ({
             <View className="h-12" />
 
             <Animated.View
-                layout={LinearTransition.springify().stiffness(200).mass(0.5).damping(20)}
+                layout={LinearTransition.springify().stiffness(180).damping(18).mass(1)}
                 className={cn(
                     "absolute top-0 rounded-3xl border border-border bg-[#1a1a2b]",
                     containerClassName,
@@ -106,7 +106,7 @@ export const SelectPopover = ({
                                 />
                             )}
 
-                            <Text className={cn("ml-2 font-poppins-medium", itemStyle?.labelClassName)}>
+                            <Text className={cn("ml-2 text-text-primary font-poppins-medium", itemStyle?.labelClassName)}>
                                 {selectedSelect.label}
                             </Text>
 

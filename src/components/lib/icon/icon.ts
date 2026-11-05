@@ -100,6 +100,7 @@ const commonIconMap = {
         Icon: Octicons,
         name: "git-branch"
     },
+
     "edit" :{
         Icon: Entypo,
         name: "edit"
@@ -177,6 +178,21 @@ const commonIconMap = {
     "chevron-right": {
         Icon: Entypo,
         name: "chevron-right"
+    },
+
+    "chevron-left": {
+        Icon: Entypo,
+        name: "chevron-left"
+    },
+
+    "wifi" : {
+        Icon: FontAwesome6,
+        name: "wifi"
+    },
+
+    "signal" : {
+        Icon: FontAwesome6,
+        name: "signal"
     },
 
     "arrow-back-circle-outline": {

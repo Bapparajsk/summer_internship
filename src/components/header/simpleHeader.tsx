@@ -34,7 +34,7 @@ export const SimpleHeader = ({ title, icon, titleClassName , leftContent, rightC
                     <If.Else>
                         <View className='w-20'>
                             <MotionButton
-                                className='h-10 flex-row gap-1 w-full'
+                                className='h-10 flex-row gap-0.5 w-full'
                                 onPress={onPress}
                                 
                             >
@@ -51,7 +51,7 @@ export const SimpleHeader = ({ title, icon, titleClassName , leftContent, rightC
 
                                 <If condition={Boolean(title)}>
                                     <If.Then>
-                                        <Text className={cn('text-xs font-poppins-semibold', titleClassName)}>
+                                        <Text className={cn('text-xs font-poppins-semibold text-text-secondary', titleClassName)}>
                                             {title}
                                         </Text>
                                     </If.Then>

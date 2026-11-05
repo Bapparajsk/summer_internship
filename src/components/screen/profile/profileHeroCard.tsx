@@ -33,7 +33,7 @@ type ProfileHeroProps = {
     achievements: number;
 };
 
-const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5"
+const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5";
 
 const options: SelectOption[] = [
     { id: "edit-name", label: "Edit Name", iconName: "edit", endIcon: "chevron-right" , classNames: { container: className } },
