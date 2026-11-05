@@ -32,14 +32,15 @@ type ProfileHeroProps = {
     achievements: number;
 };
 
-const className = "px-2 py-1.5"
+const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5"
 
 const options: SelectOption[] = [
-    { id: "edit-name", label: "Edit Name", iconName: "edit", classNames: { container: className } },
-    { id: "profile-image", label: "Update Image", iconName: "image", classNames: { container: className } },
+    { id: "edit-name", label: "Edit Name", iconName: "edit", endIcon: "chevron-right" , classNames: { container: className } },
+    { id: "profile-image", label: "Update Image", iconSize: 14, iconName: "image", endIcon: "chevron-right", classNames: { container: className } },
+    { id: "app-settings", label: "App Settings", iconSize: 14, iconName: "cog-outline", endIcon: "chevron-right", classNames: { container: className } },
     {
         id: "log-out", label: "Log Out", iconName: "logout", classNames: {
-            container: className + " bg-danger-soft px-3",
+            container: className + " bg-danger-soft px-3 mb-0",
             label: "text-red-500",
             startIconColor: "#fb2c36"
         }
@@ -131,7 +132,7 @@ const ProfileStatusBadge = ({ status }: { status: Status }) => {
                 backgroundColor: config.bg
             }}
         >
-            <Icon size={10} color={config.text} name={name}/>
+            <Icon size={10} color={config.text} name={name} />
             <Text
                 className={cn("text-[8px] leading-normal font-poppins-semibold uppercase")}
                 style={{ color: config.text }}
@@ -162,10 +163,10 @@ export const ProfileHeroCard = ({
             {/* Profile Row */}
             <View className="flex-row items-center">
 
-                <View className="rounded-[28px]">
+                <View className="rounded-[24px]">
                     <Image
                         source={{ uri: avatar }}
-                        className="size-18 rounded-[28px]"
+                        className="size-18 rounded-[24px]"
                         resizeMode="cover"
                     />
                 </View>
@@ -179,7 +180,7 @@ export const ProfileHeroCard = ({
                         >
                             {name}
                         </Text>
-                        <ProfileStatusBadge status={status}/>
+                        <ProfileStatusBadge status={status} />
                     </View>
 
                     <Text
@@ -203,6 +204,7 @@ export const ProfileHeroCard = ({
                     showActiveColor={false}
                     activeIsOpenText="Account Center"
                     activeIsOpenTextPosition="right"
+                    containerClassName="border-white/20"
                     activeContent={
                         <MaterialCommunityIcons
                             name="account-cog-outline"

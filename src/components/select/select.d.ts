@@ -5,6 +5,8 @@ export type SelectOption = {
     id: string;
     label: string;
     iconName?: IconName;
+    endIcon?: IconName | undefined
+    iconSize?: number
     classNames?: {
         container?: string;
         label?: string;
@@ -35,7 +37,7 @@ export type SelectPopoverProps = {
     triggerClassName?: string;
     containerClassName?: string;
     iconSize?: number;
-    separators?: number[];
+    separators?: number[] | "all";
     onCloseTriggerId?: SelectOption["id"][];
     onSelect?: (item: SelectOption) => void;
 };

@@ -16,7 +16,7 @@ import {
 } from "@/components/select";
 import If from "@/components/lib/if";
 
-const className = "px-2 py-0.5";
+const className = "px-2 py-0.5 my-0.5";
 
 const options: SelectOption[] = [
     {

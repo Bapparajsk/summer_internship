@@ -128,7 +128,7 @@ export const SelectPopover = ({
 
                 {/* Content */}
                 {open && (
-                    <Animated.View className="mb-3 gap-1 px-2 mt-1.5" >
+                    <Animated.View className="mb-3 px-2 mt-1.5" >
                         <SelectItemList
                             items={items}
                             selectedSelect={selectedSelect}

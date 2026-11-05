@@ -168,6 +168,17 @@ const commonIconMap = {
         Icon: Octicons,
         name: "lock"
     },
+
+    "cog-outline": {
+        Icon: Ionicons,
+        name: "cog-sharp"
+    },
+
+    "chevron-right": {
+        Icon: Entypo,
+        name: "chevron-right"
+    },
+
     // logo
     "logo-google": {
         Icon: FontAwesome6,
