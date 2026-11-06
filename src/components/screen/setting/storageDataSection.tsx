@@ -78,28 +78,6 @@ function StorageRow({
 }
 
 export function StorageDataSection() {
-    const [cacheSize, setCacheSize] = useState("142 MB");
-
-    const handleClearCache = () => {
-        Alert.alert(
-            "Clear cached data?",
-            "Temporary files will be removed. Your downloaded quiz packs and account data will remain unchanged.",
-            [
-                { text: "Cancel", style: "cancel" },
-                {
-                    text: "Clear Cache",
-                    style: "destructive",
-                    onPress: () => {
-                        // Connect your actual cache-clearing function here.
-                        // Update the displayed size after successful clearing.
-                        setCacheSize("0 MB");
-                    },
-                },
-            ]
-        );
-    };
-
-
 
     return (
         <Container title="Storage & Data">
@@ -116,13 +94,12 @@ export function StorageDataSection() {
                             Clear Cached Data
                         </Text>
                         <Text className="font-poppins-light text-[11px] text-text-secondary">
-                            {cacheSize} used
+                            2GB used
                         </Text>
                     </View>
                 </View>
 
                 <PressableFeedback
-                    onPress={handleClearCache}
                     className="rounded-lg border border-border px-3 py-1.5 active:bg-surface-container-high"
                 >
                     <Text className="font-poppins-medium text-[11px] text-text-secondary">

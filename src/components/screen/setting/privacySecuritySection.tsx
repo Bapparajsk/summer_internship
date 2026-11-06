@@ -1,8 +1,7 @@
-
 import { View, Text } from "react-native";
 import { Container } from "./container";
 import { PressableFeedback } from "heroui-native";
-import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons, Octicons } from "@expo/vector-icons";
+import { Entypo, MaterialCommunityIcons, MaterialIcons, Octicons } from "@expo/vector-icons";
 
 type SecurityRowProps = {
     title: string;
@@ -72,41 +71,11 @@ export function PrivacySecuritySection() {
             <View className="h-px bg-border" />
 
             <SecurityRow
-                title="Blocked Users"
-                metadata="0 users"
-                icon={<Feather name="user-x" size={18} color="#8FA5B8" />}
-                onPress={() => { }}
-            />
-
-            <View className="h-px bg-border" />
-
-            <SecurityRow
                 title="Active Sessions"
                 metadata="2 devices"
                 icon={<MaterialCommunityIcons name="monitor-cellphone" size={18} color="#8FA5B8" />}
                 onPress={() => { }}
             />
-
-            {/* Destructive action — separated */}
-            {/* <Pressable
-                onPress={handleDeleteAccount}
-                className="mt-3 min-h-[58px] flex-row items-center justify-between rounded-2xl border border-danger/20 bg-danger-soft px-4 active:opacity-70"
-            >
-                <View className="flex-row items-center gap-3">
-                    <Trash2 size={18} color="#F87171" />
-
-                    <View className="gap-0.5">
-                        <Text className="font-poppins-medium text-[13px] text-danger">
-                            Delete Account
-                        </Text>
-                        <Text className="font-poppins-light text-[10px] text-text-secondary">
-                            Permanently remove your account
-                        </Text>
-                    </View>
-                </View>
-
-                <ChevronRight size={18} color="#F87171" />
-            </Pressable> */}
         </Container>
     );
 }

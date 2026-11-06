@@ -233,7 +233,7 @@ export const ProfileHeroCard = ({
             </View>
 
             {/* Stats */}
-            <View className="mt-5 flex-row justify-around rounded-2xl border border-white/5 bg-white/3 py-2">
+            <View className="mt-5 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
 
                 <StatItem
                     icon="school"
