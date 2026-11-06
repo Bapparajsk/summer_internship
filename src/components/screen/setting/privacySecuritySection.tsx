@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import { Container } from "./container";
 import { PressableFeedback } from "heroui-native";
 import { Entypo, MaterialCommunityIcons, MaterialIcons, Octicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 type SecurityRowProps = {
     title: string;
@@ -52,12 +53,14 @@ function SecurityRow({
 
 export function PrivacySecuritySection() {
 
+    const router = useRouter();
+
     return (
         <Container title="Privacy & Security" >
             <SecurityRow
                 title="Change Password"
                 icon={<MaterialIcons name="lock-outline" size={18} color="#8FA5B8" />}
-                onPress={() => { }}
+                onPress={() => { router.push("/setting/changePassword") }}
             />
 
             <View className="h-px bg-border" />

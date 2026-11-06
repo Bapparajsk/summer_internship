@@ -1,16 +1,15 @@
-import { ScreenWrapper } from '@/components/screen'
-import { Header, HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection, PrivacySecuritySection, SignOutButton } from '@/components/screen/setting'
+import { HerderTitle, NotificationsSection, PreferencesSection, StorageDataSection, PrivacySecuritySection, SignOutButton } from '@/components/screen/setting'
+import { SettingScreenWrapper } from '@/components/screen/setting/screenWrapper'
 
 export default function SettingScreen() {
   return (
-    <ScreenWrapper path='setting' showFooter={false} paddingTop={10}>
-      <Header />
+    <SettingScreenWrapper path='index' backTitle='Profile' >
       <HerderTitle />
       <PreferencesSection />
       <NotificationsSection />
       <StorageDataSection />
       <PrivacySecuritySection />
       <SignOutButton onPress={() => {}} />
-    </ScreenWrapper>
+    </SettingScreenWrapper>
   )
 }

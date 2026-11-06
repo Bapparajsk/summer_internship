@@ -1,4 +1,3 @@
-export * from "./header"
 export * from "./herderTitle"
 export * from "./preferencesSection"
 export * from "./notificationsSection"
