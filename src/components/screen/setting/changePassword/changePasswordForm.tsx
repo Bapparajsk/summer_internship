@@ -3,110 +3,21 @@ import { useState } from "react";
 import {
     View,
     Text,
-    TextInput,
     Pressable,
     ActivityIndicator,
 } from "react-native";
 import {
     useForm,
     Controller,
-    type Control,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    Lock,
-    LockKeyhole,
-    ShieldCheck,
-    Eye,
-    EyeOff,
-    CircleAlert,
-} from "lucide-react-native";
 
 import {
     changePasswordSchema,
     type ChangePasswordFormValues,
 } from "@/utils/validate/changePassword";
-
-type PasswordFieldProps = {
-    control: Control<ChangePasswordFormValues>;
-    name: keyof ChangePasswordFormValues;
-    label: string;
-    placeholder: string;
-    icon: React.ReactNode;
-    error?: string;
-    onChange?: () => void;
-};
-
-function PasswordField({
-    control,
-    name,
-    label,
-    placeholder,
-    icon,
-    error,
-    onChange,
-}: PasswordFieldProps) {
-    const [visible, setVisible] = useState(false);
-
-    return (
-        <View className="gap-1.5">
-            <Text className="ml-1 font-poppins-medium text-[11px] tracking-[0.5px] text-text-secondary">
-                {label}
-            </Text>
-
-            <View
-                className={`h-[52px] flex-row items-center rounded-2xl border bg-surface-container-low px-3 ${error ? "border-danger/50" : "border-border-subtle"
-                    }`}
-            >
-                {icon}
-
-                <Controller
-                    control={control}
-                    name={name}
-                    render={({ field: { value, onChange: handleChange, onBlur } }) => (
-                        <TextInput
-                            value={value}
-                            onChangeText={(text) => {
-                                handleChange(text);
-                                onChange?.();
-                            }}
-                            onBlur={onBlur}
-                            placeholder={placeholder}
-                            placeholderTextColor="#737D89"
-                            secureTextEntry={!visible}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            className="ml-3 flex-1 font-poppins-light text-[13px] text-text-primary"
-                        />
-                    )}
-                />
-
-                <Pressable
-                    onPress={() => setVisible((prev) => !prev)}
-                    hitSlop={10}
-                    accessibilityRole="button"
-                    accessibilityLabel={visible ? "Hide password" : "Show password"}
-                >
-                    {visible ? (
-                        <EyeOff size={19} color="#8FA5B8" />
-                    ) : (
-                        <Eye size={19} color="#8FA5B8" />
-                    )}
-                </Pressable>
-            </View>
-
-            {!!error && (
-                <View className="ml-1 flex-row items-center gap-1.5">
-                    <CircleAlert size={13} color="#F87171" />
-                    <Text className="font-poppins-light text-[10px] text-danger">
-                        {error}
-                    </Text>
-                </View>
-            )}
-        </View>
-    );
-}
-
+import { AuthInput } from "@/components/auth/input";
+import { Button, PressableFeedback } from "heroui-native";
 function getPasswordStrength(password: string) {
     if (!password) return 0;
 
@@ -172,26 +83,57 @@ export function ChangePasswordForm({
         }
     });
 
+    const RenderField = (
+        name: keyof ChangePasswordFormValues,
+        label: string,
+        placeholder: string,
+        options: {
+            keyboard?: "default" | "email-address";
+            autoComplete?: "name" | "email" | "new-password";
+            autoCapitalize?: "none" | "words";
+        } = {},
+    ) => {
+
+        return (
+            <View className="gap-2">
+                <Controller
+                    control={control}
+                    name={name}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <AuthInput
+                            name={"password"}
+                            label={label}
+                            error={errors[name]?.message}
+                            theme="dark"
+
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            placeholder={placeholder}
+                            placeholderTextColor="#888888"
+                            keyboardType={options.keyboard ?? "default"}
+                            autoComplete={options.autoComplete}
+                            autoCapitalize={options.autoCapitalize ?? "none"}
+                            autoCorrect={false}
+                            editable={!isSubmitting}
+                            accessibilityLabel={label}
+
+                            className="bg-white/4 border-border text-text-secondary"
+                        />
+                    )}
+                />
+            </View >
+        );
+    };
+
     return (
         <View className="gap-5">
-            <PasswordField
-                control={control}
-                name="currentPassword"
-                label="CURRENT PASSWORD"
-                placeholder="Enter current password"
-                icon={<Lock size={19} color="#8FA5B8" />}
-                error={errors.currentPassword?.message}
-            />
+            {RenderField("currentPassword", "CURRENT PASSWORD", "Enter current password", {
+            })}
 
             <View className="gap-2">
-                <PasswordField
-                    control={control}
-                    name="newPassword"
-                    label="NEW PASSWORD"
-                    placeholder="Enter new password"
-                    icon={<LockKeyhole size={19} color="#8FA5B8" />}
-                    error={errors.newPassword?.message}
-                />
+                {RenderField("newPassword", "NEW PASSWORD", "Enter new password", {
+                })}
 
                 {!!newPassword && (
                     <View className="gap-1.5 px-1">
@@ -200,8 +142,8 @@ export function ChangePasswordForm({
                                 <View
                                     key={item}
                                     className={`h-1 flex-1 rounded-full ${strength >= item
-                                            ? "bg-primary"
-                                            : "bg-surface-container-high"
+                                        ? "bg-primary"
+                                        : "bg-surface-container-high"
                                         }`}
                                 />
                             ))}
@@ -218,14 +160,9 @@ export function ChangePasswordForm({
                 )}
             </View>
 
-            <PasswordField
-                control={control}
-                name="confirmPassword"
-                label="CONFIRM NEW PASSWORD"
-                placeholder="Re-enter new password"
-                icon={<ShieldCheck size={19} color="#8FA5B8" />}
-                error={errors.confirmPassword?.message}
-            />
+            {RenderField("confirmPassword", "CONFIRM NEW PASSWORD", "Re-enter new password", {
+                autoComplete: "new-password",
+            })}
 
             {!!errors.root?.server && (
                 <Text className="font-poppins-light text-[11px] text-danger">
@@ -233,10 +170,11 @@ export function ChangePasswordForm({
                 </Text>
             )}
 
-            <Pressable
+            <Button
                 onPress={submit}
-                disabled={isSubmitting || submitting}
-                className="h-[52px] flex-row items-center justify-center gap-2 rounded-xl bg-primary active:opacity-80 disabled:opacity-50"
+                isDisabled={isSubmitting || submitting}
+                className="h-13 bg-primary"
+                variant="outline"
             >
                 {isSubmitting || submitting ? (
                     <ActivityIndicator color="#0D1117" />
@@ -245,7 +183,7 @@ export function ChangePasswordForm({
                         Update Password
                     </Text>
                 )}
-            </Pressable>
+            </Button>
         </View>
     );
 }
