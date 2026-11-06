@@ -34,11 +34,9 @@ export const SimpleHeader = ({ title, icon, titleClassName , leftContent, rightC
                     <If.Else>
                         <View className='w-20'>
                             <MotionButton
-                                className='h-10 flex-row gap-0.5 w-full'
+                                className='h-10 flex-row gap-0.5 w-full pr-2'
                                 onPress={onPress}
-                                
                             >
-                                {/* <Ionicons name="arrow-back-circle-outline" size={20} color={"#f87171"} /> */}
                                 <If condition={Boolean(icon)}>
                                     <If.Then>
                                         <Icon

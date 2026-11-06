@@ -1,7 +1,6 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 import { SignupForm } from "@/components/auth/signup";
-import { SigninForm } from "@/components/auth/signin";
 
 export default function SignupScreen() {
 

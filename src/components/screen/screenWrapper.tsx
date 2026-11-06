@@ -1,12 +1,13 @@
-import Animated, { SharedValue } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { AppFooter } from "../footer";
 import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { cn } from "heroui-native";
 import { ReactNode } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
-const AnimatedScrollView = Animated.createAnimatedComponent(Animated.ScrollView);
+const AnimatedScrollView = Animated.createAnimatedComponent(KeyboardAwareScrollView);
 
 interface ScreenContentProps {
     path: string;
@@ -18,7 +19,7 @@ interface ScreenContentProps {
     SCREEN_HORIZONTAL_PADDING?: number;
     paddingTop?: number;
     bottomContainer?: ReactNode
-    onScroll?: ((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined> | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | SharedValue<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined> | undefined> | undefined
+    onScroll?: ((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined
 }
 
 export const BOTTOM_CONTAINER_Z_INDEX = 99999;
@@ -66,9 +67,13 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                     paddingBottom: 40 + bottomBarHeight,
                     position: "relative",
                     gap: 12,
+                    flexGrow: 1,
                 }}
                 stickyHeaderIndices={stickyHeaderIndices}
                 stickyHeaderHiddenOnScroll={stickyHeaderHiddenOnScroll}
+
+                bottomOffset={30}
+                keyboardShouldPersistTaps="handled"
             >
                 {children}
                 {showFooter && <AppFooter />}

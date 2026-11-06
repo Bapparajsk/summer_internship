@@ -56,7 +56,7 @@ export function PrivacySecuritySection() {
     const router = useRouter();
 
     return (
-        <Container title="Privacy & Security" >
+        <Container title="Privacy & Security" className="overflow-hidden">
             <SecurityRow
                 title="Change Password"
                 icon={<MaterialIcons name="lock-outline" size={18} color="#8FA5B8" />}
