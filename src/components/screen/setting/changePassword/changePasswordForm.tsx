@@ -1,23 +1,23 @@
-
 import { useState } from "react";
 import {
     View,
     Text,
-    Pressable,
     ActivityIndicator,
 } from "react-native";
-import {
-    useForm,
-    Controller,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "heroui-native";
 
 import {
     changePasswordSchema,
     type ChangePasswordFormValues,
 } from "@/utils/validate/changePassword";
+
 import { AuthInput } from "@/components/auth/input";
-import { Button, PressableFeedback } from "heroui-native";
+
+import { PasswordStrongIndicator } from "./passwordStrongIndicator";
+
+
 function getPasswordStrength(password: string) {
     if (!password) return 0;
 
@@ -135,29 +135,10 @@ export function ChangePasswordForm({
                 {RenderField("newPassword", "NEW PASSWORD", "Enter new password", {
                 })}
 
-                {!!newPassword && (
-                    <View className="gap-1.5 px-1">
-                        <View className="flex-row gap-1">
-                            {[1, 2, 3, 4, 5].map((item) => (
-                                <View
-                                    key={item}
-                                    className={`h-1 flex-1 rounded-full ${strength >= item
-                                        ? "bg-primary"
-                                        : "bg-surface-container-high"
-                                        }`}
-                                />
-                            ))}
-                        </View>
-
-                        <Text className="font-poppins-light text-[10px] text-text-secondary">
-                            {strength <= 2
-                                ? "Weak password"
-                                : strength <= 4
-                                    ? "Moderate password"
-                                    : "Strong password"}
-                        </Text>
-                    </View>
-                )}
+                <PasswordStrongIndicator
+                    strength={strength}
+                    newPassword={Boolean(newPassword)}
+                />
             </View>
 
             {RenderField("confirmPassword", "CONFIRM NEW PASSWORD", "Re-enter new password", {
