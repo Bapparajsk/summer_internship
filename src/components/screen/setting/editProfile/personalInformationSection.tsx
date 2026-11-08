@@ -1,7 +1,8 @@
 import { Container } from '../container'
-import { GraduationCap, Mail, UserRound } from 'lucide-react-native'
+import { UserRound } from 'lucide-react-native'
 import { ProfileInfoField } from './infoField'
 import { View } from 'react-native'
+import EngineeringRoles from './engineeringRoles'
 
 export const PersonalInformationSection = () => {
     return (
@@ -12,15 +13,14 @@ export const PersonalInformationSection = () => {
                     value="Bapparaj Debnath"
                     icon={<UserRound size={18} color="#8FA5B8" />}
                 />
-                <ProfileInfoField
-                    label="Email Address"
-                    value="bapparaj@example.com"
-                    icon={<Mail size={18} color="#8FA5B8" />}
-                />
+
+                <EngineeringRoles />
 
                 <ProfileInfoField
-                    label="Course"
-                    value="  Computer Science and Technology Computer Science and Technology Computer Science and Technology Computer Science Computer Science and Technology Computer Science Computer Science and Technology Computer Science Computer Science and Technology Computer Science and Technology v vComputer Science and Technology Computer Science and Technology Computer Science and Technology"
+                    label="Description"
+                    value='CS sophomore passionate about distributed algorithms, competitive programming & quiz sprints 🚀'
+                    showWordCount
+                    maxCount={100}
                 />
             </View>
         </Container>
