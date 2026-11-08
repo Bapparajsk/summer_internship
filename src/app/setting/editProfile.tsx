@@ -1,5 +1,5 @@
 import { SettingScreenWrapper } from '@/components/screen/setting'
-import { Text } from 'react-native'
+import { PersonalInformationSection } from '@/components/screen/setting/editProfile'
 
 export default function EditProfile() {
     return (
@@ -12,9 +12,7 @@ export default function EditProfile() {
                 subtitle: "Update your personal and academic information."
             }}
         >
-            <Text className='text-8xl text-pink-300'>
-                Edit profile
-            </Text>
+            <PersonalInformationSection />
         </SettingScreenWrapper>
     )
 }

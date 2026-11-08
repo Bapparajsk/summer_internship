@@ -117,12 +117,12 @@ export const ProfileHeroCard = ({
 
                     <Text
                         numberOfLines={1}
-                        className="font-poppins-medium text-[10px] text-zinc-300"
+                        className="font-poppins-medium text-xs text-text-secondary"
                     >
                         {role}
                     </Text>
 
-                    <Text className="font-poppins-light text-[10px] text-zinc-500">
+                    <Text className="font-poppins-medium text-[10px] text-text-secondary">
                         {program} • Semester {semester}
                     </Text>
                 </View>
@@ -160,8 +160,17 @@ export const ProfileHeroCard = ({
                 />
             </View>
 
+            <View className='w-full mt-3'>
+                <Text
+                    className='text-xs font-poppins-medium text-text-secondary'
+                    numberOfLines={3}
+                >
+                    CS sophomore passionate about distributed algorithms, competitive programming & quiz sprints 🚀
+                </Text>
+            </View>
+
             {/* Stats */}
-            <View className="mt-5 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
+            <View className="mt-3 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
 
                 <StatItem
                     icon="school"
