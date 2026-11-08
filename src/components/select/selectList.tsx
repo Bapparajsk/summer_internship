@@ -42,7 +42,7 @@ export const SelectItemList = ({
                         }>
                             <If.Then>
                                 <Animated.View entering={FadeIn.delay(100)}>
-                                    <Separator />
+                                    <Separator className='mb-0.5'/>
                                 </Animated.View>
                             </If.Then>
                         </If>

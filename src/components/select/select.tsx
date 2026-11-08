@@ -142,7 +142,7 @@ export const SelectPopover = ({
 
                 {/* Content */}
                 {open && (
-                    <Animated.View className="mb-3 px-2 mt-1.5" >
+                    <View className="mb-3 px-2 mt-1.5" >
                         <SelectItemList
                             items={items}
                             selectedSelect={selectedSelect}
@@ -157,7 +157,7 @@ export const SelectPopover = ({
                             separators={separators}
                             onCloseTriggerId={onCloseTriggerId}
                         />
-                    </Animated.View>
+                    </View>
                 )}
             </Animated.View>
         </View>

@@ -36,7 +36,7 @@ type ProfileHeroProps = {
 const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5";
 
 const options: SelectOption[] = [
-    { id: "edit-name", label: "Edit Name", iconName: "edit", endIcon: "chevron-right" , classNames: { container: className } },
+    { id: "edit-profile", label: "Edit Profile", iconName: "edit", endIcon: "chevron-right" , classNames: { container: className } },
     { id: "profile-image", label: "Update Image", iconSize: 14, iconName: "image", endIcon: "chevron-right", classNames: { container: className } },
     { id: "app-settings", label: "App Settings", iconSize: 14, iconName: "cog-outline", endIcon: "chevron-right", classNames: { container: className } },
     {
@@ -208,6 +208,7 @@ export const ProfileHeroCard = ({
                     items={options}
                     showActiveIcon={false}
                     showActiveColor={false}
+                    separators={[3]}
                     activeIsOpenText="Account Center"
                     activeIsOpenTextPosition="right"
                     containerClassName="border-white/20"
