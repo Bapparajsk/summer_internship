@@ -1,4 +1,4 @@
-export * from "./herderTitle"
+export * from "./headerTitle"
 export * from "./preferencesSection"
 export * from "./notificationsSection"
 export * from "./storageDataSection"

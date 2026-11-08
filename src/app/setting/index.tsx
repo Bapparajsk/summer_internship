@@ -1,6 +1,5 @@
 import { 
   SettingScreenWrapper, 
-  HerderTitle, 
   NotificationsSection, 
   PreferencesSection, 
   StorageDataSection, 
@@ -10,8 +9,15 @@ import {
 
 export default function SettingScreen() {
   return (
-    <SettingScreenWrapper path='index' backTitle='Profile' >
-      <HerderTitle title='Settings' subtitle='Personalize your QuizFlow experience.'/>
+    <SettingScreenWrapper 
+      path='index' 
+      backTitle='Profile' 
+
+      header={{
+        title: 'Settings',
+        subtitle: 'Personalize your QuizFlow experience.'
+      }}
+    >
       <PreferencesSection />
       <NotificationsSection />
       <StorageDataSection />

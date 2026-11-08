@@ -1,86 +1,12 @@
 import { getCommonIcon, IconName, MaterialCommunityIcons, MaterialIcons } from '../../lib/icon';
-import {
-    Image,
-    Text,
-    View
-} from 'react-native';
-import { SelectPopover, SelectOption } from '../../select';
+import { Image, Text, View } from 'react-native';
+import { SelectPopover } from '../../select';
 import { cn } from 'heroui-native';
 import { useRouter } from 'expo-router';
-
-type Status = "Excellent" | "Good" | "Average" | "Poor" | "Failing";
-
-type StatusConfig = {
-    bg: string;
-    border: string;
-    text: string;
-    icon: IconName
-}
-
-type ProfileHeroProps = {
-    name: string;
-    role: string;
-    program: string;
-    semester: string;
-
-    avatar: string;
-
-    status: Status;
-
-    cgpa: string;
-    streak: number;
-    rank: string;
-    achievements: number;
-};
-
-const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5";
-
-const options: SelectOption[] = [
-    { id: "edit-profile", label: "Edit Profile", iconName: "edit", endIcon: "chevron-right" , classNames: { container: className } },
-    { id: "profile-image", label: "Update Image", iconSize: 14, iconName: "image", endIcon: "chevron-right", classNames: { container: className } },
-    { id: "app-settings", label: "App Settings", iconSize: 14, iconName: "cog-outline", endIcon: "chevron-right", classNames: { container: className } },
-    {
-        id: "log-out", label: "Log Out", iconName: "logout", classNames: {
-            container: className + " bg-danger-soft px-3 mb-0",
-            label: "text-red-500",
-            startIconColor: "#fb2c36"
-        }
-    }
-];
+import { options, optionsHref, statusConfig,  } from './constant';
+import { ProfileHeroProps, Status } from './types';
 
 
-const statusConfig: Record<Status, StatusConfig> = {
-    Excellent: {
-        bg: "#10B9811F",
-        border: "#10B98166",
-        text: "#10B981",
-        icon: "check-circle",
-    },
-    Good: {
-        bg: "#3B82F61F",
-        border: "#3B82F666",
-        text: "#3B82F6",
-        icon: "check-circle",
-    },
-    Average: {
-        bg: "#F59E0B1F",
-        border: "#F59E0B66",
-        text: "#F59E0B",
-        icon: "minus-circle",
-    },
-    Poor: {
-        bg: "#F973161F",
-        border: "#F9731666",
-        text: "#F97316",
-        icon: "alert",
-    },
-    Failing: {
-        bg: "#EF44441F",
-        border: "#EF444466",
-        text: "#EF4444",
-        icon: "x-circle",
-    },
-};
 
 // return bg-color / border-color and icon
 const getStatusConfig = (status: Status) => {
@@ -226,8 +152,9 @@ export const ProfileHeroCard = ({
                     iconSize={12}
                     activeIsOpenTextClassName='text-xs font-poppins-medium'
                     onSelect={(item) => {
-                        if(item.id === "app-settings") {
-                            router.push("/setting")
+                        const url = optionsHref[item.id];
+                        if(url) {
+                            router.push(url);
                         }
                     }}
                 />

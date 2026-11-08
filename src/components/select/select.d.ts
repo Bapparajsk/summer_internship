@@ -12,7 +12,8 @@ export type SelectOption = {
         label?: string;
         startIconColor?: string;
         endIconColor?: string;
-    }
+    },
+    [kye: string]: unknown
 };
 
 export type SelectPopoverItemStyle = {

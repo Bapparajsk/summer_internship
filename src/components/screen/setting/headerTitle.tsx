@@ -1,7 +1,12 @@
 import { Separator } from 'heroui-native'
 import { View, Text } from 'react-native'
 
-export const HerderTitle = ({ title, subtitle }: { title: string; subtitle: string }) => {
+export type HeaderTitleProps = {
+    title: string; 
+    subtitle: string
+}
+
+export const HeaderTitle = ({ title, subtitle }: HeaderTitleProps) => {
     return (
         <View >
             <Text className="font-poppins-semibold text-[28px] leading-9 tracking-[-0.6px] text-text-primary">

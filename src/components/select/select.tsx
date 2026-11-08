@@ -34,7 +34,6 @@ export const SelectPopover = ({
     const [selectedSelect, setSelectedSelect] = useState<SelectOption>(items.find(item => item.id === activeItemId) || items[0]);
 
 
-
     const { Icon, name: iconName } = getCommonIcon(selectedSelect.iconName || "sensors");
 
     const animatedIconStyle = useAnimatedStyle(() => ({
