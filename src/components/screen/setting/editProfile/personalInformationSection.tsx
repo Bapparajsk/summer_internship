@@ -2,7 +2,7 @@ import { Container } from '../container'
 import { UserRound } from 'lucide-react-native'
 import { ProfileInfoField } from './infoField'
 import { View } from 'react-native'
-import EngineeringRoles from './engineeringRoles'
+import {EngineeringRoles} from './engineeringRoles'
 
 export const PersonalInformationSection = () => {
     return (
