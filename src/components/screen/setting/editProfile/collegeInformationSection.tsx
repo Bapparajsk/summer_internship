@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Container } from '../container';
 import { ProfileInfoField } from './infoField';
-import { FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome6, Ionicons } from '@expo/vector-icons';
 
 export const CollegeInformationSection = () => {
   return (
@@ -22,6 +22,12 @@ export const CollegeInformationSection = () => {
           value='P.O. Karnamadhabpur, P.S. Ghola, Near Mohispota, Kalyani Express Highway, Sodepur, Kolkata – 700113, West Bengal'
           showWordCount
           maxCount={100}
+        />
+        <ProfileInfoField
+          label="Website"
+          rightLabel='(Optional)'
+          value="https://eiem.ac.in"
+          icon={<Ionicons name="globe-outline" size={18} color="#8FA5B8" />}
         />
       </View>
     </Container>

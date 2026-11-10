@@ -25,7 +25,7 @@ export default function ProfileScreen() {
         semester="4"
         avatar="https://img.freepik.com/premium-photo/avatar-profile-picture-white-background_880763-10255.jpg?w=1480"
         // coverImage="https://images.unsplash.com/photo-1523050854058-8df90110c9f1"
-        status="Excellent"
+        status="Poor"
         cgpa="8.7"
         streak={14}
         rank="#12"

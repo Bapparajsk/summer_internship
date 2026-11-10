@@ -5,6 +5,7 @@ import If from "@/components/lib/if";
 
 export type ProfileInfoFieldProps = {
     label: string;
+    rightLabel?: string;
     value?: string;
     icon?: ReactNode;
     endIcon?: ReactNode;
@@ -19,6 +20,7 @@ export type ProfileInfoFieldProps = {
 
 export function ProfileInfoField({
     label,
+    rightLabel,
     value,
     icon,
     endIcon,
@@ -34,9 +36,18 @@ export function ProfileInfoField({
 
     return (
         <View className="gap-1">
-            <Text className="ml-1 font-poppins-medium text-[12px] text-text-primary">
-                {label}
-            </Text>
+            <View className="flex-row justify-between items-center px-1">
+                <Text className="font-poppins-medium text-xs text-text-primary">
+                    {label}
+                </Text>
+                <If condition={Boolean(rightLabel)}>
+                    <If.Then>
+                        <Text className="font-poppins-medium text-[10px] text-text-tertiary">
+                            {rightLabel}
+                        </Text>
+                    </If.Then>
+                </If>
+            </View>
 
             <Is onPress={onPress}>
                 <View className={cn("min-h-13.5 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2", className)}>

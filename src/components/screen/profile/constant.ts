@@ -30,7 +30,7 @@ export const optionsHref: Partial<Record<OptionId, Href>> = {
 
 export const statusConfig: Record<Status, StatusConfig> = {
     Excellent: {
-        bg: "#10B9811F",
+        bg: "#10B9812F",
         border: "#10B98166",
         text: "#10B981",
         icon: "check-circle",

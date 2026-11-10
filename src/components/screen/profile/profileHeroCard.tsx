@@ -1,17 +1,12 @@
 import { getCommonIcon, MaterialCommunityIcons, MaterialIcons } from '../../lib/icon';
 import { Image, Text, View } from 'react-native';
 import { SelectPopover } from '../../select';
-import { cn } from 'heroui-native';
 import { useRouter } from 'expo-router';
-import { options, optionsHref, statusConfig,  } from './constant';
+import { options, optionsHref, statusConfig, } from './constant';
 import { ProfileHeroProps, Status } from './types';
+import Svg, { Path } from 'react-native-svg';
 
 
-
-// return bg-color / border-color and icon
-const getStatusConfig = (status: Status) => {
-    return statusConfig[status];
-}
 
 function StatItem({
     icon,
@@ -46,31 +41,64 @@ function StatItem({
     );
 }
 
+
 const ProfileStatusBadge = ({ status }: { status: Status }) => {
-    const config = getStatusConfig(status);
+    const config = statusConfig[status];
     const { Icon, name } = getCommonIcon(config.icon);
 
-    
-
     return (
-        <View
-            className="flex-row gap-x-0.5 rounded-full items-center px-1.5 py-0.5"
-            style={{
-                borderWidth: 1,
-                borderColor: config.border,
-                backgroundColor: config.bg
-            }}
-        >
-            <Icon size={10} color={config.text} name={name} />
-            <Text
-                className={cn("text-[8px] leading-normal font-poppins-semibold uppercase")}
-                style={{ color: config.text }}
-            >
-                {status}
-            </Text>
+        <View className="relative">
+            <View className="relative">
+                {/* Single continuous border */}
+                <Svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 140 42"
+                    preserveAspectRatio="none"
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                    }}
+                >
+                    <Path
+                        d="
+                            M 16 0.5
+                            H 124
+                            Q 139.5 0.5 139.5 16
+                            V 21
+                            Q 139.5 36.5 124 36.5
+                            H 19
+                            Q 16 36.5 13 39
+                            L 5 41
+                            L 8 34
+                            Q 0.5 29 0.5 21
+                            V 16
+                            Q 0.5 0.5 16 0.5
+                            Z
+                        "
+                        fill={config.bg}
+                        stroke={config.border}
+                        strokeWidth={2}
+                        strokeLinejoin="round"
+                    />
+                </Svg>
+
+                {/* Content */}
+                <View className="flex-row items-center gap-x-1 px-2 py-0.5">
+                    <Icon size={10} name={name} color={config.text} className={"mb-0.5"}/>
+
+                    <Text
+                        className="text-[9px] font-poppins-semibold uppercase"
+                        style={{ color: config.text }}
+                    >
+                        {status}
+                    </Text>
+                </View>
+            </View>
         </View>
     );
-}
+};
 
 export const ProfileHeroCard = ({
     name,
@@ -93,7 +121,11 @@ export const ProfileHeroCard = ({
     return (
         <View className="relative rounded-[34px] border border-border bg-white/4 p-3">
             {/* Profile Row */}
-            <View className="flex-row items-center">
+            <View className="flex-row items-center relative">
+
+                <View className='absolute -top-3 left-[71px]'>
+                    <ProfileStatusBadge status={status} />
+                </View>
 
                 <View className="rounded-[24px]">
                     <Image
@@ -101,10 +133,10 @@ export const ProfileHeroCard = ({
                         className="size-18 rounded-[24px]"
                         resizeMode="cover"
                     />
+                    
                 </View>
 
                 <View className="ml-2 flex-1">
-
                     <View className="flex-row items-center gap-1">
                         <Text
                             numberOfLines={1}
@@ -112,7 +144,6 @@ export const ProfileHeroCard = ({
                         >
                             {name}
                         </Text>
-                        <ProfileStatusBadge status={status} />
                     </View>
 
                     <Text
@@ -153,7 +184,7 @@ export const ProfileHeroCard = ({
                     activeIsOpenTextClassName='text-xs font-poppins-medium'
                     onSelect={(item) => {
                         const url = optionsHref[item.id];
-                        if(url) {
+                        if (url) {
                             router.push(url);
                         }
                     }}
