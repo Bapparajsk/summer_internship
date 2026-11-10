@@ -1,4 +1,4 @@
-import { getCommonIcon, IconName, MaterialCommunityIcons, MaterialIcons } from '../../lib/icon';
+import { getCommonIcon, MaterialCommunityIcons, MaterialIcons } from '../../lib/icon';
 import { Image, Text, View } from 'react-native';
 import { SelectPopover } from '../../select';
 import { cn } from 'heroui-native';

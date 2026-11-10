@@ -1,18 +1,21 @@
 import { View, Text } from "react-native";
 import type { ReactNode } from "react";
-import { PressableFeedback } from "heroui-native";
+import { cn, PressableFeedback } from "heroui-native";
 import If from "@/components/lib/if";
 
-type ProfileInfoFieldProps = {
+export type ProfileInfoFieldProps = {
     label: string;
     value?: string;
     icon?: ReactNode;
-    endIcon?: ReactNode
-    showWordCount?: boolean
-    maxCount?: number
+    endIcon?: ReactNode;
+    showWordCount?: boolean;
+    maxCount?: number;
+    isButton?: boolean;
+    className?: string;
 
-    onPress?: () => void
+    onPress?: () => void;
 };
+
 
 export function ProfileInfoField({
     label,
@@ -21,16 +24,22 @@ export function ProfileInfoField({
     endIcon,
     showWordCount,
     maxCount,
+    isButton = true,
+    className,
+
     onPress
 }: ProfileInfoFieldProps) {
+
+    const Is = isButton ? PressableFeedback : View;
+
     return (
         <View className="gap-1">
             <Text className="ml-1 font-poppins-medium text-[12px] text-text-primary">
                 {label}
             </Text>
 
-            <PressableFeedback onPress={onPress}>
-                <View className="min-h-13.5 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2">
+            <Is onPress={onPress}>
+                <View className={cn("min-h-13.5 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2", className)}>
                     {icon && <View className="h-9 w-9 items-center justify-center border border-border rounded-xl bg-transparent">
                         {icon}
                     </View>}
@@ -43,7 +52,7 @@ export function ProfileInfoField({
 
                     {endIcon}
                 </View>
-            </PressableFeedback>
+            </Is>
 
             <If condition={Boolean(showWordCount)}>
                 <If.Then>

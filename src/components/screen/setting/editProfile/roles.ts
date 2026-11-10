@@ -47,3 +47,46 @@ export const ENGINEERING_ROLES: SelectOption[] = [
     { value: 'ENGINEERING_MANAGER', label: 'Engineering Manager' },
     { value: 'OTHER', label: 'Other' },
 ];
+
+
+
+export const ENGINEERING_COURSES: SelectOption[] = [
+    // Computer Science & IT
+    { value: 'COMPUTER_SCIENCE', label: 'Computer Science Engineering' },
+    { value: 'INFORMATION_TECHNOLOGY', label: 'Information Technology' },
+    { value: 'AI_DATA_SCIENCE', label: 'AI & Data Science' },
+    { value: 'CYBER_SECURITY', label: 'Cyber Security' },
+    { value: 'SOFTWARE_ENGINEERING', label: 'Software Engineering' },
+
+    // Mechanical
+    { value: 'MECHANICAL', label: 'Mechanical Engineering' },
+    { value: 'AUTOMOBILE', label: 'Automobile Engineering' },
+    { value: 'MECHATRONICS', label: 'Mechatronics Engineering' },
+    { value: 'PRODUCTION', label: 'Production Engineering' },
+
+    // Civil
+    { value: 'CIVIL', label: 'Civil Engineering' },
+    { value: 'ARCHITECTURE', label: 'Architecture' },
+
+    // Electrical & Electronics
+    { value: 'ELECTRICAL', label: 'Electrical Engineering' },
+    { value: 'ELECTRONICS', label: 'Electronics Engineering' },
+    { value: 'ECE', label: 'Electronics & Communication Engineering' },
+    { value: 'EEE', label: 'Electrical & Electronics Engineering' },
+    { value: 'VLSI', label: 'VLSI Design' },
+
+    // Chemical & Biotechnology
+    { value: 'CHEMICAL', label: 'Chemical Engineering' },
+    { value: 'BIOTECHNOLOGY', label: 'Biotechnology' },
+    { value: 'BIOMEDICAL', label: 'Biomedical Engineering' },
+
+    // Other Engineering
+    { value: 'AERONAUTICAL', label: 'Aeronautical Engineering' },
+    { value: 'AEROSPACE', label: 'Aerospace Engineering' },
+    { value: 'AGRICULTURAL', label: 'Agricultural Engineering' },
+    { value: 'MARINE', label: 'Marine Engineering' },
+
+    // Other
+    { value: 'DIPLOMA_ENGINEERING', label: 'Diploma Engineering' },
+    { value: 'OTHER', label: 'Other' },
+];

@@ -2,12 +2,12 @@ import { Container } from '../container'
 import { UserRound } from 'lucide-react-native'
 import { ProfileInfoField } from './infoField'
 import { View } from 'react-native'
-import {EngineeringRoles} from './engineeringRoles'
+import { EngineeringRoles } from './engineeringRoles'
 
 export const PersonalInformationSection = () => {
     return (
         <Container title='Personal Information'>
-            <View className='gap-4 p-3'>
+            <View className='gap-3 p-3'>
                 <ProfileInfoField
                     label="Full Name"
                     value="Bapparaj Debnath"

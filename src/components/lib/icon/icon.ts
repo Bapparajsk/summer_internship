@@ -216,6 +216,48 @@ const commonIconMap = {
     "logo-apple": {
         Icon: FontAwesome6,
         name: "apple"
+    },
+
+    // number 0 - 9
+    "0" :{
+        Icon: FontAwesome6,
+        name: "0"
+    },
+    "1" :{
+        Icon: FontAwesome6,
+        name: "1"
+    },
+    "2" :{
+        Icon: FontAwesome6,
+        name: "2"
+    },
+    "3" :{
+        Icon: FontAwesome6,
+        name: "3"
+    },
+    "4" :{
+        Icon: FontAwesome6,
+        name: "4"
+    },
+    "5" :{
+        Icon: FontAwesome6,
+        name: "5"
+    },
+    "6" :{
+        Icon: FontAwesome6,
+        name: "6"
+    },
+    "7" :{
+        Icon: FontAwesome6,
+        name: "7"
+    },
+    "8" :{
+        Icon: FontAwesome6,
+        name: "8"
+    },
+    "9" :{
+        Icon: FontAwesome6,
+        name: "9"
     }
 }
 
