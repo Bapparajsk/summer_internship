@@ -31,10 +31,10 @@ export const SelectPopover = ({
 
     const triggerWidth = useRef(120);
     const [open, setOpen] = useState(false);
-    const [selectedSelect, setSelectedSelect] = useState<SelectOption>(items.find(item => item.id === activeItemId) || items[0]);
+    const [selectedSelect, setSelectedSelect] = useState<SelectOption | undefined>(items.find(item => item.id === activeItemId));
 
 
-    const { Icon, name: iconName } = getCommonIcon(selectedSelect.iconName || "sensors");
+    const { Icon, name: iconName } = getCommonIcon(selectedSelect?.iconName || "sensors");
 
     const animatedIconStyle = useAnimatedStyle(() => ({
         transform: [
@@ -110,7 +110,7 @@ export const SelectPopover = ({
                         </Fragment>
                     ) : (
                         <Fragment>
-                            {selectedSelect.iconName && (
+                            {selectedSelect?.iconName && (
                                 <Icon
                                     name={iconName as any}
                                     size={16}
@@ -119,7 +119,7 @@ export const SelectPopover = ({
                             )}
 
                             <Text className={cn("ml-2 text-text-primary font-poppins-medium", itemStyle?.labelClassName)}>
-                                {selectedSelect.label}
+                                {selectedSelect?.label}
                             </Text>
 
                             <Animated.View style={[{ marginLeft: 8 }, animatedIconStyle]}>
