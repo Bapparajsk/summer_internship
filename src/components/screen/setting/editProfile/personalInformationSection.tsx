@@ -1,8 +1,8 @@
 import { Container } from '../container'
-import { UserRound } from 'lucide-react-native'
 import { ProfileInfoField } from './infoField'
 import { View } from 'react-native'
 import { EngineeringRoles } from './engineeringRoles'
+import { FontAwesome5 } from '@expo/vector-icons'
 
 export const PersonalInformationSection = () => {
     return (
@@ -11,7 +11,7 @@ export const PersonalInformationSection = () => {
                 <ProfileInfoField
                     label="Full Name"
                     value="Bapparaj Debnath"
-                    icon={<UserRound size={18} color="#8FA5B8" />}
+                    icon={<FontAwesome5 name="user-circle" size={18} color="#8FA5B8" />}
                 />
 
                 <EngineeringRoles />

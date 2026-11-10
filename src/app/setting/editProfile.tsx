@@ -1,5 +1,9 @@
 import { SettingScreenWrapper } from '@/components/screen/setting'
-import { PersonalInformationSection, AcademicInformationSection } from '@/components/screen/setting/editProfile'
+import { 
+    PersonalInformationSection, 
+    AcademicInformationSection,
+    CollegeInformationSection,
+} from '@/components/screen/setting/editProfile'
 
 export default function EditProfile() {
     return (
@@ -14,6 +18,7 @@ export default function EditProfile() {
         >
             <PersonalInformationSection />
             <AcademicInformationSection />
+            <CollegeInformationSection />
         </SettingScreenWrapper>
     )
 }
