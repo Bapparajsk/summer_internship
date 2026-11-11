@@ -122,6 +122,11 @@ export default function WaitingRoom() {
                     completion waiting room 
                 </Button>
             </Link>
+            <Link asChild href={"/quiz/final_leaderboard"}>
+                <Button>
+                    final leaderboard 
+                </Button>
+            </Link>
         </ScreenWrapper>
     )
 }

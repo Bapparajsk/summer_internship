@@ -91,7 +91,9 @@ export default function CompletionWaitingRoomScreen() {
             />
             <ParticipantUser
                 participants={participants}
-                onViewLeaderboard={() => {}}
+                onViewLeaderboard={() => {
+                    
+                }}
             />
             <WaitingExperience />
         </ScreenWrapper>

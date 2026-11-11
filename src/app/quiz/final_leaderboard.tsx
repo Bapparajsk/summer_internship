@@ -1,19 +1,26 @@
-import { View } from 'react-native'
 import { SettingScreenWrapper } from '@/components/screen/setting'
+import { useRouter } from 'expo-router'
+import { EsportsPodium, MOCK_PODIUM_PLAYERS } from '@/components/screen/quiz/FinalLeaderboard';
 
-export const FinalLeaderboard = () => {
+export default function FinalLeaderboardScreen() {
+
+    const router = useRouter();
+
     return (
         <SettingScreenWrapper
-            path='changePassword'
-            backTitle='Setting'
+            path='quiz/final_leaderboard'
+            backTitle='Explore'
             header={{
-                title: 'Change password',
-                subtitle: 'Choose a strong password to keep your account secure.'
+                title: 'Final Standings',
+                subtitle: 'Computational systems sprint concluded. Official results are locked.'
+            }}
+            onBackPress={() => {
+                router.dismissTo("/explore");
             }}
         >
-            <View>
-
-            </View>
+            <EsportsPodium
+                players={MOCK_PODIUM_PLAYERS}
+            />
         </SettingScreenWrapper>
     )
 }

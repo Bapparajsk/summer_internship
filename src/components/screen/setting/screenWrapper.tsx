@@ -7,16 +7,23 @@ import { HeaderTitle, HeaderTitleProps } from "./headerTitle";
 export type SettingScreenWrapperProps = {
   path: string;
   backTitle: string;
-  children: ReactNode
+  children: ReactNode;
+  onBackPress?: () => void;
 
   header: HeaderTitleProps
 }
 
-export const SettingScreenWrapper = ({ path, backTitle, header , children }: SettingScreenWrapperProps) => {
+export const SettingScreenWrapper = ({ path, backTitle, header , children, onBackPress }: SettingScreenWrapperProps) => {
 
   const router = useRouter();
 
   const handelPress = () => {
+
+    if(onBackPress) {
+      onBackPress();
+      return;
+    }
+
     if (router.canGoBack()) {
       router.back();
     }
