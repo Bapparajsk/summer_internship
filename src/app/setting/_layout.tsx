@@ -7,8 +7,8 @@ export default function SettingLayout() {
             animation: "ios_from_right"
         }}>
             <Stack.Screen name="index"/>
-            <Stack.Screen name="editProfile" options={{ animation: "fade_from_bottom" }} />
-            <Stack.Screen name="changePassword" />
+            <Stack.Screen name="edit_profile" options={{ animation: "fade_from_bottom" }} />
+            <Stack.Screen name="change_password" />
         </Stack>
     );
 }
