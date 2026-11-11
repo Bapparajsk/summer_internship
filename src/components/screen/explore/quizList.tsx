@@ -127,7 +127,7 @@ export const QuizList = () => {
                     <QuizCard
                         {...item}
                         onPress={() => {
-                            router.push("/quiz/waiting-room")
+                            router.push("/quiz/waiting_room")
                         }}
                     />
                 )}

@@ -1,10 +1,13 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { ScreenWrapper } from '@/components/screen'
 
-export default function completion_waiting_room() {
-  return (
-    <View>
-      <Text>completion_waiting_room</Text>
-    </View>
-  )
+export default function CompletionWaitingRoomScreen() {
+    return (
+        <ScreenWrapper
+            path={"quiz/waiting-room"}
+            showFooter={false}
+            paddingTop={10}
+        >
+            
+        </ScreenWrapper>
+    )
 }

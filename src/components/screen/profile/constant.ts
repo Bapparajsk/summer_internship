@@ -24,7 +24,7 @@ export const options = [
 type OptionId = typeof options[number]["id"];
 
 export const optionsHref: Partial<Record<OptionId, Href>> = {
-    "edit-profile": "/setting/editProfile",
+    "edit-profile": "/setting/edit_profile",
     "app-settings": "/setting",
 };
 

@@ -117,6 +117,11 @@ export default function WaitingRoom() {
                     goto game
                 </Button>
             </Link>
+            <Link asChild href={"/quiz/completion_waiting_room"}>
+                <Button>
+                    completion waiting room 
+                </Button>
+            </Link>
         </ScreenWrapper>
     )
 }
