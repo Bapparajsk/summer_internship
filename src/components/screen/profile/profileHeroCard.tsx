@@ -1,45 +1,11 @@
-import { getCommonIcon, MaterialCommunityIcons, MaterialIcons } from '../../lib/icon';
-import { Image, Text, View } from 'react-native';
-import { SelectPopover } from '../../select';
-import { useRouter } from 'expo-router';
-import { options, optionsHref, statusConfig, } from './constant';
+import { getCommonIcon } from '../../lib/icon';
+import { Text, View } from 'react-native';
+import { statusConfig, } from './constant';
 import { ProfileHeroProps, Status } from './types';
 import Svg, { Path } from 'react-native-svg';
-
-
-
-function StatItem({
-    icon,
-    value,
-    label,
-    color,
-}: {
-    icon: keyof typeof MaterialIcons.glyphMap;
-    value: string | number;
-    label: string;
-    color: string;
-}) {
-    return (
-        <View className="items-center">
-            <MaterialIcons
-                name={icon}
-                size={16}
-                color={color}
-            />
-
-            <Text
-                className="mt-0.5 text-[10px] font-poppins-semibold"
-                style={{ color }}
-            >
-                {value}
-            </Text>
-
-            <Text className="text-[8px] font-poppins-medium text-zinc-500">
-                {label}
-            </Text>
-        </View>
-    );
-}
+import { UserAchievements } from './userAchievements';
+import { UserSettingPopover } from './userSettingPopover';
+import { getEmoji } from './emoji';
 
 
 const ProfileStatusBadge = ({ status }: { status: Status }) => {
@@ -49,7 +15,6 @@ const ProfileStatusBadge = ({ status }: { status: Status }) => {
     return (
         <View className="relative">
             <View className="relative">
-                {/* Single continuous border */}
                 <Svg
                     width="100%"
                     height="100%"
@@ -86,7 +51,7 @@ const ProfileStatusBadge = ({ status }: { status: Status }) => {
 
                 {/* Content */}
                 <View className="flex-row items-center gap-x-1 px-2 py-0.5">
-                    <Icon size={10} name={name} color={config.text} className={"mb-0.5"}/>
+                    <Icon size={10} name={name} color={config.text} className={"mb-0.5"} />
 
                     <Text
                         className="text-[9px] font-poppins-semibold uppercase"
@@ -116,7 +81,7 @@ export const ProfileHeroCard = ({
     achievements
 }: ProfileHeroProps) => {
 
-    const router = useRouter();
+    const { emoji, background } = getEmoji(avatar);
 
     return (
         <View className="relative rounded-[34px] border border-border bg-white/4 p-3">
@@ -128,12 +93,11 @@ export const ProfileHeroCard = ({
                 </View>
 
                 <View className="rounded-[24px]">
-                    <Image
-                        source={{ uri: avatar }}
-                        className="size-18 rounded-[24px]"
-                        resizeMode="cover"
-                    />
-                    
+                    <View className='size-18 rounded-[24px] items-center justify-center' style={{ backgroundColor: background }}>
+                        <Text className='text-3xl'>
+                            {emoji}
+                        </Text>
+                    </View>
                 </View>
 
                 <View className="ml-2 flex-1">
@@ -160,37 +124,10 @@ export const ProfileHeroCard = ({
 
             </View>
 
-            <View className="absolute right-4 top-4 z-10 flex-row gap-2">
-                <SelectPopover
-                    items={options}
-                    showActiveIcon={false}
-                    showActiveColor={false}
-                    separators={[3]}
-                    activeIsOpenText="Account Center"
-                    activeIsOpenTextPosition="right"
-                    containerClassName="border-white/20"
-                    activeContent={
-                        <MaterialCommunityIcons
-                            name="account-cog-outline"
-                            size={18}
-                            color="#9CA3AF"
-                        />
-                    }
-                    triggerClassName="px-3 py-2"
-                    itemStyle={{
-                        labelClassName: "text-[10px]"
-                    }}
-                    iconSize={12}
-                    activeIsOpenTextClassName='text-xs font-poppins-medium'
-                    onSelect={(item) => {
-                        const url = optionsHref[item.id];
-                        if (url) {
-                            router.push(url);
-                        }
-                    }}
-                />
-            </View>
+            {/* setting popover */}
+            <UserSettingPopover />
 
+            {/* user description */}
             <View className='w-full mt-3'>
                 <Text
                     className='text-xs font-poppins-medium text-text-secondary'
@@ -201,37 +138,13 @@ export const ProfileHeroCard = ({
             </View>
 
             {/* Stats */}
-            <View className="mt-3 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
+            <UserAchievements
+                cgpa={cgpa}
+                rank={rank}
+                streak={streak}
+                achievements={achievements}
+            />
 
-                <StatItem
-                    icon="school"
-                    value={cgpa}
-                    label="CGPA"
-                    color="#818CF8"
-                />
-
-                <StatItem
-                    icon="local-fire-department"
-                    value={streak}
-                    label="Streak"
-                    color="#FB923C"
-                />
-
-                <StatItem
-                    icon="emoji-events"
-                    value={rank}
-                    label="Rank"
-                    color="#FACC15"
-                />
-
-                <StatItem
-                    icon="workspace-premium"
-                    value={achievements}
-                    label="Awards"
-                    color="#00D5BE"
-                />
-
-            </View>
         </View>
     );
 }

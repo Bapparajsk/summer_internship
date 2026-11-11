@@ -1,4 +1,5 @@
 import { IconName } from "@/components/lib/icon";
+import { ProfileEmojiName } from "./emoji";
 
 
 export type Status = "Excellent" | "Good" | "Average" | "Poor" | "Failing";
@@ -16,7 +17,7 @@ export type ProfileHeroProps = {
     program: string;
     semester: string;
 
-    avatar: string;
+    avatar: ProfileEmojiName;
 
     status: Status;
 

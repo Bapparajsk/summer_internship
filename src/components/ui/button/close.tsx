@@ -9,7 +9,7 @@ import { PressableFeedbackProps } from "heroui-native";
 export const CloseButton = ({ isSaved = true, saveTitle = "Save changes", ...rest }: CloseButtonProps & PressableFeedbackProps) => {
     return (
         <MotionButton
-            layout={LinearTransition.springify().stiffness(200).mass(0.5).damping(20)}
+            layout={LinearTransition.springify().stiffness(200).mass(0.7).damping(20)}
             className='w-auto h-auto'
             {...rest}
         >
