@@ -90,7 +90,7 @@ export function EsportsPodium({
                         Final Arena
                     </Text>
 
-                    <Text className="font-poppins-light text-[10px] tracking-wider text-text-tertiary">
+                    <Text className="font-poppins-medium text-[10px] tracking-wider text-text-tertiary">
                         TOP THREE CHAMPIONS
                     </Text>
                 </View>

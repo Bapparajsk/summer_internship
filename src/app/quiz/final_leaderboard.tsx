@@ -1,6 +1,6 @@
 import { SettingScreenWrapper } from '@/components/screen/setting'
 import { useRouter } from 'expo-router'
-import { EsportsPodium, MOCK_PODIUM_PLAYERS } from '@/components/screen/quiz/FinalLeaderboard';
+import { AllParticipants, EsportsPodium, MOCK_PODIUM_PLAYERS, TEMP_PARTICIPANTS } from '@/components/screen/quiz/FinalLeaderboard';
 
 export default function FinalLeaderboardScreen() {
 
@@ -21,6 +21,7 @@ export default function FinalLeaderboardScreen() {
             <EsportsPodium
                 players={MOCK_PODIUM_PLAYERS}
             />
+            <AllParticipants participants={TEMP_PARTICIPANTS} />
         </SettingScreenWrapper>
     )
 }
