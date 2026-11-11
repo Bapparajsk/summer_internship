@@ -60,7 +60,7 @@ export function PrivacySecuritySection() {
             <SecurityRow
                 title="Change Password"
                 icon={<MaterialIcons name="lock-outline" size={18} color="#8FA5B8" />}
-                onPress={() => { router.push("/setting/changePassword") }}
+                onPress={() => { router.push("/setting/change_password") }}
             />
 
             <View className="h-px bg-border" />
