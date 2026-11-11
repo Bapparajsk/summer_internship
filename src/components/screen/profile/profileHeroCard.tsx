@@ -123,7 +123,7 @@ export const ProfileHeroCard = ({
             {/* Profile Row */}
             <View className="flex-row items-center relative">
 
-                <View className='absolute -top-3 left-[71px]'>
+                <View className='absolute -top-3 left-17.75'>
                     <ProfileStatusBadge status={status} />
                 </View>
 
