@@ -117,12 +117,20 @@ export default function WaitingRoom() {
                     goto game
                 </Button>
             </Link>
+            
             <Link asChild href={"/quiz/completion_waiting_room"}>
                 <Button>
                     completion waiting room 
                 </Button>
             </Link>
+
             <Link asChild href={"/quiz/final_leaderboard"}>
+                <Button>
+                    final leaderboard 
+                </Button>
+            </Link>
+
+            <Link asChild href={"/quiz/create_room"}>
                 <Button>
                     final leaderboard 
                 </Button>
