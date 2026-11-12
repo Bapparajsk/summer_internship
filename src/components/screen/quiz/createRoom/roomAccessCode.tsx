@@ -103,7 +103,6 @@ export const RoomAccessCode = ({
             {mode === "private" && (
                 <Animated.View
                     entering={FadeInUp.duration(250).easing(Easing.out(Easing.cubic))}
-                    exiting={FadeOutUp.duration(180).easing(Easing.in(Easing.cubic))}
                     className="gap-2.5"
                 >
                     <View

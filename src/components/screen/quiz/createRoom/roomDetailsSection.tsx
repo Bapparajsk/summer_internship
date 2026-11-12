@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native';
 import { InputGroup, PressableFeedback, TextArea, TextField } from 'heroui-native';
-import { FontAwesome6 } from '@expo/vector-icons';
+import { Feather, FontAwesome6 } from '@expo/vector-icons';
+import { generateRoomName } from '@/utils/quiz/quizNameGaneretor';
 
 
 type Props = {
@@ -52,8 +53,13 @@ export const RoomDetailsSection = ({
                         className="min-h-12.5 flex-1 bg-white/5 font-poppins-medium text-xs rounded-full border-border text-text-primary"
                     />
                     <InputGroup.Suffix>
-                        <PressableFeedback className='border border-border p-2 rounded-full'>
-                            <FontAwesome6 name="wand-magic-sparkles" size={12} color="#5cc6e2" />
+                        <PressableFeedback
+                            className='border border-border p-2 rounded-full'
+                            onPress={() => {
+                                onRoomNameChange(generateRoomName())
+                            }}
+                        >
+                            <Feather name="refresh-cw" size={12} color="#5cc6e2" />
                         </PressableFeedback>
                     </InputGroup.Suffix>
                 </InputGroup>

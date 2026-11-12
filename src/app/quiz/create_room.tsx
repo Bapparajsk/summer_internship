@@ -1,5 +1,6 @@
-import { RoomDetailsSection, RoomAccessCode } from '@/components/screen/quiz/createRoom';
+import { RoomDetailsSection, RoomAccessCode, ParticipantsSection } from '@/components/screen/quiz/createRoom';
 import { SettingScreenWrapper } from '@/components/screen/setting';
+import { generateRoomName } from '@/utils/quiz/quizNameGaneretor';
 import { useRouter } from 'expo-router';
 import { Separator } from 'heroui-native';
 import { useState } from 'react';
@@ -14,6 +15,7 @@ export default function CreateRoomScreen() {
     );
 
     const [password, setPassword] = useState('QF-7392');
+    const [playerLimit, setPlayerLimit] = useState(8);
 
 
     return (
@@ -34,14 +36,19 @@ export default function CreateRoomScreen() {
                 onRoomNameChange={setRoomName}
                 onDescriptionChange={setDescription}
             />
-            <Separator/>
             <RoomAccessCode
                 password={password}
                 onPasswordChange={setPassword}
                 onGenerate={() => {
-                    // setPassword()
+                    // setPassword(generateRoomName)
                 }}
             />
+            <Separator />
+            <ParticipantsSection
+                value={playerLimit}
+                onChange={setPlayerLimit}
+            />
+            <Separator />
         </SettingScreenWrapper>
     )
 }
