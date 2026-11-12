@@ -72,10 +72,10 @@ export const RoomDetailsSection = ({
                         onChangeText={onDescriptionChange}
                         placeholder="Algorithms, C++ & System Design showdown with the squad"
                         placeholderTextColor="rgba(255,255,255,0.35)"
-                        numberOfLines={6}
+                        numberOfLines={4}
                         multiline
                         textAlignVertical="top"
-                        className="min-h-19 rounded-xl border border-border bg-surface-container px-4 py-3 font-poppins-light text-[13px] leading-5 text-text-primary"
+                        className="min-h-19 flex-1 bg-white/5 font-poppins-medium text-xs rounded-xl border-border text-text-primary"
                     />
                 </TextField>
             </View>
