@@ -11,7 +11,7 @@ import {
 } from 'lucide-react-native';
 import { cn, PressableFeedback, Switch } from 'heroui-native';
 import { EvilIcons, Octicons } from '@expo/vector-icons';
-import Animated, { Easing, FadeInUp, FadeOutUp, LinearTransition } from "react-native-reanimated"
+import Animated, { Easing, FadeInUp, LinearTransition } from "react-native-reanimated"
 
 export type Mode = "public" | "private";
 

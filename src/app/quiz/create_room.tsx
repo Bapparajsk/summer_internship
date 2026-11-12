@@ -1,6 +1,5 @@
-import { RoomDetailsSection, RoomAccessCode, ParticipantsSection } from '@/components/screen/quiz/createRoom';
+import { RoomDetailsSection, RoomAccessCode, ParticipantsSection, QuizSourceSection } from '@/components/screen/quiz/createRoom';
 import { SettingScreenWrapper } from '@/components/screen/setting';
-import { generateRoomName } from '@/utils/quiz/quizNameGaneretor';
 import { useRouter } from 'expo-router';
 import { Separator } from 'heroui-native';
 import { useState } from 'react';
@@ -49,6 +48,7 @@ export default function CreateRoomScreen() {
                 onChange={setPlayerLimit}
             />
             <Separator />
+            <QuizSourceSection questionPoolCount={6} />
         </SettingScreenWrapper>
     )
 }
