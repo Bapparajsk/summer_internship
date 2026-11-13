@@ -1,9 +1,8 @@
-import { RoomDetailsSection, RoomAccessCode, ParticipantsSection, QuizSourceSection } from '@/components/screen/quiz/createRoom';
+import { RoomDetailsSection, RoomAccessCode, ParticipantsSection, QuizSourceSection, Difficulty, QuestionFiltersSection, QuestionOrderSection, QuestionOrder } from '@/components/screen/quiz/createRoom';
 import { SettingScreenWrapper } from '@/components/screen/setting';
 import { useRouter } from 'expo-router';
 import { Separator } from 'heroui-native';
 import { useState } from 'react';
-
 export default function CreateRoomScreen() {
 
     const router = useRouter();
@@ -15,6 +14,11 @@ export default function CreateRoomScreen() {
 
     const [password, setPassword] = useState('QF-7392');
     const [playerLimit, setPlayerLimit] = useState(8);
+
+    const [difficulty, setDifficulty] = useState<Difficulty>('Medium');
+    const [questionCount, setQuestionCount] = useState(10);
+
+    const [value, setValue] = useState<QuestionOrder>("randomized");
 
 
     return (
@@ -49,6 +53,19 @@ export default function CreateRoomScreen() {
             />
             <Separator />
             <QuizSourceSection questionPoolCount={6} />
+            <Separator />
+
+            <QuestionFiltersSection
+                difficulty={difficulty}
+                questionCount={questionCount}
+                availableQuestions={900}
+                onDifficultyChange={setDifficulty}
+                onQuestionCountChange={setQuestionCount}
+            />
+            <QuestionOrderSection
+                value={value}
+                onChange={setValue}
+            />
         </SettingScreenWrapper>
     )
 }

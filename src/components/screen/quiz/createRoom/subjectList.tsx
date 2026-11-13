@@ -1,7 +1,9 @@
 import { View, Text } from 'react-native'
-import { Fragment, useMemo, useState } from 'react'
+import React, { Fragment, useMemo, useState } from 'react'
 import { BottomSheet, PressableFeedback, Separator } from 'heroui-native'
 import { CATEGORIES } from './data';
+
+const allSubjects = [...new Set(CATEGORIES.flatMap(item => item.subjects))];
 
 export const SubjectList = ({ category }: { category: string }) => {
 
@@ -21,21 +23,19 @@ export const SubjectList = ({ category }: { category: string }) => {
                     <Text className="text-[10px] font-poppins-semibold tracking-widest text-text-tertiary">
                         SUBJECT / TRACK
                     </Text>
-                    {subjects.length > 4 && (
-                        <PressableFeedback
-                            onPress={() => setIsOpen(true)}
-                        >
-                            <Text className='text-primary text-xs font-poppins-medium'>
-                                See All
-                            </Text>
-                        </PressableFeedback>
-                    )}
+                    <PressableFeedback
+                        onPress={() => setIsOpen(true)}
+                    >
+                        <Text className='text-primary text-xs font-poppins-medium'>
+                            See All
+                        </Text>
+                    </PressableFeedback>
                 </View>
 
                 <View className="flex-row flex-wrap gap-2">
                     {subjects.slice(0, 4).map((sub => (
                         <SubjectChip
-                            key={sub}
+                            key={`create-room-subject-key-${sub}`}
                             label={sub}
                             selected={isSelectedSubject === sub}
                             onPress={() => {
@@ -55,11 +55,11 @@ export const SubjectList = ({ category }: { category: string }) => {
                         <BottomSheet.Title className="text-sm font-poppins-semibold tracking-widest text-text-primary">
                             SUBJECT / TRACK
                         </BottomSheet.Title>
-                        <Separator className='my-3'/>
+                        <Separator className='my-3' />
                         <View className="flex-row flex-wrap gap-2">
-                            {subjects.map((sub => (
+                            {allSubjects.map((sub => (
                                 <SubjectChip
-                                    key={sub}
+                                    key={`create-room-bottoms-sheet-subject-key-${sub}`}
                                     label={sub}
                                     selected={isSelectedSubject === sub}
                                     onPress={() => {
