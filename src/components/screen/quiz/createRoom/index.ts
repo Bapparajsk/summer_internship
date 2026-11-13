@@ -4,3 +4,6 @@ export * from "./participantsSection";
 export * from "./quizSourceSection";
 export * from "./questionFiltersSection";
 export * from "./questionOrderSection";
+export * from "./gameRulesButton";
+export * from "./scoringSettings";
+export * from "./roomBlueprint";

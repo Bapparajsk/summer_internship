@@ -1,8 +1,26 @@
-import { RoomDetailsSection, RoomAccessCode, ParticipantsSection, QuizSourceSection, Difficulty, QuestionFiltersSection, QuestionOrderSection, QuestionOrder } from '@/components/screen/quiz/createRoom';
+import { RoomDetailsSection, RoomAccessCode, ParticipantsSection, QuizSourceSection, Difficulty, QuestionFiltersSection, QuestionOrderSection, QuestionOrder, GameRulesButton, RoomBlueprint } from '@/components/screen/quiz/createRoom';
 import { SettingScreenWrapper } from '@/components/screen/setting';
 import { useRouter } from 'expo-router';
 import { Separator } from 'heroui-native';
 import { useState } from 'react';
+
+
+const TEMP_ROOM_BLUEPRINT = {
+  visibility: 'private' as const,
+  capacity: 8,
+  category: 'Programming',
+  subjects: ['C++ Programming'],
+  questionOrder: 'randomized' as const,
+  questionCount: 10,
+  difficulty: 'medium',
+  timePerQuestion: 20,
+  baseScore: 100,
+  negativeMarking: true,
+  penalty: 25,
+  showCorrectAnswer: true,
+  shuffleAnswers: true,
+};
+
 export default function CreateRoomScreen() {
 
     const router = useRouter();
@@ -66,6 +84,13 @@ export default function CreateRoomScreen() {
                 value={value}
                 onChange={setValue}
             />
+            <GameRulesButton
+                points={100}
+                shuffleAnswers={true}
+                timeLimit={20}
+            />
+            <Separator />
+            <RoomBlueprint {...TEMP_ROOM_BLUEPRINT} />
         </SettingScreenWrapper>
     )
 }
