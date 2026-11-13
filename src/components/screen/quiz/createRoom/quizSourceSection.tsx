@@ -1,74 +1,10 @@
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { View, Text } from 'react-native';
-import {
-    SlidersHorizontal,
-    Database,
-} from 'lucide-react-native';
-import { PressableFeedback, Tabs } from 'heroui-native';
-
-type Category = {
-    id: string;
-    label: string;
-    subjects: string[];
-};
-
-const CATEGORIES: Category[] = [
-    {
-        id: 'programming',
-        label: 'Programming',
-        subjects: [
-            'C++ Programming',
-            'Algorithms',
-            'Data Structures',
-            'React & Web',
-            'Operating Systems',
-            'Computer Networks',
-        ],
-    },
-    {
-        id: 'computer-science',
-        label: 'Computer Science',
-        subjects: [
-            'Operating Systems',
-            'Computer Networks',
-            'Database Systems',
-            'Computer Architecture',
-            'Compiler Design',
-        ],
-    },
-    {
-        id: 'mathematics',
-        label: 'Mathematics',
-        subjects: [
-            'Algebra',
-            'Calculus',
-            'Probability',
-            'Statistics',
-            'Discrete Mathematics',
-        ],
-    },
-    {
-        id: 'science',
-        label: 'Science',
-        subjects: [
-            'Physics',
-            'Chemistry',
-            'Biology',
-            'Astronomy',
-        ],
-    },
-    {
-        id: 'general',
-        label: 'General Knowledge',
-        subjects: [
-            'History',
-            'Geography',
-            'Current Affairs',
-            'Culture',
-        ],
-    },
-];
+import { SlidersHorizontal, Database } from 'lucide-react-native';
+import { Tabs } from 'heroui-native';
+import { CATEGORIES } from './data';
+import { SubjectList } from './subjectList';
 
 type Props = {
     questionPoolCount: number;
@@ -78,20 +14,6 @@ export const QuizSourceSection = ({
     questionPoolCount,
 }: Props) => {
     const [category, setCategory] = useState('programming');
-    const [isSelectedSubject, setIsSelectedSubject] = useState<string | undefined>(undefined);
-
-    const subjects = useMemo(() => {
-        const selectedCategories =
-            category === 'all'
-                ? CATEGORIES
-                : CATEGORIES.filter(item => item.id === category);
-
-        return [...new Set(
-            selectedCategories.flatMap(item => item.subjects)
-        )];
-    }, [category]);
-
-    console.log(subjects)
 
     return (
         <View className="gap-2">
@@ -135,14 +57,6 @@ export const QuizSourceSection = ({
                             <Tabs.List>
                                 <Tabs.ScrollView scrollAlign="center" >
                                     <Tabs.Indicator />
-
-                                    <Tabs.Trigger value="all">
-                                        <Tabs.Label>
-                                            <Text className='font-poppins-medium text-xs leading-normal'>
-                                                All
-                                            </Text>
-                                        </Tabs.Label>
-                                    </Tabs.Trigger>
                                     {CATEGORIES.map(category => (
                                         <Tabs.Trigger value={category.id} key={`create-room-quiz-category-id-${category.id}`}>
                                             <Tabs.Label>
@@ -161,33 +75,7 @@ export const QuizSourceSection = ({
                 <View className="h-px bg-border" />
 
                 {/* Subjects */}
-                <View className="gap-2">
-                    <View className="flex-row items-center justify-between">
-                        <Text className="text-[10px] font-poppins-semibold tracking-widest text-text-tertiary">
-                            SUBJECT / TRACK
-                        </Text>
-                        {subjects.length > 4 && (
-                            <PressableFeedback>
-                                <Text className='text-primary text-xs font-poppins-medium'>
-                                    See All
-                                </Text>
-                            </PressableFeedback>
-                        )}
-                    </View>
-
-                    <View className="flex-row flex-wrap gap-2">
-                        {subjects.slice(0, 4).map((sub => (
-                            <SubjectChip
-                                key={sub}
-                                label={sub}
-                                selected={isSelectedSubject === sub}
-                                onPress={() => {
-                                    setIsSelectedSubject(sub)
-                                }}
-                            />
-                        )))}
-                    </View>
-                </View>
+                <SubjectList category={category} />
 
                 {/* Question pool */}
                 <View className="gap-2 rounded-xl bg-surface-container-lowest border border-border p-3">
@@ -225,27 +113,3 @@ export const QuizSourceSection = ({
     );
 };
 
-const SubjectChip = ({
-    label,
-    selected,
-    onPress,
-}: {
-    label: string;
-    selected: boolean;
-    onPress: () => void;
-}) => (
-    <PressableFeedback
-        onPress={onPress}
-        className={`rounded-lg border px-3 py-2 ${selected
-            ? 'border-primary bg-primary'
-            : 'border-border bg-surface-container-high'
-            }`}
-    >
-        <Text
-            className={`text-[11px] font-poppins-medium ${selected ? 'text-background' : 'text-text-primary'
-                }`}
-        >
-            {label}
-        </Text>
-    </PressableFeedback>
-);
