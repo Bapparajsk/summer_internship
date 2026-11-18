@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { Fragment, useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { BottomSheet, PressableFeedback, Separator } from 'heroui-native'
 import { CATEGORIES } from './data';
 

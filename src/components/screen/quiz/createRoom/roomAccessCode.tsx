@@ -1,16 +1,8 @@
 import { Fragment, useState } from 'react';
 import { View, Text, Pressable, TextInput } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
-import {
-    Copy,
-    Eye,
-    EyeOff,
-    RefreshCw,
-    Lock,
-    Check,
-} from 'lucide-react-native';
 import { cn, PressableFeedback, Switch } from 'heroui-native';
-import { EvilIcons, Octicons } from '@expo/vector-icons';
+import { EvilIcons, Feather, Octicons } from '@expo/vector-icons';
 import Animated, { Easing, FadeInUp, LinearTransition } from "react-native-reanimated"
 
 export type Mode = "public" | "private";
@@ -114,7 +106,7 @@ export const RoomAccessCode = ({
                             </Text>
 
                             <View className="flex-row items-center gap-1">
-                                <Lock size={11} color="#8FA5B8" />
+                                <Feather name="lock" size={11} color="#8FA5B8" />
                                 <Text className="text-[8px] font-poppins-medium leading-normal text-text-tertiary">
                                     Protected
                                 </Text>
@@ -139,9 +131,9 @@ export const RoomAccessCode = ({
                                     accessibilityLabel={visible ? 'Hide access code' : 'Show access code'}
                                 >
                                     {visible ? (
-                                        <EyeOff size={19} color="#8FA5B8" />
+                                        <Feather name="eye-off" size={19} color="#8FA5B8" />
                                     ) : (
-                                        <Eye size={19} color="#8FA5B8" />
+                                        <Feather name="eye" size={19} color="#8FA5B8" />
                                     )}
                                 </Pressable>
 
@@ -152,9 +144,9 @@ export const RoomAccessCode = ({
                                     accessibilityLabel="Copy access code"
                                 >
                                     {copied ? (
-                                        <Check size={18} color="#5CC6E2" />
+                                        <Feather name="check" size={18} color="#5CC6E2" />
                                     ) : (
-                                        <Copy size={18} color="#5CC6E2" />
+                                        <Feather name="copy" size={18} color="#5CC6E2" />
                                     )}
                                 </Pressable>
                             </View>
@@ -172,7 +164,7 @@ export const RoomAccessCode = ({
                         onPress={onGenerate}
                         className={"h-11 flex-row items-center justify-center gap-2 rounded-xl border border-border bg-surface-container-high"}
                     >
-                        <RefreshCw size={15} color="#5CC6E2" />
+                        <Feather name="refresh-cw" size={15} color="#5CC6E2" />
                         <Text className="font-poppins-medium text-xs text-text-primary">
                             Generate New Code
                         </Text>

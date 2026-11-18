@@ -1,18 +1,10 @@
 import { Text, View } from 'react-native';
-import Animated, {
-    LinearTransition,
-} from 'react-native-reanimated';
-import {
-    ChevronDown,
-    Clock3,
-    Gamepad2,
-    Shuffle,
-    Trophy,
-} from 'lucide-react-native';
+import Animated, { LinearTransition } from 'react-native-reanimated';
 import { BottomSheet, PressableFeedback, Separator } from 'heroui-native';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { ScoringSettings } from './scoringSettings';
 import { TimingScoringSection } from './timingScoringSection';
+import { Entypo, Feather, FontAwesome6, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
 type Props = {
     timeLimit: number;
@@ -27,10 +19,6 @@ export const GameRulesButton = ({
 }: Props) => {
 
     const [isOpen, setIsOpen] = useState(false);
-    // negativeMarking: boolean;
-    // penalty: number;
-    // showCorrectAnswer: boolean;
-    // shuffleAnswers: boolean;
 
     const [negativeMarking, setNegativeMarking] = useState(false);
     const [penalty, setPenalty] = useState(0);
@@ -47,7 +35,7 @@ export const GameRulesButton = ({
                     <View className='p-3 border border-border bg-white/6 rounded-4xl'>
                         <View className="flex-row items-center gap-3">
                             <View className="h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
-                                <Gamepad2 size={20} color="#5CC6E2" />
+                                <MaterialCommunityIcons name="gamepad-variant-outline" size={20} color="#5CC6E2" />
                             </View>
 
                             <View className="flex-1 gap-0.5">
@@ -71,23 +59,24 @@ export const GameRulesButton = ({
                                     transform: [{ rotate: isOpen ? '180deg' : '0deg' }],
                                 }}
                             >
-                                <ChevronDown size={19} color="#8A929D" />
+                                <Entypo name="chevron-down" size={19} color="#8A929D" />
                             </Animated.View>
                         </View>
                         <Separator className='my-2' />
                         <View className="flex-row flex-wrap items-center gap-x-2 gap-y-2">
                             <SummaryItem
-                                Icon={Clock3}
+                                // iconName={"clock"}
+                                icon={<Feather name="clock" size={12} color="#8A929D" />}
                                 label={`${timeLimit}s / question`}
                             />
                             <Separator orientation="vertical" />
                             <SummaryItem
-                                Icon={Trophy}
+                                icon={<Octicons name="trophy" size={12} color="#8A929D" />}
                                 label={`${points} points`}
                             />
                             <Separator orientation="vertical" />
                             <SummaryItem
-                                Icon={Shuffle}
+                                icon={<FontAwesome6 name="shuffle" size={12} color="#8A929D" />}
                                 label={shuffleAnswers ? 'Shuffle answers' : 'Fixed answers'}
                             />
                         </View>
@@ -135,14 +124,14 @@ export const GameRulesButton = ({
 };
 
 const SummaryItem = ({
-    Icon,
+    icon,
     label,
-}: {
-    Icon: typeof Clock3;
+}: { 
     label: string;
+    icon: ReactNode
 }) => (
     <View className="flex-row items-center gap-1">
-        <Icon size={12} color="#8A929D" />
+        {icon}
         <Text className="font-poppins-light text-[10px] text-text-secondary">
             {label}
         </Text>

@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
 import { View, Text } from 'react-native';
-import { SlidersHorizontal, Database } from 'lucide-react-native';
 import { Tabs } from 'heroui-native';
 import { CATEGORIES } from './data';
 import { SubjectList } from './subjectList';
+import { FontAwesome6, Octicons } from '@expo/vector-icons';
 
 type Props = {
     questionPoolCount: number;
@@ -21,7 +21,7 @@ export const QuizSourceSection = ({
             <View className="gap-3">
                 <View className="flex-row items-center justify-between">
                     <View className="flex-row items-center gap-2">
-                        <SlidersHorizontal size={20} color="#5CC6E2" />
+                        <FontAwesome6 name="sliders" size={20} color="#5CC6E2" />
                         <Text className="font-poppins-semibold text-base text-text-primary">
                             Quiz Source
                         </Text>
@@ -81,7 +81,7 @@ export const QuizSourceSection = ({
                 <View className="gap-2 rounded-xl bg-surface-container-lowest border border-border p-3">
                     <View className="flex-row items-center justify-between">
                         <View className="flex-row items-center gap-2">
-                            <Database size={15} color="#5CC6E2" />
+                            <Octicons name="database" size={15} color="#5CC6E2" />
                             <Text className="font-poppins-medium text-xs text-text-primary">
                                 Question Pool
                             </Text>

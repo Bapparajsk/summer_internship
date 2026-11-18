@@ -1,15 +1,6 @@
 import { View, Text } from 'react-native';
-import {
-    BookOpen,
-    CheckCircle2,
-    Clock3,
-    Layers3,
-    Lock,
-    Shuffle,
-    Trophy,
-    Users,
-    ClipboardCheck,
-} from 'lucide-react-native';
+import { ReactNode } from 'react';
+import { Feather, FontAwesome, FontAwesome6, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
 type RoomBlueprintProps = {
     visibility: 'public' | 'private';
@@ -56,7 +47,7 @@ export const RoomBlueprint = ({
             <View className="flex-row items-center justify-between">
                 <View className="flex-row items-center gap-2">
                     <View className="h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
-                        <ClipboardCheck size={18} color="#5CC6E2" />
+                        <MaterialCommunityIcons name="clipboard-check-outline" size={18} color="#5CC6E2" />
                     </View>
 
                     <View>
@@ -70,7 +61,7 @@ export const RoomBlueprint = ({
                 </View>
 
                 <View className="flex-row items-center gap-1 rounded-full bg-success-soft px-2 py-1">
-                    <CheckCircle2 size={11} color="#4ADE80" />
+                    <Feather name="check-circle" size={11} color="#4ADE80" />
                     <Text className="font-poppins-medium text-[10px] text-success">
                         Ready
                     </Text>
@@ -84,15 +75,17 @@ export const RoomBlueprint = ({
                 <SectionLabel label="ROOM ACCESS" />
 
                 <View className="flex-row gap-2">
+            {/* <Icon size={13} color="#8FA5B8" /> */}
+
                     <SummaryCard
-                        Icon={Lock}
+                        Icon={<Feather name="lock" size={13} color="#8FA5B8" />}
                         label="Visibility"
                         value={visibility === 'private' ? 'Private' : 'Public'}
                         detail={visibility === 'private' ? 'PIN protected' : 'Open to join'}
                     />
 
                     <SummaryCard
-                        Icon={Users}
+                        Icon={<FontAwesome name="users" size={13} color="#8FA5B8" />}
                         label="Capacity"
                         value={`${capacity} players`}
                         detail="Maximum players"
@@ -106,7 +99,7 @@ export const RoomBlueprint = ({
 
                 <View className="rounded-xl bg-surface-container-high p-3 gap-3">
                     <SummaryRow
-                        Icon={BookOpen}
+                        Icon={<MaterialCommunityIcons name="book-open-blank-variant-outline" size={14} color="#5CC6E2" />}
                         label="Subject"
                         value={subjectLabel}
                     />
@@ -114,7 +107,7 @@ export const RoomBlueprint = ({
                     <View className="h-px bg-border" />
 
                     <SummaryRow
-                        Icon={Shuffle}
+                        Icon={<FontAwesome6 name="shuffle" size={14} color="#5CC6E2" />}
                         label="Question order"
                         value={questionOrder === 'randomized' ? 'Randomized' : 'Sequential'}
                     />
@@ -122,7 +115,7 @@ export const RoomBlueprint = ({
                     <View className="h-px bg-border" />
 
                     <SummaryRow
-                        Icon={Layers3}
+                        Icon={<Ionicons name="layers-outline" size={14} color="#5CC6E2" />}
                         label="Questions"
                         value={`${questionCount} · ${capitalize(difficulty)}`}
                     />
@@ -134,14 +127,16 @@ export const RoomBlueprint = ({
                 <SectionLabel label="GAME RULES" />
 
                 <View className="flex-row gap-2">
+            {/* <Icon  /> */}
+
                     <SummaryCard
-                        Icon={Clock3}
+                        Icon={<Feather name="clock" size={13} color="#8FA5B8" />}
                         label="Time per question"
                         value={`${timePerQuestion}s`}
                     />
 
                     <SummaryCard
-                        Icon={Trophy}
+                        Icon={<Octicons name="trophy" size={13} color="#8FA5B8" />}
                         label="Correct answer"
                         value={`+${baseScore} pts`}
                     />
@@ -184,14 +179,14 @@ const SummaryCard = ({
     value,
     detail,
 }: {
-    Icon: typeof Lock;
+    Icon: ReactNode;
     label: string;
     value: string;
     detail?: string;
 }) => (
     <View className="flex-1 rounded-3xl bg-white/10 border border-border p-3 gap-1">
         <View className="flex-row items-center gap-1.5">
-            <Icon size={13} color="#8FA5B8" />
+            {Icon}
             <Text className="font-poppins-medium text-[10px] text-text-secondary">
                 {label}
             </Text>
@@ -217,12 +212,13 @@ const SummaryRow = ({
     label,
     value,
 }: {
-    Icon: typeof BookOpen;
+    Icon: ReactNode;
     label: string;
     value: string;
 }) => (
     <View className="flex-row items-center gap-2">
-        <Icon size={14} color="#5CC6E2" />
+        
+        {Icon}
 
         <Text className="flex-1 font-poppins-medium text-xs text-text-secondary">
             {label}

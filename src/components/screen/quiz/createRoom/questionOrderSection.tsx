@@ -1,9 +1,10 @@
 import { Text, View } from 'react-native';
-import { ListOrdered, Shuffle } from 'lucide-react-native';
 import { cn, Tabs } from 'heroui-native';
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
+import { FontAwesome6, Octicons } from '@expo/vector-icons';
 
 export type QuestionOrder = 'randomized' | 'sequential';
+
 
 type Props = {
     value: QuestionOrder;
@@ -14,12 +15,14 @@ const OPTIONS = [
     {
         value: 'randomized',
         label: 'Randomized',
-        Icon: Shuffle,
+        Icon: Octicons,
+        iconName: "list-ordered"
     },
     {
         value: 'sequential',
         label: 'Sequential',
-        Icon: ListOrdered,
+        Icon: FontAwesome6,
+        iconName: "shuffle"
     },
 ] as const;
 
@@ -70,6 +73,7 @@ export const QuestionOrderSection = ({
                                 {({ isSelected }) => (
                                     <>
                                         <item.Icon
+                                            name={item.iconName}
                                             size={12}
                                             color={isSelected ? '#5CC6E2' : '#8A929D'}
                                         />

@@ -1,5 +1,6 @@
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Check } from 'lucide-react-native';
+import { PressableFeedback } from 'heroui-native';
 
 const TIME_OPTIONS = [10, 15, 20, 30, 45, 60] as const;
 
@@ -35,12 +36,12 @@ export const TimingScoringSection = ({
                         const selected = timePerQuestion === seconds;
 
                         return (
-                            <Pressable
+                            <PressableFeedback
                                 key={seconds}
                                 onPress={() => onTimeChange(seconds)}
                                 accessibilityRole="radio"
                                 accessibilityState={{ checked: selected }}
-                                className={`w-[31%] flex-grow flex-row items-center justify-center gap-1.5 rounded-lg py-3 ${selected
+                                className={`w-[31%] grow flex-row items-center justify-center gap-1.5 rounded-lg py-3 ${selected
                                         ? 'bg-primary'
                                         : 'bg-surface-container-high'
                                     }`}
@@ -57,7 +58,7 @@ export const TimingScoringSection = ({
                                 {selected && (
                                     <Check size={12} color="#0D1117" />
                                 )}
-                            </Pressable>
+                            </PressableFeedback>
                         );
                     })}
                 </View>

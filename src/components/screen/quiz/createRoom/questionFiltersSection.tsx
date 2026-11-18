@@ -1,7 +1,6 @@
-
 import { View, Text } from 'react-native';
-import { SlidersHorizontal } from 'lucide-react-native';
 import { PressableFeedback, Tabs } from 'heroui-native';
+import { FontAwesome6 } from '@expo/vector-icons';
 
 export type Difficulty = 'Any' | 'Easy' | 'Medium' | 'Hard';
 
@@ -35,7 +34,7 @@ export const QuestionFiltersSection = ({
         <View className="gap-4">
             {/* Header */}
             <View className="flex-row items-center gap-2">
-                <SlidersHorizontal size={19} color="#5CC6E2" />
+                <FontAwesome6 name="sliders" size={19} color="#5CC6E2" />
                 <Text className="font-poppins-semibold text-base text-text-primary">
                     Question Filters
                 </Text>
