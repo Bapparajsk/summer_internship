@@ -1,0 +1,29 @@
+{
+    "user": {
+        "id": "string",
+        "name": "string",
+        "avatar": "string",
+        "clerk_user_id": "string",
+        "status": ["Excellent", "Good", "Average", "Poor", "Failing"],
+        "engineering_roll": "string",
+        "description": "string | 100-word"
+    },
+    "academic_information": {
+        "user_id": "string",
+        "degree": [
+            "diploma",
+            "B.Tech",
+            "M.Tech"
+        ],
+        "department": "string",
+        "current_semester": "semester 1, .... 6/8"
+    },
+    "college_information": {
+        "user_id": "string",
+        "collage_name": "string",
+        "principal_name": "string",
+        "location": "string",
+        "logo_url": "url",
+        "website": "url"
+    }
+}

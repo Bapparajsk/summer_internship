@@ -11,7 +11,6 @@ export const notifications: NotificationItem[] = [
     action: "Join now",
     room: "#DSA-404",
   },
-
   {
     id: "2",
     type: "result",
