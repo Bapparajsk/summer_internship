@@ -45,7 +45,23 @@ export const SubjectList = ({ category }: { category: string }) => {
                     )))}
                 </View>
             </View>
-
+            <Separator />
+            <View className='gap-2'>
+                <Text className="text-[10px] font-poppins-semibold tracking-widest text-text-tertiary">
+                    SUBJECT
+                </Text>
+                {isSelectedSubject && (
+                    <View className='max-w-1/2'>
+                        <SubjectChip
+                            label={isSelectedSubject}
+                            selected={true}
+                            onPress={() => {
+                                setIsSelectedSubject(undefined)
+                            }}
+                        />
+                    </View>
+                )}
+            </View>
             <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
                 <BottomSheet.Portal>
                     <BottomSheet.Overlay className='bg-black/60' />
@@ -87,7 +103,7 @@ const SubjectChip = ({
 }) => (
     <PressableFeedback
         onPress={onPress}
-        className={`rounded-lg border px-3 py-2 ${selected
+        className={`rounded-lg border px-3 py-2 w-fit ${selected
             ? 'border-primary bg-primary'
             : 'border-border bg-surface-container-high'
             }`}

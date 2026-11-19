@@ -1,4 +1,5 @@
 import { RoomDetailsSection, RoomAccessCode, ParticipantsSection, QuizSourceSection, Difficulty, QuestionFiltersSection, QuestionOrderSection, QuestionOrder, GameRulesButton, RoomBlueprint } from '@/components/screen/quiz/createRoom';
+import { CreateRoomButton } from '@/components/screen/quiz/createRoom/createRoomButton';
 import { SettingScreenWrapper } from '@/components/screen/setting';
 import { useRouter } from 'expo-router';
 import { Separator } from 'heroui-native';
@@ -6,19 +7,20 @@ import { useState } from 'react';
 
 
 const TEMP_ROOM_BLUEPRINT = {
-  visibility: 'private' as const,
-  capacity: 8,
-  category: 'Programming',
-  subjects: ['C++ Programming'],
-  questionOrder: 'randomized' as const,
-  questionCount: 10,
-  difficulty: 'medium',
-  timePerQuestion: 20,
-  baseScore: 100,
-  negativeMarking: true,
-  penalty: 25,
-  showCorrectAnswer: true,
-  shuffleAnswers: true,
+    room_name: "Computer Register Core etc...",
+    visibility: 'private' as const,
+    capacity: 8,
+    category: 'Programming',
+    subjects: ['C++ Programming'],
+    questionOrder: 'randomized' as const,
+    questionCount: 10,
+    difficulty: 'medium',
+    timePerQuestion: 20,
+    baseScore: 100,
+    negativeMarking: true,
+    penalty: 25,
+    showCorrectAnswer: true,
+    shuffleAnswers: true,
 };
 
 export default function CreateRoomScreen() {
@@ -37,6 +39,37 @@ export default function CreateRoomScreen() {
     const [questionCount, setQuestionCount] = useState(10);
 
     const [value, setValue] = useState<QuestionOrder>("randomized");
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
+
+    const createRoom = async () => {
+        return new Promise((res, rej ) => {
+            setTimeout(() => {
+                res("okay")
+            }, 3000)
+        }); 
+    }
+
+    const handleCreateRoom = async () => {
+        if (isLoading || isComplete) return;
+
+        try {
+            setIsLoading(true);
+
+            await createRoom();
+
+            setIsLoading(false);
+            setIsComplete(true);
+
+            setTimeout(() => {
+                // router.replace('/room/waiting-room');
+            }, 1400);
+        } catch (error) {
+            setIsLoading(false);
+            // Show your error message.
+        }
+    };
 
 
     return (
@@ -91,6 +124,15 @@ export default function CreateRoomScreen() {
             />
             <Separator />
             <RoomBlueprint {...TEMP_ROOM_BLUEPRINT} />
+            <CreateRoomButton
+                onPress={handleCreateRoom}
+                loading={isLoading}
+                success={isComplete}
+                disabled={false}
+            />
         </SettingScreenWrapper>
     )
 }
+
+
+

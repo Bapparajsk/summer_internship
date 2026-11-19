@@ -15,14 +15,14 @@ const OPTIONS = [
     {
         value: 'randomized',
         label: 'Randomized',
-        Icon: Octicons,
-        iconName: "list-ordered"
+        Icon: FontAwesome6,
+        iconName: "shuffle"
     },
     {
         value: 'sequential',
         label: 'Sequential',
-        Icon: FontAwesome6,
-        iconName: "shuffle"
+        Icon: Octicons,
+        iconName: "list-ordered"
     },
 ] as const;
 
@@ -44,7 +44,6 @@ const AnimatedContentContainer = ({
                 {children}
             </Text>
         </View>
-        
     </Animated.View>
 );
 
@@ -54,15 +53,19 @@ export const QuestionOrderSection = ({
 }: Props) => {
 
     return (
-        <View className="rounded-4xl bg-white/7 border border-border p-3 gap-3">
-            <View className="gap-1">
-                <Text className="font-poppins-medium text-sm text-text-primary">
-                    Question order
-                </Text>
+        <View className="rounded-4xl bg-white/7 border border-border p-2 gap-3">
+            <View
+                className='bg-white/6 border border-border rounded-3xl py-2 px-3'
+            >
+                <View className="gap-1">
+                    <Text className="font-poppins-semibold text-sm text-text-primary">
+                        Question order
+                    </Text>
 
-                <Text className="font-poppins-medium text-xs text-text-secondary">
-                    Choose how questions appear to players.
-                </Text>
+                    <Text className="font-poppins-medium text-xs text-text-secondary">
+                        Choose how questions appear to players.
+                    </Text>
+                </View>
             </View>
             <Tabs value={value} onValueChange={(item) => onChange(item as any)} variant="primary">
                 <Tabs.List className='gap-0'>
@@ -91,7 +94,7 @@ export const QuestionOrderSection = ({
                 </Tabs.List>
                 <Animated.View
                     layout={LinearTransition.duration(200)}
-                    className="px-4 py-6 border border-border rounded-xl"
+                    className="px-5 py-2 border border-border rounded-3xl"
                 >
                     <Tabs.Content value="randomized">
                         <AnimatedContentContainer>

@@ -16,7 +16,7 @@ export const TimingScoringSection = ({
     onTimeChange,
 }: Props) => {
     return (
-        <View className="gap-4">
+        <View className="gap-3 mb-3">
             {/* Time per question */}
             <View className="gap-3">
                 <View className="flex-row items-center justify-between">

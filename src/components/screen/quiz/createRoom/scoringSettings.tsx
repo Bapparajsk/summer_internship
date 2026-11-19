@@ -1,9 +1,11 @@
-import { Pressable, Text, View, Switch as HNSwitch } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Animated, {
     FadeIn,
     FadeOut,
     LinearTransition,
 } from 'react-native-reanimated';
+import { Switch as HSwitch } from "heroui-native/switch";
+import { Separator } from 'heroui-native';
 
 type Props = {
     negativeMarking: boolean;
@@ -30,7 +32,7 @@ export const ScoringSettings = ({
     onShuffleAnswersChange,
 }: Props) => {
     return (
-        <View className="gap-2">
+        <View className="gap-2 mt-3">
             {/* Negative marking */}
             <View className="rounded-xl bg-surface-container-high p-3 gap-3">
                 <View className="flex-row items-center gap-3">
@@ -96,7 +98,7 @@ export const ScoringSettings = ({
                     </Animated.View>
                 )}
             </View>
-
+        
             <SettingRow
                 title="Show correct answer"
                 description="Reveal the correct answer after each question."
@@ -123,14 +125,14 @@ const Switch = ({
     onValueChange: (value: boolean) => void;
     activeColor?: string;
 }) => (
-    <HNSwitch
-        value={value}
-        onValueChange={onValueChange}
-        trackColor={{
-            false: '#31353C',
-            true: activeColor,
+    <HSwitch
+        isSelected={value}
+        onSelectedChange={onValueChange}
+        animation={{
+            backgroundColor: {
+                value: ['#31353C', activeColor]
+            }
         }}
-        thumbColor="#FFFFFF"
     />
 );
 

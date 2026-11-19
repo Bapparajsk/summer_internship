@@ -5,6 +5,7 @@ import { ReactNode, useState } from 'react';
 import { ScoringSettings } from './scoringSettings';
 import { TimingScoringSection } from './timingScoringSection';
 import { Entypo, Feather, FontAwesome6, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 type Props = {
     timeLimit: number;
@@ -21,7 +22,7 @@ export const GameRulesButton = ({
     const [isOpen, setIsOpen] = useState(false);
 
     const [negativeMarking, setNegativeMarking] = useState(false);
-    const [penalty, setPenalty] = useState(0);
+    const [penalty, setPenalty] = useState(5);
     const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
 
@@ -32,7 +33,7 @@ export const GameRulesButton = ({
                 <PressableFeedback
                     accessibilityRole="button"
                 >
-                    <View className='p-3 border border-border bg-white/6 rounded-4xl'>
+                    <View className='p-3 border border-border bg-white/6 rounded-3xl'>
                         <View className="flex-row items-center gap-3">
                             <View className="h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
                                 <MaterialCommunityIcons name="gamepad-variant-outline" size={20} color="#5CC6E2" />
@@ -86,37 +87,45 @@ export const GameRulesButton = ({
             <BottomSheet.Portal>
                 <BottomSheet.Overlay className='bg-black/60' />
                 <BottomSheet.Content
-                    snapPoints={["75%"]}
+                    snapPoints={["55%", "95%"]}
+                    enableOverDrag={false}
+                    enableDynamicSizing={false}
+                    contentContainerClassName="h-full"
                 >
-                    <View className="gap-1 mb-1">
-                        <Text className="font-poppins-semibold text-sm text-text-primary">
-                            Scoring & answer settings
-                        </Text>
-                        <Text className="font-poppins-light text-xs text-text-secondary">
-                            Control scoring rules and answer presentation.
-                        </Text>
-                    </View>
-                    <Separator className='my-3'/>
-                    <TimingScoringSection
-                        baseScore={100}
-                        timePerQuestion={20}
-                        onTimeChange={(value) => {
-                            console.log(value)
-                        }}
-                    />
-                    <ScoringSettings
-                        negativeMarking={negativeMarking}
-                        penalty={penalty}
-                        showCorrectAnswer={showCorrectAnswer}
-                        shuffleAnswers={shuffleAnswers}
+                    <BottomSheetScrollView
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <View className="gap-1 mb-1">
+                            <Text className="font-poppins-semibold text-sm text-text-primary">
+                                Scoring & answer settings
+                            </Text>
+                            <Text className="font-poppins-light text-xs text-text-secondary">
+                                Control scoring rules and answer presentation.
+                            </Text>
+                        </View>
+                        <Separator className='my-3' />
+                        <TimingScoringSection
+                            baseScore={100}
+                            timePerQuestion={20}
+                            onTimeChange={(value) => {
+                                console.log(value)
+                            }}
+                        />
+                        <Separator />
+                        <ScoringSettings
+                            negativeMarking={negativeMarking}
+                            penalty={penalty}
+                            showCorrectAnswer={showCorrectAnswer}
+                            shuffleAnswers={shuffleAnswers}
 
-                        onNegativeMarkingChange={setNegativeMarking}
-                        onPenaltyChange={setPenalty}
-                        onShowCorrectAnswerChange={setShowCorrectAnswer}
-                        onShuffleAnswersChange={() => { }}
+                            onNegativeMarkingChange={setNegativeMarking}
+                            onPenaltyChange={setPenalty}
+                            onShowCorrectAnswerChange={setShowCorrectAnswer}
+                            onShuffleAnswersChange={() => { }}
 
-                    />
-
+                        />
+                    </BottomSheetScrollView>
                 </BottomSheet.Content>
             </BottomSheet.Portal>
         </BottomSheet>
@@ -126,7 +135,7 @@ export const GameRulesButton = ({
 const SummaryItem = ({
     icon,
     label,
-}: { 
+}: {
     label: string;
     icon: ReactNode
 }) => (

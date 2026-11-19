@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Feather, FontAwesome, FontAwesome6, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
 type RoomBlueprintProps = {
+    room_name: string,
     visibility: 'public' | 'private';
     capacity: number;
     category: string;
@@ -19,6 +20,7 @@ type RoomBlueprintProps = {
 };
 
 export const RoomBlueprint = ({
+    room_name,
     visibility,
     capacity,
     category,
@@ -70,12 +72,19 @@ export const RoomBlueprint = ({
 
             <View className="h-px bg-border" />
 
+            <View className='gap-2'>
+                <SectionLabel label="ROOM DETAILS" />
+                <Text numberOfLines={2} className='font-poppins-semibold text-text-primary'>
+                    {room_name}
+                </Text>
+            </View>
+
             {/* Room access */}
             <View className="gap-2">
                 <SectionLabel label="ROOM ACCESS" />
 
                 <View className="flex-row gap-2">
-            {/* <Icon size={13} color="#8FA5B8" /> */}
+                    {/* <Icon size={13} color="#8FA5B8" /> */}
 
                     <SummaryCard
                         Icon={<Feather name="lock" size={13} color="#8FA5B8" />}
@@ -127,7 +136,7 @@ export const RoomBlueprint = ({
                 <SectionLabel label="GAME RULES" />
 
                 <View className="flex-row gap-2">
-            {/* <Icon  /> */}
+                    {/* <Icon  /> */}
 
                     <SummaryCard
                         Icon={<Feather name="clock" size={13} color="#8FA5B8" />}
@@ -191,7 +200,7 @@ const SummaryCard = ({
                 {label}
             </Text>
         </View>
- 
+
         <Text
             numberOfLines={1}
             className="font-poppins-semibold text-sm text-text-primary"
@@ -217,7 +226,7 @@ const SummaryRow = ({
     value: string;
 }) => (
     <View className="flex-row items-center gap-2">
-        
+
         {Icon}
 
         <Text className="flex-1 font-poppins-medium text-xs text-text-secondary">

@@ -30,8 +30,8 @@ export const QuizSourceSection = ({
             </View>
 
             {/* Category and Subject */}
-            <View className="gap-4 rounded-4xl border border-border bg-white/4 p-2">
-                <View className="flex-row items-center justify-between">
+            <View className="gap-3 rounded-4xl border border-border bg-white/4 p-2">
+                <View className="flex-row items-center justify-between border border-border bg-white/6 rounded-3xl py-2 px-2">
                     <Text className="font-poppins-semibold text-[15px] text-text-primary">
                         Category & Subject
                     </Text>
