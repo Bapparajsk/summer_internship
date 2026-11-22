@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { FlatList, Text, TextInput, View } from "react-native";
 import { BottomSheet, Button, PressableFeedback, SearchField, Tabs } from "heroui-native";
-import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import type { BottomSheetRef } from "heroui-native";
 import debounce from "lodash.debounce";
 import { Octicons } from "@expo/vector-icons";
 
@@ -27,6 +27,8 @@ function SearchBarButton() {
     const [data, setData] = useState<Filter[]>([...filters]);
 
     const inputRef = useRef<TextInput | null>(null);
+    const sheetRef = useRef<BottomSheetRef>(null);
+    const listRef = useRef<FlatList<Filter>>(null);
 
     useEffect(() => {
         if (isOpen && inputRef.current) {
@@ -53,25 +55,28 @@ function SearchBarButton() {
     const debouncedChangeText = debounce(onChangeTextDebounced, 300);
 
     return (
-        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-            <BottomSheet.Trigger asChild>
-                <PressableFeedback className="h-12 w-full rounded-full bg-white/4 border border-border">
-                    <View className="flex-row items-center justify-items-start gap-2 h-full px-4">
-                        <Octicons name="search" size={16} color="#8FA5B8" />
-                        <Text className="font-poppins-medium text-text-secondary text-xs">
-                            Search quizzes...
-                        </Text>
-                    </View>
-                </PressableFeedback>
-            </BottomSheet.Trigger>
-            <BottomSheet.Portal >
-                <BottomSheet.Overlay className="bg-black/70" />
-                <BottomSheet.Content
-                    snapPoints={["90%"]}
-                    enableDynamicSizing={false}
-                    enableOverDrag={false}
-                    contentContainerClassName="h-full"
-                >
+        <>
+            <PressableFeedback
+                className="h-12 w-full rounded-full bg-white/4 border border-border"
+                onPress={() => {
+                    setIsOpen(true);
+                    sheetRef.current?.present();
+                }}
+            >
+                <View className="flex-row items-center justify-items-start gap-2 h-full px-4">
+                    <Octicons name="search" size={16} color="#8FA5B8" />
+                    <Text className="font-poppins-medium text-text-secondary text-xs">
+                        Search quizzes...
+                    </Text>
+                </View>
+            </PressableFeedback>
+            <BottomSheet
+                ref={sheetRef}
+                detents={[0.9]}
+                scrollableRef={listRef}
+                onDidDismiss={() => setIsOpen(false)}
+            >
+                <BottomSheet.Content className="h-full">
                     <SearchField onChange={debouncedChangeText}>
                         <SearchField.Group>
                             <SearchField.SearchIcon />
@@ -83,8 +88,8 @@ function SearchBarButton() {
                             <SearchField.ClearButton />
                         </SearchField.Group>
                     </SearchField>
-                    <BottomSheetFlatList
-
+                    <FlatList
+                        ref={listRef}
                         data={data}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
@@ -93,6 +98,7 @@ function SearchBarButton() {
                                     variant="ghost"
                                     onPress={() => {
                                         setIsOpen(false);
+                                        sheetRef.current?.dismiss();
                                     }}
                                 >
 
@@ -102,8 +108,8 @@ function SearchBarButton() {
                         )}
                     />
                 </BottomSheet.Content>
-            </BottomSheet.Portal>
-        </BottomSheet>
+            </BottomSheet>
+        </>
     );
 }
 

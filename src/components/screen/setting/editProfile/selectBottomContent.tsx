@@ -6,18 +6,18 @@ import React, {
     useState,
 } from 'react';
 
-import { cn, SearchField, Select, Separator } from 'heroui-native';
+import { cn, SearchField, Select, Separator, type BottomSheetRef } from 'heroui-native';
 
 import { Feather } from '@expo/vector-icons';
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import { View, Text, TextInput } from 'react-native';
+import { FlatList, View, Text, TextInput } from 'react-native';
 import { SelectOption } from './roles';
 
 
 export const BottomContent = ({data} : { data: SelectOption[] }) => {
 
     const inputRef = useRef<TextInput>(null);
-    const sheetRef = useRef<BottomSheet>(null);
+    const sheetRef = useRef<BottomSheetRef>(null);
+    const listRef = useRef<FlatList<SelectOption>>(null);
 
     const [search, setSearch] = useState('');
 
@@ -66,13 +66,10 @@ export const BottomContent = ({data} : { data: SelectOption[] }) => {
     return (
         <Select.Content
             presentation="bottom-sheet"
-            snapPoints={['50%', '90%']}
-            enableOverDrag={false}
-            enableDynamicSizing={false}
-            contentContainerClassName="h-full"
+            detents={[0.5, 0.9]}
+            scrollableRef={listRef}
             ref={sheetRef}
-
-            onClose={() => inputRef.current?.blur()}
+            onDidDismiss={() => inputRef.current?.blur()}
         >
             <View className="pb-3">
                 <Select.ListLabel className="mb-3">
@@ -93,14 +90,15 @@ export const BottomContent = ({data} : { data: SelectOption[] }) => {
                             className="flex-1 pl-10 font-poppins-medium text-xs text-text-primary border border-border rounded-full focus:border-primary"
                             autoCapitalize="none"
                             autoCorrect={false}
-                            onFocus={() => sheetRef.current?.snapToIndex(1)}
+                            onFocus={() => sheetRef.current?.resize(1)}
                         />
                         <SearchField.ClearButton />
                     </SearchField.Group>
                 </SearchField>
             </View>
 
-            <BottomSheetFlatList
+            <FlatList
+                ref={listRef}
                 data={filteredRoles}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}

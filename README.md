@@ -32,7 +32,7 @@ You can start developing by editing the files inside the **src/app** directory. 
 - **HeroUI Native** (`heroui-native`) wrapped in `HeroUINativeProvider` and `GestureHandlerRootView` in `src/app/_layout.tsx`
 - **Uniwind** + **Tailwind CSS** wired through `metro.config.js` and `src/global.css`
 - All HeroUI Native mandatory peer dependencies: `react-native-reanimated`, `react-native-gesture-handler`, `react-native-worklets`, `react-native-safe-area-context`, `react-native-svg`, `react-native-screens`
-- `@gorhom/bottom-sheet` for bottom-sheet UIs
+- `@lodev09/react-native-true-sheet` for native bottom-sheet UIs
 - TypeScript with `strict: true` and `@/*` path alias to `./src/*`
 - React Compiler enabled
 

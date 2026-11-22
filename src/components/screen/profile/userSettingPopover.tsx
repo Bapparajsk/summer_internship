@@ -4,20 +4,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { options, optionsHref } from './constant';
 import { useRouter } from 'expo-router';
 import { Fragment } from 'react/jsx-runtime';
-import { BottomSheet } from 'heroui-native';
-import { useState } from 'react';
+import { BottomSheet, type BottomSheetRef } from 'heroui-native';
+import { useRef } from 'react';
 import { BottomSheetContent } from '../setting/changeAvatar/bottomSheetContent';
 export const UserSettingPopover = () => {
 
     const router = useRouter();
 
-    const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+    const sheetRef = useRef<BottomSheetRef>(null);
 
    
     const handelOnSelect = (item: SelectOption) => {
 
         if (item.id === "change-avatar") {
-            setIsOpenBottomSheet(true);
+            sheetRef.current?.present();
             return;
         }
 
@@ -55,11 +55,11 @@ export const UserSettingPopover = () => {
                     onSelect={handelOnSelect}
                 />
             </View>
-            <BottomSheet isOpen={isOpenBottomSheet} onOpenChange={setIsOpenBottomSheet}>
-                <BottomSheet.Portal>
-                    <BottomSheet.Overlay className='bg-black/80' />
-                    <BottomSheetContent />
-                </BottomSheet.Portal>
+            <BottomSheet
+                ref={sheetRef}
+                detents={[0.9]}
+            >
+                <BottomSheetContent />
             </BottomSheet>
         </Fragment>
     )

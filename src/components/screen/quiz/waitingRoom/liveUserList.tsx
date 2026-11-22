@@ -1,6 +1,6 @@
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { BottomSheet, cn, PressableFeedback, useToast } from "heroui-native";
-import { useState } from "react";
+import { BottomSheet, cn, PressableFeedback, type BottomSheetRef } from "heroui-native";
+import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 import { PlayerDetails, PlayerDetailsSheet } from "./playerDetailsSheet";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -68,11 +68,12 @@ export function LiveUserList({
 
     const [users, setUsers] = useState<LiveUser[]>(temp_users);
     const [selectedUser, setSelectedUser] = useState<LiveUser | null>(null);
-    const { toast } = useToast();
+    const sheetRef = useRef<BottomSheetRef>(null);
 
     const handleOpenPlayerSheet = (user: LiveUser) => {
         if (!isHost || user.isYou) return;
         setSelectedUser(user);
+        sheetRef.current?.present();
     };
 
     const handleSheetOpenChange = (isOpen: boolean) => {
@@ -155,14 +156,19 @@ export function LiveUserList({
                     </Text>
                 )}
             </View>
-            <BottomSheet isOpen={Boolean(selectedUser)} onOpenChange={handleSheetOpenChange}>
-                <BottomSheet.Portal>
-                    <BottomSheet.Overlay />
-                    <BottomSheet.Content>
-                        <PlayerDetailsSheet
-                            visible={selectedUser !== null}
-                            player={selectedUser ?? fallbackPlayer}
-                            onClose={() => handleSheetOpenChange(false)}
+            <BottomSheet
+                ref={sheetRef}
+                detents={[0.75]}
+                onDidDismiss={() => handleSheetOpenChange(false)}
+            >
+                <BottomSheet.Content>
+                    <PlayerDetailsSheet
+                        visible={selectedUser !== null}
+                        player={selectedUser ?? fallbackPlayer}
+                        onClose={() => {
+                            handleSheetOpenChange(false);
+                            sheetRef.current?.dismiss();
+                        }}
                             onRemove={(player) => {
                                 setUsers((previous) =>
                                     previous.filter((user) => user.id !== player.id),
@@ -177,9 +183,8 @@ export function LiveUserList({
                                 //     onActionPress: ({ hide }) => hide(),
                                 // });
                             }}
-                        />
-                    </BottomSheet.Content>
-                </BottomSheet.Portal>
+                    />
+                </BottomSheet.Content>
             </BottomSheet>
         </Animated.View>
     );

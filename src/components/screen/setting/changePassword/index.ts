@@ -1,1 +1,1 @@
-export * from "./headerTitle";
+export * from "./changePasswordForm";

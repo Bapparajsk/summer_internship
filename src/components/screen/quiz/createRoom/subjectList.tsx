@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
-import { Fragment, useMemo, useState } from 'react'
-import { BottomSheet, PressableFeedback, Separator } from 'heroui-native'
+import { Fragment, useMemo, useRef, useState } from 'react'
+import { BottomSheet, PressableFeedback, Separator, type BottomSheetRef } from 'heroui-native'
 import { CATEGORIES } from './data';
 
 const allSubjects = [...new Set(CATEGORIES.flatMap(item => item.subjects))];
@@ -8,7 +8,7 @@ const allSubjects = [...new Set(CATEGORIES.flatMap(item => item.subjects))];
 export const SubjectList = ({ category }: { category: string }) => {
 
     const [isSelectedSubject, setIsSelectedSubject] = useState<string | undefined>(undefined);
-    const [isOpen, setIsOpen] = useState(false);
+    const sheetRef = useRef<BottomSheetRef>(null);
 
     const subjects = useMemo(() => {
         return [...new Set(
@@ -24,7 +24,9 @@ export const SubjectList = ({ category }: { category: string }) => {
                         SUBJECT / TRACK
                     </Text>
                     <PressableFeedback
-                        onPress={() => setIsOpen(true)}
+                        onPress={() => {
+                            sheetRef.current?.present();
+                        }}
                     >
                         <Text className='text-primary text-xs font-poppins-medium'>
                             See All
@@ -62,12 +64,11 @@ export const SubjectList = ({ category }: { category: string }) => {
                     </View>
                 )}
             </View>
-            <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-                <BottomSheet.Portal>
-                    <BottomSheet.Overlay className='bg-black/60' />
-                    <BottomSheet.Content
-                        snapPoints={["70%"]}
-                    >
+            <BottomSheet
+                ref={sheetRef}
+                detents={[0.7]}
+            >
+                <BottomSheet.Content>
                         <BottomSheet.Title className="text-sm font-poppins-semibold tracking-widest text-text-primary">
                             SUBJECT / TRACK
                         </BottomSheet.Title>
@@ -85,7 +86,6 @@ export const SubjectList = ({ category }: { category: string }) => {
                             )))}
                         </View>
                     </BottomSheet.Content>
-                </BottomSheet.Portal>
             </BottomSheet>
         </Fragment>
     )

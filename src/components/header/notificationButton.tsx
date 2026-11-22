@@ -25,6 +25,7 @@ export const NotificationButton = () => {
             </MotionButton>
 
             <BottomSheet
+                ref={sheetRef}
                 detents={[0.97]}
                 draggable={false}
             >

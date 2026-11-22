@@ -1,6 +1,6 @@
-import { BottomSheet } from "heroui-native";
+import { BottomSheet, type BottomSheetRef } from "heroui-native";
 import { PressableFeedback } from "heroui-native/pressable-feedback";
-import { useState } from "react";
+import { useRef } from "react";
 import { Image, Text, View } from "react-native";
 import { QuizActivityCalendar } from "./quizActivityCalendar";
 
@@ -48,7 +48,7 @@ export const ProgressHeader = ({
 
     const day = new Date().getDate() as keyof typeof calendarIcons;
 
-    const [isOpen, setIsOpen] = useState(false);
+    const sheetRef = useRef<BottomSheetRef>(null);
 
     return (
         <View className="flex-row items-start justify-between pt-1">
@@ -66,10 +66,11 @@ export const ProgressHeader = ({
                 </Text>
             </View>
 
-            <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-                <BottomSheet.Trigger asChild>
-                    <PressableFeedback
-                onPress={onFilter}
+            <PressableFeedback
+                onPress={() => {
+                    onFilter?.();
+                    sheetRef.current?.present();
+                }}
                 className="ml-3 size-14 items-center justify-center rounded-full bg-white/5 border border-border"
                 hitSlop={8}
             >
@@ -79,13 +80,10 @@ export const ProgressHeader = ({
 
                 />
             </PressableFeedback>
-                </BottomSheet.Trigger>
-                <BottomSheet.Portal>
-                    <BottomSheet.Overlay />
-                    <BottomSheet.Content>
-                        <QuizActivityCalendar />
-                    </BottomSheet.Content>
-                </BottomSheet.Portal>
+            <BottomSheet ref={sheetRef} detents={[0.9]}>
+                <BottomSheet.Content>
+                    <QuizActivityCalendar />
+                </BottomSheet.Content>
             </BottomSheet>
         </View>
     );

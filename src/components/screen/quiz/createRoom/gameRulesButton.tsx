@@ -1,11 +1,10 @@
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
-import { BottomSheet, PressableFeedback, Separator } from 'heroui-native';
-import { ReactNode, useState } from 'react';
+import { BottomSheet, PressableFeedback, Separator, type BottomSheetRef } from 'heroui-native';
+import { ReactNode, useRef, useState } from 'react';
 import { ScoringSettings } from './scoringSettings';
 import { TimingScoringSection } from './timingScoringSection';
 import { Entypo, Feather, FontAwesome6, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 type Props = {
     timeLimit: number;
@@ -20,6 +19,7 @@ export const GameRulesButton = ({
 }: Props) => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const sheetRef = useRef<BottomSheetRef>(null);
 
     const [negativeMarking, setNegativeMarking] = useState(false);
     const [penalty, setPenalty] = useState(5);
@@ -28,11 +28,14 @@ export const GameRulesButton = ({
 
 
     return (
-        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-            <BottomSheet.Trigger asChild>
-                <PressableFeedback
-                    accessibilityRole="button"
-                >
+        <>
+            <PressableFeedback
+                accessibilityRole="button"
+                onPress={() => {
+                    setIsOpen(true);
+                    sheetRef.current?.present();
+                }}
+            >
                     <View className='p-3 border border-border bg-white/6 rounded-3xl'>
                         <View className="flex-row items-center gap-3">
                             <View className="h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
@@ -82,17 +85,14 @@ export const GameRulesButton = ({
                             />
                         </View>
                     </View>
-                </PressableFeedback>
-            </BottomSheet.Trigger>
-            <BottomSheet.Portal>
-                <BottomSheet.Overlay className='bg-black/60' />
-                <BottomSheet.Content
-                    snapPoints={["55%", "95%"]}
-                    enableOverDrag={false}
-                    enableDynamicSizing={false}
-                    contentContainerClassName="h-full"
-                >
-                    <BottomSheetScrollView
+            </PressableFeedback>
+            <BottomSheet
+                ref={sheetRef}
+                detents={[0.55, 0.95]}
+                onDidDismiss={() => setIsOpen(false)}
+            >
+                <BottomSheet.Content className="h-full">
+                    <ScrollView
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
@@ -125,10 +125,10 @@ export const GameRulesButton = ({
                             onShuffleAnswersChange={() => { }}
 
                         />
-                    </BottomSheetScrollView>
+                    </ScrollView>
                 </BottomSheet.Content>
-            </BottomSheet.Portal>
-        </BottomSheet>
+            </BottomSheet>
+        </>
     );
 };
 
