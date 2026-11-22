@@ -7,8 +7,6 @@ export default function OnBoarding() {
 
     const isComplete = useOnboardingStore(store => store.isComplete);
 
-    console.log({ isComplete })
-
     if(isComplete) {
         return <Redirect href={"/(auth)"}/>
     }

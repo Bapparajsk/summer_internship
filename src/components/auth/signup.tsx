@@ -7,13 +7,45 @@ import { SignupFormValues, signupSchema } from "@/utils/validate/auth";
 import { Button } from "../ui/button";
 import { Wrapper } from "./wrapper";
 import { AuthInput } from "./input";
+import { useSignUp,  } from "@clerk/expo";
+import { useRouter } from "expo-router";
 
-type SignupFormProps = {
-    onSubmit: (values: Omit<SignupFormValues, "confirmPassword">) => Promise<void>;
+type ParsedName = {
+    firstName: string;
+    lastName: string;
+};
+
+export const parseUserName = (name: string): ParsedName => {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+
+    if (parts.length === 0) {
+        return {
+            firstName: "",
+            lastName: "",
+        };
+    }
+
+    if (parts.length === 1) {
+        return {
+            firstName: parts[0],
+            lastName: "",
+        };
+    }
+
+    return {
+        firstName: parts[0],
+        lastName: parts.slice(1).join(" "),
+    };
 };
 
 
-export const SignupForm = ({ onSubmit }: SignupFormProps) => {
+
+export const SignupForm = () => {
+
+    const { signUp, fetchStatus } = useSignUp();
+
+    const router = useRouter();
+
     const [serverError, setServerError] = useState("");
 
     const {
@@ -32,19 +64,69 @@ export const SignupForm = ({ onSubmit }: SignupFormProps) => {
         },
     });
 
-    const submitForm = async (values: SignupFormValues) => {
+    const submitForm = async ({ name, email, password }: SignupFormValues) => {
         setServerError("");
 
+        const { firstName, lastName } = parseUserName(name);
+
+        let signUpResult;
         try {
-            await onSubmit({
-                name: values.name.trim(),
-                email: values.email.trim(),
-                password: values.password,
+            signUpResult = await signUp.password({
+                firstName,
+                lastName,
+                emailAddress: email.trim().toLowerCase(),
+                password,
             });
         } catch {
             setServerError("Unable to create your account. Please try again.");
+            return;
+        }
+
+        if (signUpResult.error) {
+            const message = signUpResult.error.message.toLowerCase();
+
+            if (
+                message.includes("already exists") ||
+                message.includes("already registered")
+            ) {
+                setServerError("This email is already registered. Please sign in.");
+                return;
+            }
+
+            setServerError(signUpResult.error.message);
+            return;
+        }
+
+        let verificationResult;
+        try {
+            verificationResult = await signUp.verifications.sendEmailCode();
+        } catch {
+            setServerError("Unable to create your account. Please try again.");
+            return;
+        }
+
+        if (verificationResult.error) {
+            setServerError(verificationResult.error.message);
         }
     };
+
+    const handleVerify = async () => {
+        setServerError("");
+
+        const { error } =
+            await signUp.verifications.verifyEmailCode({ code: "" });
+
+        if (error) {
+            setServerError(error.message);
+            return;
+        }
+
+        if (signUp.status === "complete") {
+            await signUp.finalize();
+            router.replace("/(tab)");
+        }
+    };
+
 
     const RenderField = (
         name: keyof SignupFormValues,
@@ -109,9 +191,8 @@ export const SignupForm = ({ onSubmit }: SignupFormProps) => {
             )}
 
             <Button
-                // title="SIGN IN"
                 title={"CREATE ACCOUNT"}
-                // onPress={handleSubmit(submitForm)}
+                onPress={handleSubmit(submitForm)}
                 variant="primary"
                 theme="light"
                 isLoading={isSubmitting}

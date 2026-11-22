@@ -10,7 +10,7 @@ export type SettingScreenWrapperProps = {
   children: ReactNode;
   onBackPress?: () => void;
 
-  header: HeaderTitleProps
+  header?: HeaderTitleProps
 }
 
 export const SettingScreenWrapper = ({ path, backTitle, header , children, onBackPress }: SettingScreenWrapperProps) => {
@@ -39,7 +39,7 @@ export const SettingScreenWrapper = ({ path, backTitle, header , children, onBac
         title={backTitle}
         onPress={handelPress}
       />
-      <HeaderTitle {...header}/>
+      {header && <HeaderTitle {...header}/>}
       {children}
     </ScreenWrapper>
   )

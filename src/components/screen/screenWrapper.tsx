@@ -2,7 +2,7 @@ import Animated from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { AppFooter } from "../footer";
-import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
+import { NativeScrollEvent, NativeSyntheticEvent, StyleProp, View, ViewStyle } from "react-native";
 import { cn } from "heroui-native";
 import { ReactNode } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -19,6 +19,8 @@ interface ScreenContentProps {
     SCREEN_HORIZONTAL_PADDING?: number;
     paddingTop?: number;
     bottomContainer?: ReactNode
+    contentContainerStyle?: StyleProp<ViewStyle> | undefined,
+    showBottomGradient?: boolean;
     onScroll?: ((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | undefined
 }
 
@@ -34,6 +36,8 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
     SCREEN_HORIZONTAL_PADDING = 12,
     paddingTop = 70,
     bottomContainer,
+    contentContainerStyle,
+    showBottomGradient = true,
     onScroll
 }) => {
 
@@ -46,7 +50,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
             }}
             key={path}
         >
-            <LinearGradient
+            {showBottomGradient && <LinearGradient
                 colors={["transparent", '#000',]}
                 style={{
                     position: 'absolute',
@@ -56,7 +60,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                     height: 100,
                     zIndex: BOTTOM_CONTAINER_Z_INDEX - 1,
                 }}
-            />
+            />}
             <AnimatedScrollView
                 onScroll={onScroll}
                 scrollEventThrottle={16}
@@ -68,6 +72,7 @@ export const ScreenWrapper: React.FC<ScreenContentProps> = ({
                     position: "relative",
                     gap: 12,
                     flexGrow: 1,
+                    ...contentContainerStyle
                 }}
                 stickyHeaderIndices={stickyHeaderIndices}
                 stickyHeaderHiddenOnScroll={stickyHeaderHiddenOnScroll}

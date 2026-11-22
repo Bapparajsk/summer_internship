@@ -7,13 +7,13 @@ import { SigninFormValues, signinSchema } from "@/utils/validate/auth";
 import { Button } from "../ui/button";
 import { Wrapper } from "./wrapper";
 import { AuthInput } from "./input";
-
-type SignupFormProps = {
-  onSubmit?: (values: Omit<SigninFormValues, "confirmPassword">) => Promise<void>;
-};
+import { useSignUp } from "@clerk/expo";
 
 
-export const SigninForm = ({ onSubmit }: SignupFormProps) => {
+
+export const SigninForm = () => {
+
+
   const [serverError, setServerError] = useState("");
 
   const {
@@ -34,10 +34,7 @@ export const SigninForm = ({ onSubmit }: SignupFormProps) => {
     setServerError("");
 
     try {
-      // await onSubmit({
-      //   email: values.email.trim(),
-      //   password: values.password,
-      // });
+      
     } catch {
       setServerError("Unable to create your account. Please try again.");
     }
