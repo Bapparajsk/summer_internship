@@ -31,11 +31,11 @@ export function OnboardingHeroText({
                 index={index}
                 renderItem={({ title, description }) => (
                     <>
-                        <Text className="font-poppins-semibold text-4xl leading-tight tracking-tight text-text-primary">
+                        <Text className="font-poppins-semibold text-2xl leading-tight tracking-tight text-text-primary">
                             {title}
                         </Text>
 
-                        <Text className="mt-2 max-w-75 font-poppins-medium text-xl leading-6 text-text-secondary">
+                        <Text className="mt-2 max-w-75 font-poppins-medium text-sm leading-6 text-text-secondary">
                             {description}
                         </Text>
                     </>

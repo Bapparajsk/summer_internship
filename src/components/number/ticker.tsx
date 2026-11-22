@@ -142,9 +142,8 @@ export function Ticker({
                         key={index}
                         fontSize={fontSize}
                         style={{
-                            width: symbols.includes(char) ? fontSize * 0.25 : fontSize * .65,
+                            width: symbols.includes(char) ? fontSize * 0.25 : fontSize * .70,
                         }}
-                        className={className}
                     >
                         {char}
                     </Tick>

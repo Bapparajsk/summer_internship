@@ -145,6 +145,7 @@ function AnimatedIndexedItem({
         duration,
         easing,
         translateX,
+        _offset
     ]);
 
     const animatedStyle = useAnimatedStyle(() => ({

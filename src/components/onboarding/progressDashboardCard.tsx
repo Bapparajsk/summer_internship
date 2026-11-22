@@ -35,17 +35,13 @@ const subjects = [
         name: "Data Structures & Algo",
         value: 82,
         color: "#5CC6E2",
+        top: true,
     },
     {
         name: "Modern C++ Mastery",
         value: 75,
         color: "#7BE2FF",
-        top: true,
-    },
-    {
-        name: "Database Internals",
-        value: 69,
-        color: "#8FA5B8",
+        
     },
 ];
 
@@ -403,7 +399,7 @@ function SubjectCard({
 
             {/* Percentage */}
             <View className="ml-2 rounded-full bg-surface-container px-2 py-0.5">
-                <Ticker value={progressValueCount} fontSize={12} className="text-white font-poppins-semibold" />
+                <Ticker value={progressValueCount} fontSize={14} className="text-white font-poppins-semibold" />
             </View>
         </View>
     );

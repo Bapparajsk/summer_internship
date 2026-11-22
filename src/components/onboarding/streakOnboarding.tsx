@@ -21,9 +21,9 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
 
-const SIZE = 210;
+const SIZE = 160;
 const CENTER = SIZE / 2;
-const RADIUS = 92;
+const RADIUS = 68;
 const STROKE = 8;
 
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -108,7 +108,7 @@ export const StreakOnboarding = ({ index }: { index: number }) => {
             </View>
 
             {/* Progress core */}
-            <Animated.View className="relative h-52.5 w-52.5">
+            <Animated.View className="relative size-40">
                 <Svg
                     width={SIZE}
                     height={SIZE}
@@ -157,23 +157,23 @@ export const StreakOnboarding = ({ index }: { index: number }) => {
                     {/* Flame */}
                     <Animated.View
                         style={flameStyle}
-                        className="mb-1 h-9 w-9 items-center justify-center rounded-full bg-surface-container"
+                        className="mb-1 size-7 items-center justify-center rounded-full bg-surface-container"
                     >
-                        <Text className="text-xl">🔥</Text>
+                        <Text className="text-sm">🔥</Text>
                     </Animated.View>
 
                     {/* Number */}
                     <View className="flex-row items-baseline">
-                        <Text className="font-poppins-semibold text-[52px] leading-none tracking-tight text-text-primary">
+                        <Text className="font-poppins-semibold text-[32px] leading-none tracking-tight text-text-primary">
                             6
                         </Text>
 
-                        <Text className="ml-1 font-poppins-semibold text-sm text-primary">
+                        <Text className="ml-1 font-poppins-semibold text-xs text-primary">
                             days
                         </Text>
                     </View>
 
-                    <Text className="mt-1 font-poppins-semibold text-[10px] uppercase tracking-[2px] text-primary">
+                    <Text className="mt-1 font-poppins-semibold text-[8px] uppercase tracking-[2px] text-primary mb-5">
                         Current Streak
                     </Text>
                 </View>
@@ -219,18 +219,18 @@ export const StreakOnboarding = ({ index }: { index: number }) => {
 
             {/* Insight */}
             <Card className="mt-3 w-full border border-border-subtle bg-surface-container-low">
-                <Card.Body className="flex-row items-center gap-space-md">
+                <Card.Body className="flex-row items-center gap-x-2">
                     <View className="h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-container-high">
                         <Text className="text-xl text-primary">✦</Text>
                     </View>
-                    <View className="min-w-0 flex-1 ml-2">
-                        <Text className="font-poppins-semibold text-base tracking-tight text-text-primary">
-                            Consistency compounds
+
+                    <View className="min-w-0 flex-1">
+                        <Text className="font-poppins-semibold text-sm tracking-tight text-text-primary">
+                            Stay consistent
                         </Text>
 
-                        <Text className="mt-0.5 font-poppins-medium text-xs leading-5 text-text-secondary">
-                            A few focused minutes each day can turn practice into a lasting
-                            learning habit.
+                        <Text className="mt-0.5 font-poppins-medium text-xs text-text-secondary">
+                            Small steps. Big progress.
                         </Text>
                     </View>
                 </Card.Body>

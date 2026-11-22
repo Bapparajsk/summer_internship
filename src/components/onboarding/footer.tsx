@@ -3,17 +3,11 @@ import { PressableFeedback } from "heroui-native/pressable-feedback";
 import { DotLottie } from "@lottiefiles/dotlottie-react-native";
 
 interface OnboardingFooterProps {
-    currentStep?: number;
-    totalSteps?: number;
     onContinue?: () => void;
-    onPrevious?: () => void;
 }
 
 export function OnboardingFooter({
-    currentStep = 0,
-    totalSteps = 3,
     onContinue,
-    onPrevious,
 }: OnboardingFooterProps) {
     return (
         <View
