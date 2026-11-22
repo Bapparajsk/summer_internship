@@ -8,7 +8,7 @@ export default function OnBoarding() {
     const isComplete = useOnboardingStore(store => store.isComplete);
 
     if(isComplete) {
-        return <Redirect href={"/(auth)"}/>
+        return <Redirect href={"/(auth)/sign-up"}/>
     }
 
     return (

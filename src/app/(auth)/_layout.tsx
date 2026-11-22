@@ -21,8 +21,8 @@ export default function RootLayout(): JSX.Element {
 
     return (
         <Stack screenOptions={{ headerShown: false, animation: "fade_from_bottom" }} >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="signup" />
+            <Stack.Screen name="sign-in" />
+            <Stack.Screen name="sign-up" />
         </Stack>
     );
 }

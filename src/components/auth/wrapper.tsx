@@ -55,7 +55,7 @@ export const Wrapper = ({ authIs, children }: WrapperProps) => {
                 {isSignin ? "Don't have an account?" : "Already have an account?"}
               </Text>
 
-              <Link asChild href={isSignin ? "/(auth)/signup" : "/(auth)"}>
+              <Link asChild href={isSignin ? "/(auth)/sign-up" : "/(auth)/sign-in"}>
                 <Pressable
                   hitSlop={6}
                   accessibilityRole="link"
