@@ -1,39 +1,34 @@
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Fontisto } from '../lib/icon'
-import { BottomSheet } from 'heroui-native'
-import { useState } from 'react';
-import { Text, View } from 'react-native'
+import { BottomSheet, type BottomSheetRef } from 'heroui-native'
+import { Fragment, useRef } from 'react';
+import { ScrollView, Text, View } from 'react-native'
 import { NotificationList } from '../notification';
 import { MotionButton } from '../ui/button/motionButton';
 
 export const NotificationButton = () => {
 
-    const [isOpen, setIsOpen] = useState(false);
+    const sheetRef = useRef<BottomSheetRef>(null);
 
     return (
+        <Fragment>
+            <MotionButton
+                accessibilityLabel="Notifications"
+                onPress={() => sheetRef.current?.present()}
+            >
+                <Fontisto
+                    name="bell"
+                    size={18}
+                    color="white"
+                />
 
-        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-            <BottomSheet.Trigger asChild>
-                <MotionButton
-                    accessibilityLabel="Notifications"
-                >
-                    <Fontisto
-                        name="bell"
-                        size={18}
-                        color="white"
-                    />
+                <View className="absolute right-4.25 top-3.75 h-2 w-2 rounded-full bg-primary" />
+            </MotionButton>
 
-                    <View className="absolute right-4.25 top-3.75 h-2 w-2 rounded-full bg-primary" />
-                </MotionButton>
-            </BottomSheet.Trigger>
-            <BottomSheet.Portal>
-                <BottomSheet.Overlay />
-                <BottomSheet.Content
-                    snapPoints={["97%"]}
-                    enableOverDrag={false}
-                    enableDynamicSizing={false}
-                    contentContainerClassName="h-full"
-                >
+            <BottomSheet
+                detents={[0.97]}
+                draggable={false}
+            >
+                <BottomSheet.Content>
                     <View className="flex-row items-center justify-between px-4 py-3">
                         <View className="flex-row items-center gap-2">
                             <Fontisto
@@ -51,7 +46,7 @@ export const NotificationButton = () => {
                             </View>
                         </View>
                     </View>
-                    <BottomSheetScrollView
+                    <ScrollView
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
@@ -60,9 +55,9 @@ export const NotificationButton = () => {
                                 console.log("notification:", notification.id);
                             }}
                         />
-                    </BottomSheetScrollView>
+                    </ScrollView>
                 </BottomSheet.Content>
-            </BottomSheet.Portal>
-        </BottomSheet>
+            </BottomSheet>
+        </Fragment>
     )
 }
