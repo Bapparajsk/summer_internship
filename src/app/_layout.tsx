@@ -35,12 +35,10 @@ export default function RootLayout(): JSX.Element {
               <ThemeProvider value={DarkTheme}>
                 <FontProvider>
                   <Stack screenOptions={{ headerShown: false, animation: "fade_from_bottom" }} >
-                    {/* <Stack.Screen name="(auth)" /> */}
-                    <Stack.Screen name="(tab)" />
                     <Stack.Screen name="onboarding" />
+                    <Stack.Screen name="(auth)" />
+                    <Stack.Screen name="(tab)" />
                     <Stack.Screen name="setting" />
-
-                    {/* quiz screens */}
                     <Stack.Screen name="quiz" />
                   </Stack>
                 </FontProvider>
