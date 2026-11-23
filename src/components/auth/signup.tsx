@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,8 +9,9 @@ import { AuthInput } from "./input";
 import { useSignUp, } from "@clerk/expo";
 import { useRouter } from "expo-router";
 import { OtpWrapper } from "./otp-wrapper";
-import { type BottomSheetRef } from "heroui-native";
+import { useToast, type BottomSheetRef } from "heroui-native";
 import { maskEmail } from "@/utils/email";
+import { ToastContainer, type ToastProps } from "../ui/toastContainer";
 
 type ParsedName = {
     firstName: string;
@@ -40,23 +41,21 @@ export const parseUserName = (name: string): ParsedName => {
     };
 };
 
-
-
 export const SignupForm = () => {
 
     const { signUp } = useSignUp();
+    const { toast } = useToast();
     const router = useRouter();
 
     const sheetRef = useRef<BottomSheetRef>(null);
 
-
-    const [serverError, setServerError] = useState("");
     const [email, setEmail] = useState("");
 
     const {
         control,
         handleSubmit,
         formState: { errors, isSubmitting },
+        setError
     } = useForm<SignupFormValues>({
         resolver: zodResolver(signupSchema),
         mode: "onBlur",
@@ -73,8 +72,21 @@ export const SignupForm = () => {
         sheetRef.current?.present();
     }, []);
 
+    const showToast = (ps: ToastProps) => {
+        toast.show({
+            component(props) {
+                return (
+                    <ToastContainer
+                        isError
+                        {...ps}
+                        {...props}
+                    />
+                )
+            },
+        })
+    }
+
     const submitForm = useCallback(async ({ name, email, password }: SignupFormValues) => {
-        setServerError("");
 
         const { firstName, lastName } = parseUserName(name);
 
@@ -87,7 +99,13 @@ export const SignupForm = () => {
                 password,
             });
         } catch {
-            setServerError("Unable to create your account. Please try again.");
+             
+            showToast({
+                icon: "alert",
+                label: "Unexpected Error",
+                description: "Unable to create your account. Please try again.",
+                variant: "danger"
+            })
             return;
         }
 
@@ -98,11 +116,35 @@ export const SignupForm = () => {
                 message.includes("already exists") ||
                 message.includes("already registered")
             ) {
-                setServerError("This email is already registered. Please sign in.");
+                showToast({
+                    icon: "alert",
+                    variant: 'warning',
+                    label: 'Already Registered',
+                    description: 'This email is already registered. Please sign in.',
+                });
                 return;
             }
 
-            setServerError(signUpResult.error.message);
+            if (message.includes("password")) {
+                setError("password", {
+                    message: signUpResult.error.message
+                });
+
+                showToast({
+                    icon: "alert",
+                    variant: "danger",
+                    label: "Invalid Password",
+                    description: signUpResult.error.message
+                });
+                return;
+            }
+
+            showToast({
+                icon: "alert",
+                variant: 'warning',
+                label: 'Already Registered',
+                description: 'This email is already registered. Please sign in.',
+            });
             return;
         }
 
@@ -112,12 +154,21 @@ export const SignupForm = () => {
             setEmail(email);
             openOtpSheet();
         } catch {
-            setServerError("Unable to create your account. Please try again.");
+            showToast({
+                icon: "alert",
+                variant: 'danger',
+                label: 'Server Error',
+                description: 'Unable to create your account. Please try again.',
+            });
             return;
         }
 
         if (verificationResult.error) {
-            setServerError(verificationResult.error.message);
+            toast.show({
+                variant: "danger",
+                label: "Invalid Password",
+                description: verificationResult.error.message
+            });
         }
     }, [openOtpSheet, signUp]);
 
@@ -126,13 +177,16 @@ export const SignupForm = () => {
     }, [handleSubmit, submitForm]);
 
     const handleVerify = async (otp: string) => {
-        setServerError("");
 
         const { error } =
             await signUp.verifications.verifyEmailCode({ code: otp });
 
         if (error) {
-            setServerError(error.message);
+            showToast({
+                icon: "alert",
+                label: "Invalid Otp",
+                description: error.message.toString()
+            });
             return;
         }
 
@@ -179,8 +233,6 @@ export const SignupForm = () => {
             </View >
         );
     };
-
-    console.log(serverError)
 
     return (
         <Wrapper authIs="signup">

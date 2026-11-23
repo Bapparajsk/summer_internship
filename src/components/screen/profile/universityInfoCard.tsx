@@ -25,7 +25,7 @@ export const UniversityInfoCard = ({
     const openUniversityWebsite = () => {
         toast.show({
             component: (props) => (
-                <Toast variant="default" {...props} placement='bottom'>
+                <Toast variant="default" {...props}>
                     <View className='flex-row items-center gap-x-1'>
                         <MaterialIcons
                             name="error-outline"
@@ -42,7 +42,6 @@ export const UniversityInfoCard = ({
                     </Toast.Description>
                 </Toast>
             ),
-
         })
     };
 

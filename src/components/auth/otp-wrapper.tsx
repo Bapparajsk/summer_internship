@@ -10,20 +10,31 @@ export type OtpWrapperProps = {
 
     title?: string;
     email: string;
+    isInvalid?: boolean | undefined
 
     backTitle: string;
     sheetRef: RefObject<BottomSheetRef | null>;
     onSubmitOtp: (otp: string) => void;
 }
 
-export const OtpWrapper = ({ children, sheetRef, backTitle, title, email, onSubmitOtp }: OtpWrapperProps) => {
+const className = 'border-2 border-border font-poppins-semibold';
+
+const InputSlot = ({ index }: { index: number }) => (
+    <InputOTP.Slot index={index} className={className} >
+        <InputOTP.SlotPlaceholder />
+        <InputOTP.SlotValue className='font-poppins-semibold'/>
+        <InputOTP.SlotCaret />
+    </InputOTP.Slot>
+)
+
+export const OtpWrapper = ({ children, sheetRef, backTitle, title, email, isInvalid, onSubmitOtp }: OtpWrapperProps) => {
 
     const ref = useRef<InputOTPRef>(null);
 
     return (
         <View className='flex-1'>
             <View className='gap-y-2'>
-                {children} 
+                {children}
             </View>
             <BottomSheet
                 ref={sheetRef}
@@ -60,22 +71,29 @@ export const OtpWrapper = ({ children, sheetRef, backTitle, title, email, onSubm
                                 <Description className="mb-3 text-xs font-poppins-semibold text-text-secondary">
                                     We&apos;ve sent a code to {email}
                                 </Description>
-                                <InputOTP ref={ref} maxLength={6} onComplete={onSubmitOtp}>
+                                <InputOTP
+                                    ref={ref}
+                                    maxLength={6}
+                                    isInvalid={isInvalid}
+                                    onComplete={(otp) => {
+                                        ref.current?.blur();
+                                        onSubmitOtp(otp)
+                                    }}>
                                     <InputOTP.Group>
-                                        <InputOTP.Slot index={0} className='border-2 border-border'/>
-                                        <InputOTP.Slot index={1} className='border-2 border-border'/>
-                                        <InputOTP.Slot index={2} className='border-2 border-border'/>
+                                        <InputSlot index={0}/>
+                                        <InputSlot index={1} />
+                                        <InputSlot index={2} />
                                     </InputOTP.Group>
                                     <InputOTP.Separator />
                                     <InputOTP.Group>
-                                        <InputOTP.Slot index={3} className='border-2 border-border'/>
-                                        <InputOTP.Slot index={4} className='border-2 border-border'/>
-                                        <InputOTP.Slot index={5} className='border-2 border-border'/>
+                                        <InputSlot index={3} />
+                                        <InputSlot index={4} />
+                                        <InputSlot index={5} />
                                     </InputOTP.Group>
                                 </InputOTP>
                                 <View className='flex-row mt-3 gap-2'>
                                     <Text className="mb-3 text-xs font-poppins-medium text-text-secondary">
-                                        don&apos;t receive a OTP? 
+                                        don&apos;t receive a OTP?
                                     </Text>
                                     <PressableFeedback>
                                         <Text className='text-xs font-poppins-semibold text-text-primary'>

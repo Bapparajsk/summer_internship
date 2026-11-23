@@ -65,7 +65,7 @@ export default function RootLayout(): JSX.Element | null {
           />
 
           <HeroUINativeProvider config={heroUiConfig}>
-            <ToastProvider maxVisibleToasts={4}>
+            <ToastProvider maxVisibleToasts={4} defaultProps={{ placement: "bottom" }} >
               <ThemeProvider value={DarkTheme}>
                 <FontProvider>
                   <Stack
