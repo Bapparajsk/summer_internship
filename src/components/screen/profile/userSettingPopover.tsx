@@ -7,9 +7,12 @@ import { Fragment } from 'react/jsx-runtime';
 import { BottomSheet, type BottomSheetRef } from 'heroui-native';
 import { useRef } from 'react';
 import { BottomSheetContent } from '../setting/changeAvatar/bottomSheetContent';
+import { useLogout } from "@/hooks/auth/useLogout";
+
 export const UserSettingPopover = () => {
 
     const router = useRouter();
+    const { logout } = useLogout();
 
     const sheetRef = useRef<BottomSheetRef>(null);
 
@@ -19,6 +22,10 @@ export const UserSettingPopover = () => {
         if (item.id === "change-avatar") {
             sheetRef.current?.present();
             return;
+        }
+
+        if(item.id === "log-out") {
+            logout();
         }
 
         const url = optionsHref[item.id];

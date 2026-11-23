@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
 import { MotionButton } from '@/components/ui/button/motionButton'
+import { MotionButtonProps } from "@/components/ui/button";
 import { IconName } from '../lib/icon';
 import { ReactNode } from 'react';
 import If from '../lib/if';
@@ -19,10 +20,15 @@ export type SimpleHeaderProps = {
     leftContent?: ReactNode;
     rightContent?: ReactNode;
 
+    motionButtonProps?: MotionButtonProps
+
     onPress?: () => void;
 }
 
-export const SimpleHeader = ({ title, icon, titleClassName , leftContent, rightContent, onPress }: SimpleHeaderProps) => {
+export const SimpleHeader = ({ title, icon, titleClassName , leftContent, rightContent, motionButtonProps, onPress }: SimpleHeaderProps) => {
+    
+    const { className, ...restMotionButtonProps } = motionButtonProps ?? {};
+    
     return (
         <View className='w-full'>
             <View className='w-full flex-row items-center justify-between'>
@@ -34,8 +40,9 @@ export const SimpleHeader = ({ title, icon, titleClassName , leftContent, rightC
                     <If.Else>
                         <View className='w-20'>
                             <MotionButton
-                                className='h-10 flex-row gap-0.5 w-full pr-2'
+                                className={cn('h-10 flex-row gap-0.5 w-full pr-2', className)}
                                 onPress={onPress}
+                                {...restMotionButtonProps}
                             >
                                 <If condition={Boolean(icon)}>
                                     <If.Then>

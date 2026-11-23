@@ -15,7 +15,7 @@ export default function RootLayout(): JSX.Element {
         )
     }
 
-    if(!isSignedIn) {
+    if(isSignedIn) {
         return <Redirect href="/(tab)" />
     }
 

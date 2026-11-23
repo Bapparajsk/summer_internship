@@ -1,8 +1,8 @@
-import { cn, PressableFeedback, PressableFeedbackProps } from 'heroui-native'
+import { cn, PressableFeedback } from 'heroui-native'
 import { MotionButtonProps } from './type'
 
 
-export const MotionButton = ({ children, className, ...rest } : MotionButtonProps & PressableFeedbackProps ) => {
+export const MotionButton = ({ children, className, ...rest } : MotionButtonProps ) => {
     return (
         <PressableFeedback
             className={cn("size-13 items-center justify-center rounded-full bg-white/10 border-border border", className)}

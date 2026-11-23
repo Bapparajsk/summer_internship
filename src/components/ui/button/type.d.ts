@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { PressableFeedbackProps } from "heroui-native";
 import { ReactNode } from "react";
 import type { TextStyle, ViewStyle } from "react-native";
 
@@ -47,9 +48,7 @@ export type ButtonProps = {
     hapticStyle?: Haptics.ImpactFeedbackStyle;
 };
 
-export type MotionButtonProps = {
-    children: ReactNode
-}
+export type MotionButtonProps =  PressableFeedbackProps;
 
 export type CloseButtonProps = {
     isSaved?: boolean;

@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,8 +6,11 @@ import { SignupFormValues, signupSchema } from "@/utils/validate/auth";
 import { Button } from "../ui/button";
 import { Wrapper } from "./wrapper";
 import { AuthInput } from "./input";
-import { useSignUp,  } from "@clerk/expo";
+import { useSignUp, } from "@clerk/expo";
 import { useRouter } from "expo-router";
+import { OtpWrapper } from "./otp-wrapper";
+import { type BottomSheetRef } from "heroui-native";
+import { maskEmail } from "@/utils/email";
 
 type ParsedName = {
     firstName: string;
@@ -42,11 +44,14 @@ export const parseUserName = (name: string): ParsedName => {
 
 export const SignupForm = () => {
 
-    const { signUp, fetchStatus } = useSignUp();
+    const sheetRef = useRef<BottomSheetRef>(null);
+
+    const { signUp } = useSignUp();
 
     const router = useRouter();
 
     const [serverError, setServerError] = useState("");
+    const [email, setEmail] = useState("");
 
     const {
         control,
@@ -64,7 +69,11 @@ export const SignupForm = () => {
         },
     });
 
-    const submitForm = async ({ name, email, password }: SignupFormValues) => {
+    const openOtpSheet = useCallback(() => {
+        sheetRef.current?.present();
+    }, []);
+
+    const submitForm = useCallback(async ({ name, email, password }: SignupFormValues) => {
         setServerError("");
 
         const { firstName, lastName } = parseUserName(name);
@@ -100,6 +109,8 @@ export const SignupForm = () => {
         let verificationResult;
         try {
             verificationResult = await signUp.verifications.sendEmailCode();
+            setEmail(email);
+            openOtpSheet();
         } catch {
             setServerError("Unable to create your account. Please try again.");
             return;
@@ -108,13 +119,17 @@ export const SignupForm = () => {
         if (verificationResult.error) {
             setServerError(verificationResult.error.message);
         }
-    };
+    }, [openOtpSheet, signUp]);
 
-    const handleVerify = async () => {
+    const handleCreateAccount = useCallback(() => {
+        void handleSubmit(submitForm)();
+    }, [handleSubmit, submitForm]);
+
+    const handleVerify = async (otp: string) => {
         setServerError("");
 
         const { error } =
-            await signUp.verifications.verifyEmailCode({ code: "" });
+            await signUp.verifications.verifyEmailCode({ code: otp });
 
         if (error) {
             setServerError(error.message);
@@ -151,7 +166,6 @@ export const SignupForm = () => {
                             onChangeText={onChange}
                             onBlur={onBlur}
                             placeholder={placeholder}
-                            placeholderTextColor="#888888"
                             keyboardType={options.keyboard ?? "default"}
                             autoComplete={options.autoComplete}
                             autoCapitalize={options.autoCapitalize ?? "none"}
@@ -167,38 +181,46 @@ export const SignupForm = () => {
 
     return (
         <Wrapper authIs="signup">
-            {RenderField("name", "Full name", "Enter your full name", {
-                autoComplete: "name",
-                autoCapitalize: "words",
-            })}
+            <OtpWrapper
+                sheetRef={sheetRef}
+                backTitle="Sign up"
+                title="Verify Your Account"
+                email={maskEmail(email)}
+                onSubmitOtp={handleVerify}
+            >
+                {RenderField("name", "Full name", "Enter your full name", {
+                    autoComplete: "name",
+                    autoCapitalize: "words",
+                })}
 
-            {RenderField("email", "Email address", "you@example.com", {
-                keyboard: "email-address",
-                autoComplete: "email",
-            })}
+                {RenderField("email", "Email address", "you@example.com", {
+                    keyboard: "email-address",
+                    autoComplete: "email",
+                })}
 
-            {RenderField("password", "Password", "Create a password", {
-                autoComplete: "new-password",
-            })}
-
-            {RenderField(
-                "confirmPassword",
-                "Confirm password",
-                "Re-enter your password",
-                {
+                {RenderField("password", "Password", "Create a password", {
                     autoComplete: "new-password",
-                },
-            )}
+                })}
 
-            <Button
-                title={"CREATE ACCOUNT"}
-                onPress={handleSubmit(submitForm)}
-                variant="primary"
-                theme="light"
-                isLoading={isSubmitting}
-                disabled={!errors || isSubmitting}
-                fullWidth
-            />
+                {RenderField(
+                    "confirmPassword",
+                    "Confirm password",
+                    "Re-enter your password",
+                    {
+                        autoComplete: "new-password",
+                    },
+                )}
+
+                <Button
+                    title={"CREATE ACCOUNT"}
+                    onPress={handleCreateAccount}
+                    variant="primary"
+                    theme="light"
+                    isLoading={isSubmitting}
+                    disabled={!errors || isSubmitting}
+                    fullWidth
+                />
+            </OtpWrapper>
         </Wrapper>
     );
 }
