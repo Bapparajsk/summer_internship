@@ -1,5 +1,4 @@
 import {
-    ActivityIndicator,
     Pressable,
     Text,
     View,
@@ -10,6 +9,7 @@ import * as Haptics from "expo-haptics";
 import { themeColors } from "./color";
 import { ButtonProps } from "./type";
 import { sizeConfig } from "./config";
+import { LoadingDots } from "../loading";
 
 export function Button({
     title,
@@ -118,7 +118,11 @@ export function Button({
                     ]}
                 >
                     {isLoading ? (
-                        <ActivityIndicator color={colors.text} size="small" />
+                        <LoadingDots 
+                            size={8}
+                            className="mt-0"
+                            color="#103e4a"
+                        />
                     ) : (
                         <>
                             {leftIcon && (

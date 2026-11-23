@@ -1,3 +1,4 @@
+import { cn } from 'heroui-native';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -11,11 +12,13 @@ import Animated, {
 type DotProps = {
     delay?: number;
     size?: number;
+    color?: string
 };
 
 const Dot = ({
     delay = 0,
     size = 10,
+    color
 }: DotProps) => {
 
     const scale = useSharedValue(1);
@@ -70,14 +73,17 @@ const Dot = ({
 
     return (
         <Animated.View
+            className="rounded-full bg-cyan-400"
+
             style={[
                 animatedStyle,
                 {
                     width: size,
                     height: size,
+                    backgroundColor: color
                 },
             ]}
-            className="rounded-full bg-cyan-400"
+            
         />
     );
 };
@@ -86,20 +92,23 @@ type LoadingDotsProps = {
     dots?: number;
     size?: number;
     stagger?: number;
+    color?: string
+    className?: string
 };
 
 export const LoadingDots = ({
     dots = 3,
     size = 10,
     stagger = 350,
+    color,
+    className,
 }: LoadingDotsProps) => {
-
     return (
         <View
             style={{
                 gap: size * 0.8,
             }}
-            className="mt-6 flex-row items-center justify-center"
+            className={cn("mt-6 flex-row items-center justify-center", className)}
         >
             {Array.from({
                 length: dots,
@@ -108,6 +117,7 @@ export const LoadingDots = ({
                     key={index}
                     size={size}
                     delay={index * stagger}
+                    color={color}
                 />
             ))}
         </View>
