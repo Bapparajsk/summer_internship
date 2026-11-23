@@ -26,6 +26,7 @@ export const UserSettingPopover = () => {
 
         if(item.id === "log-out") {
             logout();
+            return;
         }
 
         const url = optionsHref[item.id];

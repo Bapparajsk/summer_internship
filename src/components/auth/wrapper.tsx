@@ -7,6 +7,8 @@ import {
 import { SocialLogin } from "./socialLogin";
 import { ReactNode } from "react";
 import { Link } from "expo-router";
+import { AuthFeedback } from "./auth-feedback";
+import { Button } from "../ui/button";
 
 type WrapperProps = {
   authIs: "signin" | "signup",

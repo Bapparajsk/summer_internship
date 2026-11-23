@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import { OtpWrapper } from "./otp-wrapper";
 import { type BottomSheetRef } from "heroui-native";
 import { maskEmail } from "@/utils/email";
+import { AuthFeedback, AuthStatus } from "./auth-feedback";
 
 type ParsedName = {
     firstName: string;
@@ -212,7 +213,9 @@ export const SignupForm = () => {
                 )}
 
                 <Button
-                    title={"CREATE ACCOUNT"}
+                    title={
+                        <AuthFeedback status="otp-sent"/>
+                    }
                     onPress={handleCreateAccount}
                     variant="primary"
                     theme="light"
@@ -220,6 +223,7 @@ export const SignupForm = () => {
                     disabled={!errors || isSubmitting}
                     fullWidth
                 />
+
             </OtpWrapper>
         </Wrapper>
     );

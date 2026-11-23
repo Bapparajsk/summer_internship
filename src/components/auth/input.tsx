@@ -40,7 +40,7 @@ export const AuthInput = ({ name, label, error, theme = "light", className, ...i
             <View className="w-full flex-row items-center">
                 <Input
                     className={cn(
-                        "flex-1 px-10 rounded-full text-black/80 font-poppins-medium text-xs bg-foreground border border-border-light",
+                        "flex-1 px-10 rounded-full text-black/80 font-poppins-medium text-xs bg-foreground border border-border-light overflow-hidden",
                         className,
                         {
                             "text-danger border-danger bg-danger-soft": error

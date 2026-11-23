@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import {
     ActivityIndicator,
     Pressable,
@@ -44,7 +43,7 @@ export function Button({
     const currentIconColor = iconColor ?? colors.text;
 
 
-    const handlePressIn = useCallback(() => {
+    const handlePressIn = () => {
         pressed.value = withSpring(1, {
             damping: 18,
             stiffness: 320,
@@ -54,15 +53,15 @@ export function Button({
         if (haptic) {
             Haptics.impactAsync(hapticStyle);
         }
-    }, []);
+    };
 
-    const handlePressOut = useCallback(() => {
+    const handlePressOut = () => {
         pressed.set(withSpring(0, {
             damping: 14,
             stiffness: 260,
             mass: 0.5,
         }));
-    }, []);
+    };
 
     const faceStyle = useAnimatedStyle(() => ({
         transform: [
@@ -73,7 +72,7 @@ export function Button({
     return (
         <Pressable
             accessibilityRole="button"
-            accessibilityLabel={accessibilityLabel ?? title}
+            accessibilityLabel={accessibilityLabel ?? "button"}
             accessibilityState={{
                 disabled: isDisabled,
                 busy: isLoading,
@@ -130,24 +129,26 @@ export function Button({
                                 />
                             )}
 
-                            {title && (
-                                <Text
-                                    numberOfLines={1}
-                                    className="font-poppins-semibold"
-                                    style={[
-                                        {
-                                            color: colors.text,
-                                            fontSize: dimensions.fontSize,
-                                            marginLeft: leftIcon ? 10 : 0,
-                                            marginRight: rightIcon ? 10 : 0,
-                                            flexShrink: 1,
-                                        },
-                                        textStyle,
-                                    ]}
-                                >
-                                    {title}
-                                </Text>
-                            )}
+                            {
+                                typeof title === "string" ? (
+                                    <Text
+                                        numberOfLines={1}
+                                        className="font-poppins-semibold"
+                                        style={[
+                                            {
+                                                color: colors.text,
+                                                fontSize: dimensions.fontSize,
+                                                marginLeft: leftIcon ? 10 : 0,
+                                                marginRight: rightIcon ? 10 : 0,
+                                                flexShrink: 1,
+                                            },
+                                            textStyle,
+                                        ]}
+                                    >
+                                        {title}
+                                    </Text>
+                                ) : (title)
+                            }
 
                             {rightIcon && (
                                 <Ionicons

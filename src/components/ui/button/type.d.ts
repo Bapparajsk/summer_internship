@@ -19,7 +19,7 @@ export type ThemeMode = "dark" | "light";
 export type IconName = React.ComponentProps<typeof Ionicons>["name"];
 
 export type ButtonProps = {
-    title?: string;
+    title?: ReactNode;
     onPress?: () => void;
 
     variant?: ButtonVariant;
