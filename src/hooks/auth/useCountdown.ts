@@ -37,6 +37,7 @@ export function useCountdown(initialSeconds: number) {
     }, [updateRemaining]);
 
     const reset = useCallback((seconds = initialSeconds) => {
+        setRemaining(seconds);
         setEndTime(Date.now() + seconds * 1000);
     }, [initialSeconds]);
 

@@ -72,9 +72,8 @@ export const parseUserName = (name: string): ParsedName => {
 
 export const SignupForm = () => {
     const { signUp } = useSignUp();
-
-    const { toast } = useToast();
     const router = useRouter();
+    const { toast } = useToast();
 
     const {
         remaining,
@@ -117,8 +116,12 @@ export const SignupForm = () => {
     });
 
     // ----------------------------------
-    // Toast
+    // OTP Sheet
     // ----------------------------------
+
+    const openOtpSheet = () => {
+        sheetRef.current?.present();
+    };
 
     const showToast = (props: ToastProps) => {
         toast.show({
@@ -132,14 +135,6 @@ export const SignupForm = () => {
                 );
             },
         });
-    };
-
-    // ----------------------------------
-    // OTP Sheet
-    // ----------------------------------
-
-    const openOtpSheet = () => {
-        sheetRef.current?.present();
     };
 
     // ----------------------------------
@@ -184,7 +179,7 @@ export const SignupForm = () => {
                 await signUp.verifications.sendEmailCode();
 
             if (result.error) {
-                handleAuthError(result.error);
+                handleAuthError(result.error, "otp");
                 return false;
             }
 
@@ -195,7 +190,7 @@ export const SignupForm = () => {
 
             return true;
         } catch (error) {
-            handleAuthError(error);
+            handleAuthError(error, "otp");
 
             return false;
         }
@@ -239,7 +234,6 @@ export const SignupForm = () => {
 
             if (result.error) {
                 handleAuthError(result.error);
-
                 return;
             }
 
@@ -274,7 +268,15 @@ export const SignupForm = () => {
     // ----------------------------------
 
     const handleVerify = async (otp: string) => {
-        if (isVerifying || !signupCreated || !otpSent) {
+        if (
+            isVerifying ||
+            !signupCreated ||
+            !otpSent ||
+            !/^\d{6}$/.test(otp)
+        ) {
+            if (/^\d{6}$/.test(otp) === false) {
+                setIsInvalidOtp(true);
+            }
             return;
         }
 
@@ -356,7 +358,7 @@ export const SignupForm = () => {
                 await signUp.verifications.sendEmailCode();
 
             if (result.error) {
-                handleAuthError(result.error);
+                handleAuthError(result.error, "otp");
                 setIsResending(false);
                 return;
             }
@@ -375,7 +377,7 @@ export const SignupForm = () => {
 
             setIsResending(false);
         } catch (error) {
-            handleAuthError(error);
+            handleAuthError(error, "otp");
             setIsResending(false);
         }
     };

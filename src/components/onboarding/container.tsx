@@ -15,7 +15,7 @@ export const Onboarding = () => {
     const handleContinue = () => {
         if (currentStep === 2) {
             setIsComplete()
-            router.replace("/(auth)");
+            router.replace("/(auth)/sign-in");
             return;
         }
 
