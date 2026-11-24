@@ -181,7 +181,10 @@ export const SigninForm = () => {
       return;
     }
 
-    if (signIn.status === "needs_second_factor") {
+    if (
+      signIn.status === "needs_second_factor" ||
+      signIn.status === "needs_client_trust"
+    ) {
       let sendResult;
       try {
         sendResult = await signIn.mfa.sendEmailCode();
@@ -206,8 +209,6 @@ export const SigninForm = () => {
       }
       return;
     }
-
-    console.log(signIn.status);
 
     showToast({
       icon: "alert",
