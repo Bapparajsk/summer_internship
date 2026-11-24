@@ -2,6 +2,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { AppState } from "react-native";
 
+export const OTP_RESEND_SECUND = 60;
+
 export function useCountdown(initialSeconds: number) {
     const [endTime, setEndTime] = useState(
         () => Date.now() + initialSeconds * 1000
