@@ -304,6 +304,7 @@ export const SignupForm = () => {
                     });
                 }
 
+                setIsVerifying(false);
                 return;
             }
 
@@ -316,11 +317,13 @@ export const SignupForm = () => {
                     variant: "danger",
                 });
 
+                setIsVerifying(false);
                 return;
             }
 
             await signUp.finalize();
 
+            setIsVerifying(false);
             router.replace("/(tab)");
 
         } catch (error) {
@@ -333,7 +336,6 @@ export const SignupForm = () => {
                 variant: "danger",
             });
 
-        } finally {
             setIsVerifying(false);
         }
     };
@@ -355,6 +357,7 @@ export const SignupForm = () => {
 
             if (result.error) {
                 handleAuthError(result.error);
+                setIsResending(false);
                 return;
             }
 
@@ -370,10 +373,9 @@ export const SignupForm = () => {
                 variant: "success",
             });
 
+            setIsResending(false);
         } catch (error) {
             handleAuthError(error);
-
-        } finally {
             setIsResending(false);
         }
     };
@@ -434,18 +436,25 @@ export const SignupForm = () => {
                 title="Verify Your Account"
                 email={maskEmail(email)}
                 onSubmitOtp={handleVerify}
+                isLoading={isVerifying}
                 isInvalid={isInvalidOtp}
                 resendOtpComponent={
                     <PressableFeedback
-                        isDisabled={!isComplete || isResending}
+                        isDisabled={
+                            !isComplete ||
+                            isResending ||
+                            !signupCreated
+                        }
                         onPress={handleResendOTP}
                     >
                         <Text className="text-xs font-poppins-semibold text-text-primary">
                             {isResending
                                 ? "Sending..."
-                                : isComplete
-                                    ? "Resend code"
-                                    : `Resend code in ${remaining}s`}
+                                : !isComplete
+                                    ? `Resend code in ${remaining}s`
+                                    : !otpSent
+                                        ? "Send verification code"
+                                        : "Resend code"}
                         </Text>
                     </PressableFeedback>
                 }
@@ -504,27 +513,6 @@ export const SignupForm = () => {
                     }
                     fullWidth
                 />
-
-                <View className="items-center">
-                    <PressableFeedback
-                        isDisabled={
-                            !isComplete ||
-                            isResending ||
-                            !signupCreated
-                        }
-                        onPress={handleResendOTP}
-                    >
-                        <Text className="text-xs font-poppins-semibold text-text-primary">
-                            {isResending
-                                ? "Sending..."
-                                : !isComplete
-                                    ? `Resend code in ${remaining}s`
-                                    : !otpSent
-                                        ? "Send verification code"
-                                        : "Resend code"}
-                        </Text>
-                    </PressableFeedback>
-                </View>
             </OtpWrapper>
         </Wrapper>
     );
