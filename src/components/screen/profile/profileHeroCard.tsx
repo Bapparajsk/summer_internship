@@ -6,6 +6,8 @@ import Svg, { Path } from 'react-native-svg';
 import { UserAchievements } from './userAchievements';
 import { UserSettingPopover } from './userSettingPopover';
 import { getEmoji } from './emoji';
+import { useAuth, useUser } from '@clerk/expo';
+import { UserName } from '@/components/user';
 
 
 const ProfileStatusBadge = ({ status }: { status: Status }) => {
@@ -101,13 +103,12 @@ export const ProfileHeroCard = ({
                 </View>
 
                 <View className="ml-2 flex-1">
-                    <View className="flex-row items-center gap-1">
-                        <Text
-                            numberOfLines={1}
-                            className="text-primary text-base font-poppins-semibold"
-                        >
-                            {name}
-                        </Text>
+                    <View className="flex-row items-center h-5">
+                        <UserName
+                            isHeader={false}
+                            classname='text-primary text-base'
+                            skeletonClassName='w-30'
+                        />
                     </View>
 
                     <Text

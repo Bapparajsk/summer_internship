@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { useScrollStore } from "@/store/scroll-store";
 import { NotificationButton } from "./notificationButton";
+import { UserName } from "@/components/user";
 
 const TITLE_OFFSET = 500;
 const SUBTITLE_OFFSET = 500;
@@ -376,10 +377,8 @@ export const AnimatedHeader = () => {
 
             <View className="flex-row items-center justify-between px-5">
                 <Animated.View style={textContainerStyle}>
-                    <Animated.View style={titleStyle}>
-                        <Text className="text-text-primary text-xl tracking-wide font-poppins-semibold">
-                            Hello, Bappa Raj
-                        </Text>
+                    <Animated.View style={[titleStyle, { height: 27 }]}>
+                        <UserName classname="text-xl"/>
                     </Animated.View>
 
                     <Animated.View style={subtitleStyle}>
