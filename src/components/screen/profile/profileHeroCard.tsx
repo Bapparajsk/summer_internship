@@ -88,7 +88,7 @@ export const ProfileHeroCard = () => {
                     <View className="flex-row items-center h-5">
                         <UserName
                             isHeader={false}
-                            classname='text-primary text-base'
+                            classname='text-base'
                             skeletonClassName='w-30'
                         />
                     </View>

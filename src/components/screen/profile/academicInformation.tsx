@@ -2,10 +2,12 @@ import { Text, View } from 'react-native'
 import { useUser } from '@/hooks/queries/use-user'
 import { PressableFeedback, SkeletonGroup } from 'heroui-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export const AcademicInformation = () => {
 
     const { data: user, isLoading, isError, refetch } = useUser();
+    const router = useRouter();
 
     return (
         <View className='h-8'>
@@ -25,11 +27,14 @@ export const AcademicInformation = () => {
                     </Text>
                 </PressableFeedback>
             ) : !user?.academic_information ? (
-                <View className="h-8 justify-center">
-                    <Text className="font-poppins-medium text-[10px] text-text-tertiary">
-                        Academic information not added
+                <PressableFeedback
+                    className="h-8 self-start justify-center"
+                    onPress={() => router.push('/setting/edit_profile')}
+                >
+                    <Text className="font-poppins-medium text-xs text-primary">
+                        + Add academic information
                     </Text>
-                </View>
+                </PressableFeedback>
             ) : (
                 <SkeletonGroup isLoading={false}>
                     <SkeletonGroup.Item
