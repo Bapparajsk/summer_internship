@@ -1,18 +1,19 @@
+
+import { useCallback } from "react";
 import { useClerk } from "@clerk/expo";
-import { useRouter } from "expo-router";
 
 export function useLogout() {
     const { signOut } = useClerk();
-    const router = useRouter();
 
-    const logout = async () => {
+    const logout = useCallback(async () => {
         try {
             await signOut();
-            router.replace("/(auth)/sign-in");
+            return true;
         } catch (error) {
-            console.error("Logout failed:", error);
+            console.error("[Logout Error]:", error);
+            throw error;
         }
-    };
+    }, [signOut]);
 
     return { logout };
 }

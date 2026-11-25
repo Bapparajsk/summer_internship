@@ -26,6 +26,7 @@ type OptionId = typeof options[number]["id"];
 export const optionsHref: Partial<Record<OptionId, Href>> = {
     "edit-profile": "/setting/edit_profile",
     "app-settings": "/setting",
+    "log-out": "/sign-out"
 };
 
 export const statusConfig: Record<Status, StatusConfig> = {

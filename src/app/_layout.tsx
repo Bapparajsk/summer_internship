@@ -79,6 +79,9 @@ export default function RootLayout(): JSX.Element | null {
                     <Stack.Screen name="(tab)" />
                     <Stack.Screen name="setting" />
                     <Stack.Screen name="quiz" />
+
+                    <Stack.Screen name="sign-out" />
+
                   </Stack>
                 </FontProvider>
               </ThemeProvider>
