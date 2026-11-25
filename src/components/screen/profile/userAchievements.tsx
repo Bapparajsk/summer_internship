@@ -39,7 +39,7 @@ const StatItem = ({
 
 export const UserAchievements = () => {
 
-  const { data: user, isLoading } = useUser();
+  const { data: user, isLoading, isError } = useUser();
 
   if(isLoading) {
     return (
@@ -47,25 +47,65 @@ export const UserAchievements = () => {
     )
   }
 
+  if (isError) {
+    return (
+      <View className="mt-3 h-17 items-center justify-center rounded-[22px] border border-white/5 bg-white/3">
+        <Text className="text-[10px] font-poppins-medium text-text-tertiary">
+          Could not load achievements
+        </Text>
+      </View>
+    );
+  }
+
+  const stats = user?.achievement_stats;
+  const streak = Number(stats?.streak);
+  const achievements = Number(stats?.achievements);
+  const rank = stats?.rank?.trim();
+  const isEmpty = !stats || (
+    (!Number.isFinite(streak) || streak <= 0) &&
+    (!rank) &&
+    (!Number.isFinite(achievements) || achievements <= 0)
+  );
+
+  if (isEmpty) {
+    return (
+      <View className="mt-3 h-17 flex-row items-center justify-center gap-2 rounded-[22px] border border-white/5 bg-white/3">
+        <MaterialIcons
+          name="emoji-events"
+          size={18}
+          color="#718096"
+        />
+        <View>
+          <Text className="text-[10px] font-poppins-semibold text-text-secondary">
+            No achievements yet
+          </Text>
+          <Text className="text-[8px] font-poppins-medium text-text-tertiary">
+            Complete quizzes to start earning rewards
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View className="mt-3 h-17 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
       <StatItem
         icon="local-fire-department"
-        value={Number(user?.achievement_stats?.streak) ?? 0}
+        value={Number.isFinite(streak) ? streak : 0}
         label="Streak"
         color="#FB923C"
       />
 
       <StatItem
         icon="emoji-events"
-        value={Number(user?.achievement_stats?.rank) ?? 0}
+        value={rank || 0}
         label="Rank"
         color="#FACC15"
       />
 
       <StatItem
         icon="workspace-premium"
-        value={Number(user?.achievement_stats?.achievements) ?? 0}
+        value={Number.isFinite(achievements) ? achievements : 0}
         label="Awards"
         color="#00D5BE"
       />
