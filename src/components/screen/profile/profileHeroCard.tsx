@@ -95,7 +95,6 @@ export const ProfileHeroCard = () => {
 
                     <AcademicInformation />
                 </View>
-
             </View>
 
             {/* setting popover */}
