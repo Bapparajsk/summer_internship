@@ -1,5 +1,6 @@
 import { ProfileEmojiName } from "@/components/screen/profile/emoji";
-import { Status } from "@/components/screen/profile/types";
+import { IconName } from "@/components/lib/icon";
+
 
 export type AcademicInformation = {
     id: string;
@@ -47,6 +48,16 @@ export type QuizExplorer = {
     createdAt: string;
     updatedAt: string;
 };
+
+
+export type Status = "Excellent" | "Good" | "Average" | "Poor" | "Failing";
+
+export type StatusConfig = {
+    bg: string;
+    border: string;
+    text: string;
+    icon: IconName
+}
 
 export type User = {
     id: string;

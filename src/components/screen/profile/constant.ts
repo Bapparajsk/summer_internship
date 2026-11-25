@@ -1,5 +1,5 @@
 import { SelectOption } from "@/components/select";
-import { Status, StatusConfig } from "./types";
+import { Status, StatusConfig } from "@/types/user";
 import { Href } from "expo-router";
 
 const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5";

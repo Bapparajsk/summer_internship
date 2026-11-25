@@ -18,15 +18,7 @@ export default function ProfileScreen() {
 
   return (
     <ScreenWrapper path="/(tab)/profile" onScroll={scrollHandler}>
-      <ProfileHeroCard
-        role="Full Stack Developer"
-        program="BCA"
-        semester="4"
-        cgpa="8.7"
-        streak={14}
-        rank="#12"
-        achievements={124}
-      />
+      <ProfileHeroCard />
 
       <ProfileIdentityCard
         {...tempProfileData}

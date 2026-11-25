@@ -1,7 +1,6 @@
 import { getCommonIcon } from '../../lib/icon';
 import { Text, View } from 'react-native';
 import { statusConfig, } from './constant';
-import { ProfileHeroProps } from './types';
 import Svg, { Path } from 'react-native-svg';
 import { UserAchievements } from './userAchievements';
 import { UserSettingPopover } from './userSettingPopover';
@@ -71,15 +70,7 @@ const ProfileStatusBadge = () => {
     );
 };
 
-export const ProfileHeroCard = ({
-    role,
-    program,
-    semester,
-    cgpa,
-    streak,
-    rank,
-    achievements
-}: ProfileHeroProps) => {
+export const ProfileHeroCard = () => {
 
     return (
         <View className="relative rounded-[34px] border border-border bg-white/4 p-3">
@@ -114,12 +105,7 @@ export const ProfileHeroCard = ({
             <UserDescription />
 
             {/* Stats */}
-            <UserAchievements
-                cgpa={cgpa}
-                rank={rank}
-                streak={streak}
-                achievements={achievements}
-            />
+            <UserAchievements />
 
         </View>
     );

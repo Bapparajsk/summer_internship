@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { View, Text } from 'react-native'
-import { ProfileHeroProps } from './types';
+import { useUser } from '@/hooks/queries/use-user';
+import { Skeleton } from 'heroui-native';
 
 const StatItem = ({
   icon,
@@ -35,40 +36,39 @@ const StatItem = ({
   );
 }
 
-export type UserAchievementsProps = Pick<ProfileHeroProps, "cgpa" | "streak" | "rank" | "achievements">;
 
-export const UserAchievements = ({ cgpa, streak, rank, achievements } : UserAchievementsProps) => {
+export const UserAchievements = () => {
+
+  const { data: user, isLoading } = useUser();
+
+  if(isLoading) {
+    return (
+      <Skeleton className='w-full h-17 rounded-[22px]'/>
+    )
+  }
+
   return (
-    <View className="mt-3 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
-
-      <StatItem
-        icon="school"
-        value={cgpa}
-        label="CGPA"
-        color="#818CF8"
-      />
-
+    <View className="mt-3 h-17 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
       <StatItem
         icon="local-fire-department"
-        value={streak}
+        value={Number(user?.achievement_stats?.streak) ?? 0}
         label="Streak"
         color="#FB923C"
       />
 
       <StatItem
         icon="emoji-events"
-        value={rank}
+        value={Number(user?.achievement_stats?.rank) ?? 0}
         label="Rank"
         color="#FACC15"
       />
 
       <StatItem
         icon="workspace-premium"
-        value={achievements}
+        value={Number(user?.achievement_stats?.achievements) ?? 0}
         label="Awards"
         color="#00D5BE"
       />
-
     </View>
   )
 }
