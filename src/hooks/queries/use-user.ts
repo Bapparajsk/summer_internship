@@ -13,12 +13,15 @@ export function useUser() {
     queryFn: async () => {
       const token = await getToken();
 
+      // console.log({token})
+
       if (!token) {
         throw new Error("Authentication required");
       }
 
       return userService.getMe(token);
     },
+    
 
     enabled: isLoaded && !!isSignedIn,
     staleTime: 5 * 60 * 1000,

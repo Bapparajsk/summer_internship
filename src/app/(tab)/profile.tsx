@@ -19,12 +19,9 @@ export default function ProfileScreen() {
   return (
     <ScreenWrapper path="/(tab)/profile" onScroll={scrollHandler}>
       <ProfileHeroCard
-        name="Bappa Raj"
         role="Full Stack Developer"
         program="BCA"
         semester="4"
-        avatar='panda'
-        status="Poor"
         cgpa="8.7"
         streak={14}
         rank="#12"

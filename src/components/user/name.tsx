@@ -13,7 +13,7 @@ export const UserName: FC<UserNameProps> = ({ isHeader = true ,classname, skelet
     const { user, isLoaded } = useUser();
 
     return (
-        <Skeleton isLoading={!isLoaded} className={cn('h-full rounded-2xl w-auto', skeletonClassName)} variant='pulse'>
+        <Skeleton isLoading={!isLoaded} className={cn('h-full rounded-2xl w-auto', skeletonClassName)}>
             <Text numberOfLines={1} className={cn("text-text-primary tracking-wide font-poppins-semibold", classname)}>
                 {isHeader && "Hello, "}{user?.fullName ?? "User"}
             </Text>

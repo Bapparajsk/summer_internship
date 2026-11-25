@@ -10,6 +10,9 @@ export async function apiRequest<T>(
     endpoint: string,
     options: ApiOptions = {}
 ): Promise<T> {
+
+    console.log(`${API_URL}${endpoint}`);
+
     const response = await fetch(`${API_URL}${endpoint}`, {
         method: options.method ?? "GET",
 

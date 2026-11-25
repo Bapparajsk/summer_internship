@@ -1,3 +1,6 @@
+import { ProfileEmojiName } from "@/components/screen/profile/emoji";
+import { Status } from "@/components/screen/profile/types";
+
 export type AcademicInformation = {
     id: string;
     user_id: string;
@@ -47,9 +50,9 @@ export type QuizExplorer = {
 
 export type User = {
     id: string;
-    avatar: string;
+    avatar: ProfileEmojiName;
     clerk_user_id: string;
-    status: string;
+    status: Status;
     description: string | null;
 
     createdAt: string;

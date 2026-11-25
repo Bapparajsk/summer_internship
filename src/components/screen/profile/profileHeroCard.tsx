@@ -1,22 +1,26 @@
 import { getCommonIcon } from '../../lib/icon';
 import { Text, View } from 'react-native';
 import { statusConfig, } from './constant';
-import { ProfileHeroProps, Status } from './types';
+import { ProfileHeroProps } from './types';
 import Svg, { Path } from 'react-native-svg';
 import { UserAchievements } from './userAchievements';
 import { UserSettingPopover } from './userSettingPopover';
-import { getEmoji } from './emoji';
-import { useAuth, useUser } from '@clerk/expo';
-import { UserName } from '@/components/user';
+import { UserAvatar, UserName } from '@/components/user';
+import { useUser } from '@/hooks/queries/use-user';
+import { Skeleton } from 'heroui-native';
+import { AcademicInformation } from './academicInformation';
+import { UserDescription } from './userDescription';
 
+const ProfileStatusBadge = () => {
 
-const ProfileStatusBadge = ({ status }: { status: Status }) => {
-    const config = statusConfig[status];
+    const { data: user, isLoading} = useUser();
+
+    const config = statusConfig[user?.status ?? "Good"];
     const { Icon, name } = getCommonIcon(config.icon);
 
     return (
         <View className="relative">
-            <View className="relative">
+            <Skeleton isLoading={isLoading} className='w-20 h-4.25 rounded-full'>
                 <Svg
                     width="100%"
                     height="100%"
@@ -59,31 +63,23 @@ const ProfileStatusBadge = ({ status }: { status: Status }) => {
                         className="text-[9px] font-poppins-semibold uppercase"
                         style={{ color: config.text }}
                     >
-                        {status}
+                        {user?.status ?? "Good"}
                     </Text>
                 </View>
-            </View>
+            </Skeleton>
         </View>
     );
 };
 
 export const ProfileHeroCard = ({
-    name,
     role,
     program,
     semester,
-
-    avatar,
-
-    status,
-
     cgpa,
     streak,
     rank,
     achievements
 }: ProfileHeroProps) => {
-
-    const { emoji, background } = getEmoji(avatar);
 
     return (
         <View className="relative rounded-[34px] border border-border bg-white/4 p-3">
@@ -91,18 +87,13 @@ export const ProfileHeroCard = ({
             <View className="flex-row items-center relative">
 
                 <View className='absolute -top-3 left-17.75'>
-                    <ProfileStatusBadge status={status} />
+                    <ProfileStatusBadge />
+                </View>
+                <View className="size-18">
+                    <UserAvatar skeletonClassName='rounded-[24px]' />
                 </View>
 
-                <View className="rounded-[24px]">
-                    <View className='size-18 rounded-[24px] items-center justify-center' style={{ backgroundColor: background }}>
-                        <Text className='text-3xl'>
-                            {emoji}
-                        </Text>
-                    </View>
-                </View>
-
-                <View className="ml-2 flex-1">
+                <View className="ml-2 flex-1 gap-0.5">
                     <View className="flex-row items-center h-5">
                         <UserName
                             isHeader={false}
@@ -111,16 +102,7 @@ export const ProfileHeroCard = ({
                         />
                     </View>
 
-                    <Text
-                        numberOfLines={1}
-                        className="font-poppins-medium text-xs text-text-secondary"
-                    >
-                        {role}
-                    </Text>
-
-                    <Text className="font-poppins-medium text-[10px] text-text-secondary">
-                        {program} • Semester {semester}
-                    </Text>
+                    <AcademicInformation />
                 </View>
 
             </View>
@@ -129,14 +111,7 @@ export const ProfileHeroCard = ({
             <UserSettingPopover />
 
             {/* user description */}
-            <View className='w-full mt-3'>
-                <Text
-                    className='text-xs font-poppins-medium text-text-secondary'
-                    numberOfLines={3}
-                >
-                    CS sophomore passionate about distributed algorithms, competitive programming & quiz sprints 🚀
-                </Text>
-            </View>
+            <UserDescription />
 
             {/* Stats */}
             <UserAchievements
