@@ -1,6 +1,6 @@
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import Animated, {
     Easing,
     interpolate,
@@ -14,7 +14,8 @@ import Animated, {
 import { Feather } from "@expo/vector-icons";
 import { usePreventRemove } from "expo-router/react-navigation";
 import { useLogout } from "@/hooks/auth/useLogout";
-import { useRouter } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
+import { useAuth } from "@clerk/expo";
 
 const COLORS = {
     background: "#10141A",
@@ -104,6 +105,7 @@ type LogoutStatus = "loading" | "success" | "error";
 
 export default function SignOutScreen() {
 
+    const { isLoaded, isSignedIn } = useAuth();
     const router = useRouter();
     const { logout } = useLogout();
 
@@ -132,6 +134,8 @@ export default function SignOutScreen() {
             false
         );
     }, [pulse]);
+
+    
 
     // Perform logout
     const performLogout = useCallback(async () => {
@@ -168,6 +172,18 @@ export default function SignOutScreen() {
     const pulseStyle = useAnimatedStyle(() => ({
         transform: [{ scale: pulse.value }],
     }));
+
+    if (!isLoaded) {
+        return (
+            <View className="flex-1 items-center justify-center">
+                <ActivityIndicator size="large" />
+            </View>
+        )
+    }
+
+    if (!isSignedIn) {
+        return <Redirect href="/(auth)/sign-in" />
+    }
 
     return (
         <View className="flex-1 px-4 justify-between items-center">
