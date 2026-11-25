@@ -17,6 +17,7 @@ import { StatusBar } from "react-native";
 import "../global.css";
 import FontProvider from "@/provider/font";
 import { useOnboardingStore } from "@/store/onboarding.store";
+import { QueryProvider } from "@/provider/query-provider";
 
 Uniwind.setTheme("dark");
 
@@ -53,42 +54,44 @@ export default function RootLayout(): JSX.Element | null {
       publishableKey={publishableKey}
       tokenCache={tokenCache}
     >
-      <GestureHandlerRootView
-        style={{ flex: 1, backgroundColor: "#000" }}
-      >
-        <KeyboardProvider>
-          <StatusBar
-            backgroundColor="#000000"
-            networkActivityIndicatorVisible
-            animated
-            barStyle="light-content"
-          />
+      <QueryProvider>
+        <GestureHandlerRootView
+          style={{ flex: 1, backgroundColor: "#000" }}
+        >
+          <KeyboardProvider>
+            <StatusBar
+              backgroundColor="#000000"
+              networkActivityIndicatorVisible
+              animated
+              barStyle="light-content"
+            />
 
-          <HeroUINativeProvider config={heroUiConfig}>
-            <ToastProvider maxVisibleToasts={4} defaultProps={{ placement: "bottom" }} >
-              <ThemeProvider value={DarkTheme}>
-                <FontProvider>
-                  <Stack
-                    screenOptions={{
-                      headerShown: false,
-                      animation: "fade_from_bottom",
-                    }}
-                  >
-                    <Stack.Screen name="index" />
-                    <Stack.Screen name="(auth)" />
-                    <Stack.Screen name="(tab)" />
-                    <Stack.Screen name="setting" />
-                    <Stack.Screen name="quiz" />
+            <HeroUINativeProvider config={heroUiConfig}>
+              <ToastProvider maxVisibleToasts={4} defaultProps={{ placement: "bottom" }} >
+                <ThemeProvider value={DarkTheme}>
+                  <FontProvider>
+                    <Stack
+                      screenOptions={{
+                        headerShown: false,
+                        animation: "fade_from_bottom",
+                      }}
+                    >
+                      <Stack.Screen name="index" />
+                      <Stack.Screen name="(auth)" />
+                      <Stack.Screen name="(tab)" />
+                      <Stack.Screen name="setting" />
+                      <Stack.Screen name="quiz" />
 
-                    <Stack.Screen name="sign-out" />
+                      <Stack.Screen name="sign-out" />
 
-                  </Stack>
-                </FontProvider>
-              </ThemeProvider>
-            </ToastProvider>
-          </HeroUINativeProvider>
-        </KeyboardProvider>
-      </GestureHandlerRootView>
+                    </Stack>
+                  </FontProvider>
+                </ThemeProvider>
+              </ToastProvider>
+            </HeroUINativeProvider>
+          </KeyboardProvider>
+        </GestureHandlerRootView>
+      </QueryProvider>
     </ClerkProvider>
   );
 }
