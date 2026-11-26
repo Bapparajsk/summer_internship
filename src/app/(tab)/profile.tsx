@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@/components/screen'
-import { ProfileHeroCard, UniversityInfoCard, ProfileQuizExplorerCard, tempProfileData, ActivityTimelineSection } from '@/components/screen/profile';
+import { ProfileHeroCard, UniversityInfoCard, ProfileQuizExplorerCard, ActivityTimelineSection } from '@/components/screen/profile';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
@@ -20,9 +20,7 @@ export default function ProfileScreen() {
     <ScreenWrapper path="/(tab)/profile" onScroll={scrollHandler}>
       <ProfileHeroCard />
 
-      <ProfileQuizExplorerCard
-        {...tempProfileData}
-      />
+      <ProfileQuizExplorerCard />
 
       <UniversityInfoCard
         universityName="Elitte Institute"
