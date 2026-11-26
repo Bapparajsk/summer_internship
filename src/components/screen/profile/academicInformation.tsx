@@ -1,12 +1,10 @@
 import { Text, View } from 'react-native'
-import { useUser } from '@/hooks/queries/use-user'
 import { PressableFeedback, SkeletonGroup } from 'heroui-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import type { UserQueryState } from '@/types/user';
 
-export const AcademicInformation = () => {
-
-    const { data: user, isLoading, isError, refetch } = useUser();
+export const AcademicInformation = ({ user, isLoading, isError }: UserQueryState) => {
     const router = useRouter();
 
     return (
@@ -16,17 +14,18 @@ export const AcademicInformation = () => {
                     <SkeletonGroup.Item className='rounded-full w-30 h-[16px]' />
                     <SkeletonGroup.Item className='rounded-full w-35 h-3.5 mt-0.5' />
                 </SkeletonGroup>
-            ) : isError ? (
-                <PressableFeedback
-                    className="h-8 flex-row items-center gap-1"
-                    onPress={() => refetch()}
-                >
+            ) : isError && !user ? (
+                <View className="h-8 flex-row items-center gap-1">
                     <MaterialIcons name="error-outline" size={13} color="#F87171" />
                     <Text className="font-poppins-medium text-[10px] text-danger">
-                        Academic info unavailable • Tap to retry
+                        Academic information unavailable
                     </Text>
-                </PressableFeedback>
-            ) : !user?.academic_information ? (
+                </View>
+            ) : !user ? (
+                <Text className="font-poppins-medium text-[10px] text-text-tertiary">
+                    Academic information unavailable
+                </Text>
+            ) : !user.academic_information ? (
                 <PressableFeedback
                     className="h-8 self-start justify-center"
                     onPress={() => router.push('/setting/edit_profile')}

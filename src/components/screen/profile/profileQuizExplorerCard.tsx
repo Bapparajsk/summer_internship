@@ -147,7 +147,7 @@ export const ProfileQuizExplorerCard = () => {
                     <View className="flex-row items-center gap-1">
                         <Ionicons name="trending-up" size={13} color="#5CC6E2" />
                         <Text className="font-poppins-medium text-[10px] text-primary">
-                            Keep learning
+                            Keep going
                         </Text>
                     </View>
                 </View>

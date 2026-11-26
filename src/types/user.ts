@@ -74,3 +74,9 @@ export type User = {
     achievement_stats: UserAchievementStats | null;
     quiz_explorer: QuizExplorer | null;
 };
+
+export type UserQueryState = {
+    user: User | undefined;
+    isLoading: boolean;
+    isError: boolean;
+};

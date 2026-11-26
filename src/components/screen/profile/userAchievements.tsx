@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { View, Text } from 'react-native'
-import { useUser } from '@/hooks/queries/use-user';
 import { Skeleton } from 'heroui-native';
+import type { UserQueryState } from '@/types/user';
 
 const StatItem = ({
   icon,
@@ -37,21 +37,28 @@ const StatItem = ({
 }
 
 
-export const UserAchievements = () => {
-
-  const { data: user, isLoading, isError } = useUser();
-
-  if(isLoading) {
+export const UserAchievements = ({ user, isLoading, isError }: UserQueryState) => {
+  if (isLoading) {
     return (
       <Skeleton className='w-full h-17 rounded-[22px]'/>
     )
   }
 
-  if (isError) {
+  if (isError && !user) {
     return (
       <View className="mt-3 h-17 items-center justify-center rounded-[22px] border border-white/5 bg-white/3">
         <Text className="text-[10px] font-poppins-medium text-text-tertiary">
           Could not load achievements
+        </Text>
+      </View>
+    );
+  }
+
+  if (!user) {
+    return (
+      <View className="mt-3 h-17 items-center justify-center rounded-[22px] border border-white/5 bg-white/3">
+        <Text className="text-[10px] font-poppins-medium text-text-tertiary">
+          Achievement data unavailable
         </Text>
       </View>
     );
