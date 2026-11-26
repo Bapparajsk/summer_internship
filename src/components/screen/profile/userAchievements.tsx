@@ -88,7 +88,7 @@ export const UserAchievements = () => {
   }
 
   return (
-    <View className="mt-3 h-17 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
+    <View className="h-17 flex-row justify-around rounded-[22px] border border-white/5 bg-white/3 py-2">
       <StatItem
         icon="local-fire-department"
         value={Number.isFinite(streak) ? streak : 0}

@@ -25,7 +25,7 @@ export const tempProfileData: ProfileIdentityCardProps = {
   nextLevelXP: 1500,
 };
 
-export const ProfileIdentityCard =({
+export const ProfileQuizExplorerCard =({
     level = 12,
     rank = "Rank Tier II",
     solved = 1248,

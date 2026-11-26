@@ -104,7 +104,9 @@ export const ProfileHeroCard = () => {
             <UserDescription />
 
             {/* Stats */}
-            <UserAchievements />
+            <View className='mt-3'>
+                <UserAchievements />
+            </View>
 
         </View>
     );
