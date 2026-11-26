@@ -1,7 +1,6 @@
 import { ProfileEmojiName } from "@/components/screen/profile/emoji";
 import { IconName } from "@/components/lib/icon";
 
-
 export type AcademicInformation = {
     id: string;
     user_id: string;
@@ -80,3 +79,8 @@ export type UserQueryState = {
     isLoading: boolean;
     isError: boolean;
 };
+
+export type UpdateUserInput = Partial<Pick<User, "avatar" | "description">> & {
+    academic_information?: Partial<Omit<AcademicInformation, "id" | "user_id">>
+    college_information?: Partial<Omit<CollegeInformation, "id" | "user_id">>
+}

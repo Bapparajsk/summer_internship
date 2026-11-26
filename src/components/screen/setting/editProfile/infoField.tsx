@@ -13,6 +13,7 @@ export type ProfileInfoFieldProps = {
     maxCount?: number;
     isButton?: boolean;
     className?: string;
+    isEditable?: boolean
 
     onPress?: () => void;
 };
@@ -28,6 +29,7 @@ export function ProfileInfoField({
     maxCount,
     isButton = true,
     className,
+    isEditable,
 
     onPress
 }: ProfileInfoFieldProps) {

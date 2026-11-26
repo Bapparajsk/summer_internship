@@ -24,5 +24,5 @@ export const PersonalInformationSection = () => {
                 />
             </View>
         </Container>
-    )
+    );
 }
