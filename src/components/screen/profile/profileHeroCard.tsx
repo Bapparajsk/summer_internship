@@ -29,7 +29,7 @@ const ProfileStatusBadge = ({ user, isLoading, isError }: UserQueryState) => {
     }
 
     const config = statusConfig[user.status];
-    const { Icon, name } = getCommonIcon(config.icon);
+    const { Icon, name } = getCommonIcon(config?.icon ?? "minus-circle");
 
     return (
         <View className="relative">

@@ -4,10 +4,10 @@ import type { UpdateUserInput, User } from "@/types/user";
 
 export const userService = {
   getMe: (token: string) =>
-    apiRequest<User>("/users/me", { token }),
+    apiRequest<User>("/me", { token }),
 
   updateMe: (token: string, input: UpdateUserInput) =>
-    apiRequest<User>("/users/me", {
+    apiRequest<User>("/me/update", {
       method: "PATCH",
       token,
       body: input,

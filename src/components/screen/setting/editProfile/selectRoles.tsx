@@ -20,13 +20,14 @@ export type SelectRolesProps = {
     current?: SelectOption;
     onChange: (value: SelectOption) => void;
     data: SelectOption[]
+    isDisabled?: boolean;
 
     label: ProfileInfoFieldProps["label"];
     icon: ProfileInfoFieldProps["icon"];
     endIcon: ProfileInfoFieldProps["endIcon"];
 }
 
-export const SelectRoles = ({ current, onChange, label, icon, endIcon, data }: SelectRolesProps) => {
+export const SelectRoles = ({ current, onChange, label, icon, endIcon, data, isDisabled = false }: SelectRolesProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const selectedRole = useMemo(
@@ -59,7 +60,10 @@ export const SelectRoles = ({ current, onChange, label, icon, endIcon, data }: S
     return (
         <>
             <ProfileInfoField
-                onPress={() => setIsOpen(true)}
+                isButton={!isDisabled}
+                onPress={() => {
+                    if (!isDisabled) setIsOpen(true);
+                }}
                 label={label}
                 value={selectedRole?.label}
                 icon={icon}
@@ -71,6 +75,7 @@ export const SelectRoles = ({ current, onChange, label, icon, endIcon, data }: S
             />
 
             <Select
+                isDisabled={isDisabled}
                 isOpen={isOpen}
                 onOpenChange={handleOpenChange}
                 value={current}
