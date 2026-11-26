@@ -2,6 +2,8 @@ import { Text, View } from "react-native";
 import { Card } from "heroui-native/card";
 import { SegmentedProgress } from "../../ui/progressBar";
 import { FontAwesome6, Ionicons } from "../../lib/icon";
+import { useUser } from "@/hooks/queries/use-user";
+import { Level } from "@/components/quizExplorer";
 
 interface ProfileIdentityCardProps {
     level?: number;
@@ -33,6 +35,11 @@ export const ProfileQuizExplorerCard =({
     currentXP = 1248,
     nextLevelXP = 1500,
 }: ProfileIdentityCardProps) => {
+
+    const { data: user } = useUser();
+
+    console.log(user?.quiz_explorer)
+
     const progress = Math.min(
         100,
         (currentXP / nextLevelXP) * 100,
@@ -66,11 +73,7 @@ export const ProfileQuizExplorerCard =({
                     </View>
 
                     {/* Level */}
-                    <View className="rounded-full border border-primary-border bg-primary-soft px-3 py-1">
-                        <Text className="font-poppins-semibold text-[10px] leading-normal text-primary">
-                            LV. {level}
-                        </Text>
-                    </View>
+                    <Level />
                 </View>
                 {/* Stats */}
                 <View className="my-3 flex-row overflow-hidden rounded-xl border border-border-subtle bg-surface-container-lowest/60">
