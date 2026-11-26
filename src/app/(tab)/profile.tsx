@@ -1,5 +1,10 @@
 import { ScreenWrapper } from '@/components/screen'
-import { ProfileHeroCard, UniversityInfoCard, ProfileQuizExplorerCard, ActivityTimelineSection } from '@/components/screen/profile';
+import {
+  ProfileHeroCard,
+  UniversityInfoCard,
+  ProfileQuizExplorerCard,
+  ActivityTimelineSection
+} from '@/components/screen/profile';
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
@@ -22,13 +27,7 @@ export default function ProfileScreen() {
 
       <ProfileQuizExplorerCard />
 
-      <UniversityInfoCard
-        universityName="Elitte Institute"
-        campus="Main Campus"
-        department="Computer Science & Technology"
-        advisor="Mr. Chandan Chowdhury"
-        logo="https://eiem.ac.in/images/logo.svg"
-      />
+      <UniversityInfoCard />
       <ActivityTimelineSection />
     </ScreenWrapper>
   )

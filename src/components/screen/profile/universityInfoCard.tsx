@@ -1,52 +1,100 @@
 import { MaterialIcons } from '../../lib/icon';
-import { Image, Text, View } from 'react-native';
-import { PressableFeedback, Toast, useToast } from 'heroui-native';
+import { Image, Linking, Text, View } from 'react-native';
+import { PressableFeedback, Skeleton, Toast, useToast } from 'heroui-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useUser } from '@/hooks/queries/use-user';
+import { useRouter } from 'expo-router';
 
-type UniversityInfoCardProps = {
-    universityName: string;
-    campus: string;
-    department: string;
-    advisor: string;
-    logo: string;
-};
+const cardClassName = "overflow-hidden rounded-[34px] border border-border bg-white/4 p-5";
 
-
-export const UniversityInfoCard = ({
-    universityName,
-    campus,
-    department,
-    advisor,
-    logo,
-}: UniversityInfoCardProps) => {
-
+export const UniversityInfoCard = () => {
+    const { data: user, isLoading, isError } = useUser();
     const { toast } = useToast();
+    const router = useRouter();
+    const college = user?.college_information;
 
-    const openUniversityWebsite = () => {
-        toast.show({
-            component: (props) => (
-                <Toast variant="default" {...props}>
-                    <View className='flex-row items-center gap-x-1'>
-                        <MaterialIcons
-                            name="error-outline"
-                            size={16}
-                            color="#F87171"
-                        />
-                        <Toast.Title className='font-poppins-medium text-sm text-zinc-500'>
-                            Unable to Open Website
-                        </Toast.Title>
-                    </View>
+    const openUniversityWebsite = async () => {
+        const website = college?.website?.trim();
+        if (!website) return;
 
-                    <Toast.Description className='font-poppins-medium text-xs text-zinc-600'>
-                        The university website is currently unavailable. Please try again later.
-                    </Toast.Description>
-                </Toast>
-            ),
-        })
+        const url = /^https?:\/\//i.test(website) ? website : `https://${website}`;
+
+        try {
+            await Linking.openURL(url);
+        } catch {
+            toast.show({
+                component: (props) => (
+                    <Toast variant="default" {...props}>
+                        <View className="flex-row items-center gap-x-1">
+                            <MaterialIcons name="error-outline" size={16} color="#F87171" />
+                            <Toast.Title className="font-poppins-medium text-sm text-zinc-500">
+                                Unable to Open Website
+                            </Toast.Title>
+                        </View>
+                        <Toast.Description className="font-poppins-medium text-xs text-zinc-600">
+                            The university website could not be opened. Please try again later.
+                        </Toast.Description>
+                    </Toast>
+                ),
+            });
+        }
     };
 
+    if (isLoading) {
+        return (
+            <View className={cardClassName}>
+                <View className="flex-row items-center gap-2">
+                    <Skeleton className="size-14 rounded-[24px]" />
+                    <View className="flex-1 gap-1">
+                        <Skeleton className="h-4 w-40 rounded-full" />
+                        <Skeleton className="h-3 w-28 rounded-full" />
+                    </View>
+                </View>
+                <View className="mt-3 gap-2">
+                    <Skeleton className="h-14 w-full rounded-2xl" />
+                    <Skeleton className="h-14 w-full rounded-2xl" />
+                </View>
+            </View>
+        );
+    }
+
+    if (isError && !user) {
+        return (
+            <View className={`${cardClassName} min-h-36 items-center justify-center gap-2`}>
+                <MaterialIcons name="error-outline" size={24} color="#F87171" />
+                <Text className="text-center font-poppins-medium text-xs text-danger">
+                    Could not load university information
+                </Text>
+            </View>
+        );
+    }
+
+    if (!college) {
+        return (
+            <View className={`${cardClassName} min-h-36 items-center justify-center gap-2`}>
+                <MaterialIcons name="school" size={24} color="#718096" />
+                <Text className="text-center font-poppins-medium text-xs text-text-secondary">
+                    University information is not available yet
+                </Text>
+                <PressableFeedback
+                    accessibilityRole="button"
+                    className="mt-1 flex-row items-center gap-1 rounded-full bg-primary-soft px-3 py-2"
+                    onPress={() => router.push('/setting/edit_profile')}
+                >
+                    <MaterialIcons name="add" size={14} color="#5CC6E2" />
+                    <Text className="font-poppins-semibold text-[10px] text-primary">
+                        Add university details
+                    </Text>
+                </PressableFeedback>
+            </View>
+        );
+    }
+
+    const websiteAvailable = Boolean(college.website?.trim());
+    const department = user?.academic_information?.department?.trim() || "Not provided";
+
     return (
-        <View className="overflow-hidden rounded-[34px] border border-border bg-white/4 p-5">
+        <View className={cardClassName}>
 
             {/* Background Glow */}
             <View className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan-400/10" />
@@ -55,13 +103,17 @@ export const UniversityInfoCard = ({
             <View className="flex-row items-center">
 
                 {/* University Logo */}
-                <View className="size-14">
+                {college.logo_url ? (
                     <Image
-                        source={{ uri: "https://static.vecteezy.com/system/resources/previews/024/765/885/non_2x/education-badge-logo-design-university-high-school-emblem-logo-template-vector.jpg" }}
-                        className="h-full w-full rounded-[24px]"
+                        source={{ uri: college.logo_url }}
+                        className="size-14 rounded-[24px]"
                         resizeMode="cover"
                     />
-                </View>
+                ) : (
+                    <View className="size-14 items-center justify-center rounded-[24px] border border-border bg-surface-container-high">
+                        <MaterialIcons name="school" size={24} color="#22D3EE" />
+                    </View>
+                )}
 
                 {/* University Details */}
                 <View className="ml-2 flex-1">
@@ -69,30 +121,28 @@ export const UniversityInfoCard = ({
                         numberOfLines={1}
                         className="text-base text-text-primary font-poppins-semibold"
                     >
-                        {universityName}
+                        {college.college_name}
                     </Text>
 
                     <Text className="text-text-secondary text-xs font-poppins-semibold">
-                        {campus}
+                        {college.location}
                     </Text>
                 </View>
 
             </View>
 
-            <PressableFeedback
-                onPress={openUniversityWebsite}
-                className="absolute top-3 right-3 flex-row items-center rounded-full bg-cyan-500/10 px-2 py-1"
-            >
-                <MaterialIcons
-                    name="language"
-                    size={14}
-                    color="#22D3EE"
-                />
-
-                <Text className="ml-0.5 font-poppins-medium uppercase text-[10px] leading-normal text-cyan-400">
-                    Official
-                </Text>
-            </PressableFeedback>
+            {websiteAvailable ? (
+                <PressableFeedback
+                    accessibilityRole="button"
+                    onPress={() => void openUniversityWebsite()}
+                    className="absolute top-3 right-3 flex-row items-center rounded-full bg-cyan-500/10 px-2 py-1"
+                >
+                    <MaterialIcons name="language" size={14} color="#22D3EE" />
+                    <Text className="ml-0.5 font-poppins-medium uppercase text-[10px] leading-normal text-cyan-400">
+                        Official
+                    </Text>
+                </PressableFeedback>
+            ) : null}
 
             {/* Info Grid */}
             <View className="mt-3 gap-2">
@@ -100,7 +150,7 @@ export const UniversityInfoCard = ({
                     iconColor='#A78BFA'
                     iconName='person'
                     title='Principal'
-                    value={advisor}
+                    value={college.principal_name?.trim() || "Not provided"}
                 />
 
                 <InfoCard
@@ -110,6 +160,15 @@ export const UniversityInfoCard = ({
                     value={department}
                 />
             </View>
+
+            {isError ? (
+                <View className="mt-3 flex-row items-center gap-1">
+                    <MaterialIcons name="error-outline" size={13} color="#F87171" />
+                    <Text className="font-poppins-medium text-[10px] text-danger">
+                        Could not refresh university details. Showing saved information.
+                    </Text>
+                </View>
+            ) : null}
 
         </View>
     );
@@ -121,7 +180,7 @@ function InfoCard({
     title,
     value,
 }: {
-    iconName: string;
+    iconName: keyof typeof MaterialIcons.glyphMap;
     iconColor: string;
     title: string;
     value: string;
@@ -141,7 +200,7 @@ function InfoCard({
 
             <View className="flex-row items-center">
                 <MaterialIcons
-                    name={iconName as any}
+                    name={iconName}
                     size={16}
                     color={iconColor}
                 />
