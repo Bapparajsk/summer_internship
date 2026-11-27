@@ -84,3 +84,7 @@ export type UpdateUserInput = Partial<Pick<User, "avatar" | "description">> & {
     academic_information?: Partial<Omit<AcademicInformation, "id" | "user_id">>
     college_information?: Partial<Omit<CollegeInformation, "id" | "user_id">>
 }
+
+export type UpdateUserResponse = {
+    updated: boolean
+}

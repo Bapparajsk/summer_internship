@@ -46,11 +46,11 @@ export const PersonalInformationSection = () => {
         });
     };
 
-    const handleRoleChange = (engineeringRoll: string) => {
+    const handleRoleChange = (engineeringRole: string) => {
         if (!user || savingOperation) return;
 
         submitUpdate('role', {
-            academic_information: { engineering_roll: engineeringRoll },
+            academic_information: { engineering_roll: engineeringRole },
         });
     };
 
@@ -64,11 +64,23 @@ export const PersonalInformationSection = () => {
         if (!user || savingOperation) return;
 
         const description = descriptionDraft.trim();
+        if (description === (user.description ?? '').trim()) {
+            setIsDescriptionEditorOpen(false);
+            return;
+        }
+
         submitUpdate(
             'description',
             { description: description || null },
             () => setIsDescriptionEditorOpen(false),
         );
+    };
+
+    const cancelDescriptionEdit = () => {
+        if (savingOperation === 'description') return;
+        setDescriptionDraft(user?.description ?? '');
+        setSaveError(null);
+        setIsDescriptionEditorOpen(false);
     };
 
     return (
@@ -118,7 +130,7 @@ export const PersonalInformationSection = () => {
                     textAreaProps={{
                         numberOfLines: 4,
                         multiline: true,
-                        maxLength: 100
+                        maxLength: DESCRIPTION_MAX_LENGTH
                     }}
                 />
 
@@ -127,14 +139,6 @@ export const PersonalInformationSection = () => {
                         <MaterialIcons name="error-outline" size={13} color="#F87171" />
                         <Text className="font-poppins-medium text-[10px] text-danger">
                             Could not load personal information
-                        </Text>
-                    </View>
-                ) : null}
-                {saveError === 'description' && !isDescriptionEditorOpen ? (
-                    <View className="flex-row items-center gap-1">
-                        <MaterialIcons name="error-outline" size={13} color="#F87171" />
-                        <Text className="font-poppins-medium text-[10px] text-danger">
-                            Could not save description. Please try again.
                         </Text>
                     </View>
                 ) : null}
@@ -157,11 +161,7 @@ export const PersonalInformationSection = () => {
                             <Button
                                 accessibilityRole="button"
                                 isDisabled={savingOperation !== null}
-                                onPress={() => {
-                                    if (savingOperation !== 'description') {
-                                        setIsDescriptionEditorOpen(false);
-                                    }
-                                }}
+                                onPress={cancelDescriptionEdit}
                                 size='sm'
                                 className='w-1/3'
                                 variant='secondary'
@@ -172,7 +172,10 @@ export const PersonalInformationSection = () => {
                             </Button>
                             <Button
                                 accessibilityRole="button"
-                                isDisabled={savingOperation !== null}
+                                isDisabled={
+                                    savingOperation !== null
+                                    || descriptionDraft.trim() === (user?.description ?? '').trim()
+                                }
                                 onPress={saveDescription}
                                 size='sm'
                                 className='flex-1'

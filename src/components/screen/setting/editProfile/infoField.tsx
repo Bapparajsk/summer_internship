@@ -63,11 +63,9 @@ export function ProfileInfoField({
                 {isEditable ? (
                     <TextField>
                         <Input
-                            ref={(e) => {
-                                e?.focus();
-                            }}
                             value={editValue}
                             onChangeText={onEditValue}
+                            autoFocus
                             className={cn("flex-row font-poppins-medium text-xs items-center gap-1.5 rounded-[16px] border border-border px-3 py-2", inputClassName)}
                             {...inputProps}
                         />

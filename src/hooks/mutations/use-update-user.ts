@@ -21,13 +21,11 @@ export function useUpdateUser() {
             return userService.updateMe(token, input);
         },
 
-        onSuccess: (_, inputs) => {
+        // this is server return only updated: true if success
+        onSuccess: (_, variables) => {
             queryClient.setQueryData(
-                queryKeys.user.me(),
-                (old: any) => ({
-                    ...old,
-                    ...inputs
-                })
+                queryKeys.user.me(), 
+                (old: any) => ({...old, ...variables})
             );
         }
     });

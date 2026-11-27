@@ -1,5 +1,5 @@
 import { apiRequest } from "@/lib/api-client";
-import type { UpdateUserInput, User } from "@/types/user";
+import type { UpdateUserInput, UpdateUserResponse, User } from "@/types/user";
 
 
 export const userService = {
@@ -7,7 +7,7 @@ export const userService = {
     apiRequest<User>("/me", { token }),
 
   updateMe: (token: string, input: UpdateUserInput) =>
-    apiRequest<User>("/me/update", {
+    apiRequest<UpdateUserResponse>("/me/update", {
       method: "PATCH",
       token,
       body: input,
