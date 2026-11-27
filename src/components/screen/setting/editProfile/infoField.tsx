@@ -37,6 +37,7 @@ export function ProfileInfoField({
     onEditValue,
     textAreaProps,
 
+
     onPress
 }: ProfileInfoFieldProps) {
 
@@ -71,7 +72,7 @@ export function ProfileInfoField({
                         />
                     </TextField>
                 ) : (
-                    <View className={cn("min-h-13.5 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2", className)}>
+                    <View className={cn("min-h-13 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2", className)}>
                         {icon && <View className="h-9 w-9 items-center justify-center border border-border rounded-xl bg-transparent">
                             {icon}
                         </View>}

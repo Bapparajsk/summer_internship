@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Text, View } from 'react-native';
-import { useUser as useClerkUser } from '@clerk/expo';
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { useUser } from '@/hooks/queries/use-user';
 import { useUpdateUser } from '@/hooks/mutations/use-update-user';
@@ -12,13 +12,14 @@ import { ProfileInfoField } from './infoField';
 import { EngineeringRoles } from './engineeringRoles';
 import { Button } from 'heroui-native';
 import If from '@/components/lib/if';
+import { UserNameEdit } from './userNameEdit';
 
 type UpdateOperation = 'description' | 'role';
 const DESCRIPTION_MAX_LENGTH = 100;
 
 export const PersonalInformationSection = () => {
     const { data: user, isLoading, isError } = useUser();
-    const { user: clerkUser, isLoaded: isClerkUserLoaded } = useClerkUser();
+    
     const updateUser = useUpdateUser();
 
     const [isDescriptionEditorOpen, setIsDescriptionEditorOpen] = useState(false);
@@ -86,15 +87,7 @@ export const PersonalInformationSection = () => {
     return (
         <Container title='Personal Information'>
             <View className='gap-3 p-3'>
-                <ProfileInfoField
-                    label="Full Name"
-                    value={isClerkUserLoaded
-                        ? clerkUser?.fullName ?? 'Not provided'
-                        : 'Loading...'
-                    }
-                    isButton={false}
-                    icon={<FontAwesome5 name="user-circle" size={18} color="#8FA5B8" />}
-                />
+                <UserNameEdit />
 
                 <EngineeringRoles
                     value={user?.academic_information?.engineering_roll}
