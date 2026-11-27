@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import type { ReactNode } from "react";
-import { cn, PressableFeedback } from "heroui-native";
+import { cn, Input, InputProps, PressableFeedback, TextField } from "heroui-native";
 import If from "@/components/lib/if";
 
 export type ProfileInfoFieldProps = {
@@ -14,6 +14,9 @@ export type ProfileInfoFieldProps = {
     isButton?: boolean;
     className?: string;
     isEditable?: boolean
+    editValue?: string,
+    onEditValue?: (value: string) => void,
+    textAreaProps?: InputProps
 
     onPress?: () => void;
 };
@@ -30,11 +33,16 @@ export function ProfileInfoField({
     isButton = true,
     className,
     isEditable,
+    editValue,
+    onEditValue,
+    textAreaProps,
 
     onPress
 }: ProfileInfoFieldProps) {
 
     const Is = isButton ? PressableFeedback : View;
+
+    const { className: inputClassName, ...inputProps } = textAreaProps ?? {};
 
     return (
         <View className="gap-1">
@@ -52,19 +60,33 @@ export function ProfileInfoField({
             </View>
 
             <Is onPress={onPress}>
-                <View className={cn("min-h-13.5 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2", className)}>
-                    {icon && <View className="h-9 w-9 items-center justify-center border border-border rounded-xl bg-transparent">
-                        {icon}
-                    </View>}
+                {isEditable ? (
+                    <TextField>
+                        <Input
+                            ref={(e) => {
+                                e?.focus();
+                            }}
+                            value={editValue}
+                            onChangeText={onEditValue}
+                            className={cn("flex-row font-poppins-medium text-xs items-center gap-1.5 rounded-[16px] border border-border px-3 py-2", inputClassName)}
+                            {...inputProps}
+                        />
+                    </TextField>
+                ) : (
+                    <View className={cn("min-h-13.5 flex-row items-center gap-1.5 rounded-[16px] border border-border bg-transparent px-3 py-2", className)}>
+                        {icon && <View className="h-9 w-9 items-center justify-center border border-border rounded-xl bg-transparent">
+                            {icon}
+                        </View>}
 
-                    <View className="flex-1 justify-center">
-                        <Text className="font-poppins-medium text-xs leading-5 text-text-secondary">
-                            {value ?? "Not provided"}
-                        </Text>
+                        <View className="flex-1 justify-center">
+                            <Text className="font-poppins-medium text-xs leading-5 text-text-secondary">
+                                {value ?? "Not provided"}
+                            </Text>
+                        </View>
+
+                        {endIcon}
                     </View>
-
-                    {endIcon}
-                </View>
+                )}
             </Is>
 
             <If condition={Boolean(showWordCount)}>
@@ -73,7 +95,7 @@ export function ProfileInfoField({
                         <Text
                             className="text-[10px] font-poppins-medium text-text-tertiary mr-1"
                         >
-                            {value?.split("").length} / {maxCount}
+                            { isEditable ? editValue?.split("").length : value?.split("").length } / {maxCount}
                         </Text>
                     </View>
                 </If.Then>

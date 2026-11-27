@@ -8,7 +8,6 @@ import {
 import { useScrollStore } from '@/store/scroll-store';
 import { useAnimatedScrollHandler } from 'react-native-reanimated';
 
-
 export default function ProfileScreen() {
 
   const scrollY = useScrollStore(
