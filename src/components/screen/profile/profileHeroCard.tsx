@@ -99,7 +99,7 @@ export const ProfileHeroCard = () => {
                 </View>
 
                 <View className="ml-2 flex-1 gap-0.5">
-                    <View className="flex-row items-center h-5">
+                    <View className="flex-row items-center h-5.75">
                         <Skeleton isLoading={!isClerkUserLoaded} className="h-full w-30 rounded-2xl">
                             <Text numberOfLines={1} className="text-base text-text-primary tracking-wide font-poppins-semibold">
                                 {clerkUser?.fullName ?? 'User'}
