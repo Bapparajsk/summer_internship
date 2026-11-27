@@ -6,7 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import { CloseButtonProps } from "./type";
 import { PressableFeedbackProps } from "heroui-native";
 
-export const CloseButton = ({ isSaved = true, saveTitle = "Save changes", ...rest }: CloseButtonProps & PressableFeedbackProps) => {
+export const CloseButton = ({ isSaved = true, saveTitle = "Save changes", icon, ...rest }: CloseButtonProps & PressableFeedbackProps) => {
     return (
         <MotionButton
             layout={LinearTransition.springify().stiffness(200).mass(0.7).damping(20)}
@@ -21,7 +21,7 @@ export const CloseButton = ({ isSaved = true, saveTitle = "Save changes", ...res
                 </If.Then>
                 <If.Else>
                     <View className='h-8 flex-row items-center justify-center px-2 gap-1'>
-                        <Feather name={"check-circle"} size={16} color={"#4ADE80"} />
+                        {icon ?? <Feather name={"check-circle"} size={16} color={"#4ADE80"} />}
                         <Text className='text-[10px] leading-normal font-poppins-medium text-success'>
                             {saveTitle}
                         </Text>

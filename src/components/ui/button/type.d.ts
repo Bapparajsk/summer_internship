@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { PressableFeedbackProps } from "heroui-native";
-import { ReactNode } from "react";
+import { ReactNode, ComponentProps } from "react";
 import type { TextStyle, ViewStyle } from "react-native";
 
 export type ButtonVariant =
@@ -16,7 +16,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 export type ThemeMode = "dark" | "light";
 
-export type IconName = React.ComponentProps<typeof Ionicons>["name"];
+export type IconName = ComponentProps<typeof Ionicons>["name"];
 
 export type ButtonProps = {
     title?: ReactNode;
@@ -53,4 +53,5 @@ export type MotionButtonProps =  PressableFeedbackProps;
 export type CloseButtonProps = {
     isSaved?: boolean;
     saveTitle?: string
+    icon?: ReactNode
 }

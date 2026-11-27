@@ -58,7 +58,7 @@ export const UserSettingPopover = () => {
             </View>
             <BottomSheet
                 ref={sheetRef}
-                detents={[0.9]}
+                detents={["auto"]}
             >
                 <BottomSheetContent />
             </BottomSheet>
