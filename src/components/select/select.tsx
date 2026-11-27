@@ -27,6 +27,7 @@ export const SelectPopover = ({
     separators,
     onCloseTriggerId,
     onSelect,
+    isDisabled = false,
 }: SelectPopoverProps) => {
 
     const triggerWidth = useRef(120);
@@ -83,6 +84,7 @@ export const SelectPopover = ({
             >
                 {/* Trigger */}
                 <PressableFeedback
+                    isDisabled={isDisabled}
                     onPress={() => setOpen(prev => !prev)}
                     onLayout={e => {
                         triggerWidth.current =

@@ -41,4 +41,5 @@ export type SelectPopoverProps = {
     separators?: number[] | "all";
     onCloseTriggerId?: SelectOption["id"][];
     onSelect?: (item: SelectOption) => void;
+    isDisabled?: boolean;
 };

@@ -6,12 +6,12 @@ export const className = "px-2 py-1.5 border border-border mb-0.5 bg-blue-400/5"
 
 export type DropdownButtonProps = 
     Pick<ProfileInfoFieldProps, "label" | "value" | "icon"> &
-    Pick<SelectPopoverProps, "activeIsOpenText" | "activeItemId" | "zIndex" |"onSelect"> &
+    Pick<SelectPopoverProps, "activeIsOpenText" | "activeItemId" | "activeItemIds" | "zIndex" | "onSelect" | "isDisabled"> &
 {
     item: SelectOption[];
 }
 
-export const DropdownButton = ({ item, label, icon, value, activeIsOpenText, activeItemId, zIndex , onSelect } : DropdownButtonProps) => {
+export const DropdownButton = ({ item, label, icon, value, activeIsOpenText, activeItemId, activeItemIds, zIndex, onSelect, isDisabled } : DropdownButtonProps) => {
     return (
         <ProfileInfoField
             isButton={false}
@@ -25,6 +25,7 @@ export const DropdownButton = ({ item, label, icon, value, activeIsOpenText, act
                     items={item}
                     zIndex={zIndex}
                     activeItemId={activeItemId}
+                    activeItemIds={activeItemIds}
                     activeIsOpenText={activeIsOpenText}
                     activeIsOpenTextPosition="right"
                     containerClassName="border-white/20 mt-2.5 rounded-[16px]"
@@ -42,6 +43,7 @@ export const DropdownButton = ({ item, label, icon, value, activeIsOpenText, act
                     iconSize={14}
                     activeIsOpenTextClassName='text-[12px] font-poppins-medium'
                     onSelect={onSelect}
+                    isDisabled={isDisabled}
                 />
             }
         />

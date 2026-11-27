@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userService } from "@/services/user.service";
 
 import { queryKeys } from "@/hooks/queries/query-keys";
-import { UpdateUserInput } from "@/types/user";
+import type { UpdateUserInput, User } from "@/types/user";
 
 export function useUpdateUser() {
     const { getToken } = useAuth();
@@ -21,12 +21,31 @@ export function useUpdateUser() {
             return userService.updateMe(token, input);
         },
 
-        // this is server return only updated: true if success
         onSuccess: (_, variables) => {
-            queryClient.setQueryData(
-                queryKeys.user.me(), 
-                (old: any) => ({...old, ...variables})
+            const user = queryClient.setQueryData<User>(
+                queryKeys.user.me(),
+                (old) => {
+                    if (!old) return old;
+
+                    return {
+                        ...old,
+                        ...variables,
+                        academic_information: variables.academic_information && old.academic_information
+                            ? { ...old.academic_information, ...variables.academic_information }
+                            : old.academic_information,
+                        college_information: variables.college_information && old.college_information
+                            ? { ...old.college_information, ...variables.college_information }
+                            : old.college_information,
+                    };
+                },
             );
+
+            if (
+                (variables.academic_information && !user?.academic_information)
+                || (variables.college_information && !user?.college_information)
+            ) {
+                void queryClient.invalidateQueries({ queryKey: queryKeys.user.me() });
+            }
         }
     });
 }
