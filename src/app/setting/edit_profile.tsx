@@ -2,7 +2,7 @@ import { SettingScreenWrapper } from '@/components/screen/setting'
 import { 
     PersonalInformationSection, 
     AcademicInformationSection,
-    CollegeInformationSection,
+    CollegeInformationSection
 } from '@/components/screen/setting/editProfile'
 
 export default function EditProfile() {

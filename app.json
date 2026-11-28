@@ -35,10 +35,6 @@
       "@clerk/expo",
       "expo-secure-store",
       "expo-web-browser",
-      [
-        "expo-secure-store",
-        "@clerk/expo"
-      ],
       "@clerk/expo-native-components"
     ],
     "experiments": {
