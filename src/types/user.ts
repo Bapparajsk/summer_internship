@@ -29,7 +29,7 @@ export type CollegeInformation = {
 
     college_name: string;
     principal_name: string | null;
-    location: string;
+    location: string | null;
     logo_url: string | null;
     website: string | null;
 };

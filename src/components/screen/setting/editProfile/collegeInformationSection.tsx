@@ -135,7 +135,7 @@ export const CollegeInformationSection = () => {
     return (
         <Container title="College Information 🏛️">
             <View className="gap-3 p-3">
-                {fields.map((field) => {
+                {fields.map((field, index) => {
                     const value = college?.[field.key] ?? undefined;
 
                     return (
@@ -168,6 +168,7 @@ export const CollegeInformationSection = () => {
                                 editable: !updateUser.isPending,
                                 keyboardType: field.key === 'website' ? 'url' : 'default',
                                 autoCapitalize: field.key === 'website' ? 'none' : 'sentences',
+                                autoFocus: false
                             }}
                         />
                     );
