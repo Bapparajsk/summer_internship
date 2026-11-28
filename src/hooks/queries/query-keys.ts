@@ -6,10 +6,15 @@ export const queryKeys = {
 
     quizzes: {
         all: ["quizzes"] as const,
-        list: (filters?: object) =>
-            ["quizzes", "list", filters] as const,
-        detail: (id: string) =>
-            ["quizzes", "detail", id] as const,
+
+        lists: () => [...queryKeys.quizzes.all, "list"] as const,
+
+        list: (params?: { limit?: number; cursor?: string }) =>
+            [...queryKeys.quizzes.lists(), params] as const,
+
+        details: () => [...queryKeys.quizzes.all, "detail"] as const,
+
+        detail: (id: string) => [...queryKeys.quizzes.details(), id] as const,
     },
 
     rooms: {

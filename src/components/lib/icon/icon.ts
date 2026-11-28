@@ -221,8 +221,12 @@ const commonIconMap = {
 
 export type IconName = keyof typeof commonIconMap;
 
-export const getCommonIcon = (name: IconName) => {
-    return commonIconMap[name] ?? {
+export const getCommonIcon = (name: string) => {
+    if (Object.prototype.hasOwnProperty.call(commonIconMap, name)) {
+        return commonIconMap[name as IconName];
+    }
+
+    return {
         Icon: AntDesign,
         name: "exclamation"
     };
